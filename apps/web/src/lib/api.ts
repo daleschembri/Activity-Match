@@ -6,10 +6,10 @@ import type {
   FeedPage,
   Group,
   JoinRequest,
-  Message,
   ReliabilityDisplay,
   UserProfile,
 } from "@activity-match/shared";
+import type { ChatMessage } from "@/lib/chatMessages";
 import { DEFAULT_CONFIG } from "@activity-match/shared";
 import { getAccessToken, isSupabaseConfigured, supabase } from "./supabase";
 
@@ -83,10 +83,10 @@ const ACTIVITY_SELECT = `
   cost_amount, cost_currency, skill_level, capacity, published_at, cover_image_ref,
   description, quorum, cost_note, equipment_note, equipment_provided,
   accessibility_note, min_age, max_age, join_deadline, acceptance_mode,
-  visibility, public_slug, host_user_id,
+  visibility, public_slug, host_user_id, host_is_participating,
   category:categories(id, name, parent_id, is_active),
   host:profiles!activities_host_user_id_fkey(id, display_name, avatar_ref),
-  location:locations(id, name, area_label, is_public_place, timezone)
+  location:locations(id, name, area_label, address_line, is_public_place, timezone)
 `;
 
 export const api = {
@@ -204,9 +204,70 @@ export const api = {
       }
     }
 
+    const hostUserId = data.host_user_id as string;
+    const [{ data: hostProfile }, { data: participationRows }, { data: geoLocations }] = await Promise.all([
+      supabase.from("profiles").select("id, display_name, avatar_ref, bio").eq("id", hostUserId).single(),
+      supabase
+        .from("participations")
+        .select("user:profiles!participations_user_id_fkey(id, display_name, avatar_ref)")
+        .eq("activity_id", id)
+        .eq("status", "confirmed"),
+      supabase.rpc("get_locations_geo"),
+    ]);
+
+    const locationRow = data.location as {
+      id?: string;
+      name?: string;
+      area_label?: string;
+      address_line?: string;
+      is_public_place?: boolean;
+      timezone?: string;
+    } | null;
+
+    let location: ActivityDetail["location"];
+    if (locationRow?.id) {
+      const coords = (geoLocations as Array<{ id: string; lat: number; lng: number }> | null)?.find(
+        (entry) => entry.id === locationRow.id,
+      );
+      location = {
+        id: locationRow.id,
+        name: locationRow.name ?? "Meeting point",
+        area_label: locationRow.area_label ?? summary.area_label ?? "",
+        is_public_place: locationRow.is_public_place ?? true,
+        address_line: locationRow.address_line ?? undefined,
+        timezone: locationRow.timezone ?? "UTC",
+        point: coords ? { lat: coords.lat, lng: coords.lng } : undefined,
+      };
+    }
+
+    const participants = (participationRows ?? [])
+      .map((row) => {
+        const raw = row.user as
+          | { id: string; display_name: string; avatar_ref: string | null }
+          | { id: string; display_name: string; avatar_ref: string | null }[]
+          | null;
+        const profile = Array.isArray(raw) ? raw[0] : raw;
+        if (!profile) return null;
+        return {
+          ...profile,
+          is_host: profile.id === hostUserId,
+        };
+      })
+      .filter(Boolean) as NonNullable<ActivityDetail["participants"]>;
+
+    const hostFromJoin = summary.host;
+    const host = {
+      id: hostProfile?.id ?? hostFromJoin.id,
+      display_name: hostProfile?.display_name ?? hostFromJoin.display_name,
+      avatar_ref: hostProfile?.avatar_ref ?? hostFromJoin.avatar_ref,
+      bio: hostProfile?.bio ?? null,
+    };
+
     return {
       ...summary,
+      host,
       description: data.description as string,
+      location,
       quorum: data.quorum as number | null,
       cost_note: data.cost_note as string | null,
       equipment_note: data.equipment_note as string | null,
@@ -218,6 +279,7 @@ export const api = {
       acceptance_mode: data.acceptance_mode as ActivityDetail["acceptance_mode"],
       visibility: data.visibility as ActivityDetail["visibility"],
       public_slug: data.public_slug as string,
+      participants,
       participant_count_visible: participationCount,
       viewer_role,
     };
@@ -584,7 +646,7 @@ export const api = {
     });
   },
 
-  async getMessages(activityId: string): Promise<Message[]> {
+  async getMessages(activityId: string): Promise<ChatMessage[]> {
     const allowed = await api.canAccessActivityChat(activityId);
     if (!allowed) throw new Error("Chat is only available after you are accepted.");
 
@@ -592,11 +654,11 @@ export const api = {
     if (!conv) return [];
     const { data, error } = await supabase
       .from("messages")
-      .select("*")
+      .select("*, sender:profiles!messages_sender_user_id_fkey(id, display_name, avatar_ref)")
       .eq("conversation_id", conv.id)
       .order("created_at");
     if (error) throw new Error(error.message);
-    return (data ?? []) as Message[];
+    return (data ?? []) as ChatMessage[];
   },
 
   async sendMessage(activityId: string, body: string) {
@@ -737,7 +799,10 @@ export const api = {
     };
   },
 
-  async getMyPlans(): Promise<{ hosted: ActivitySummary[]; joined: ActivitySummary[] }> {
+  async getMyPlans(): Promise<{
+    hosted: Array<ActivitySummary & { also_participating: boolean }>;
+    joined: ActivitySummary[];
+  }> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { hosted: [], joined: [] };
 
@@ -757,23 +822,30 @@ export const api = {
     if (joinedError) throw new Error(joinedError.message);
 
     const joinedIds = joinedParticipations?.map((p) => p.activity_id) ?? [];
+    const participatingIds = new Set(joinedIds);
+    const hostedIds = new Set((hostedRows ?? []).map((r) => r.id as string));
+
     let joinedRows: Record<string, unknown>[] = [];
     if (joinedIds.length) {
       const { data } = await supabase
         .from("activities")
         .select(ACTIVITY_SELECT)
         .in("id", joinedIds);
-      joinedRows = data ?? [];
+      joinedRows = (data ?? []).filter((r) => !hostedIds.has(r.id as string));
     }
 
     const allIds = [
       ...(hostedRows ?? []).map((r) => r.id as string),
-      ...joinedIds,
+      ...joinedRows.map((r) => r.id as string),
     ];
     const counts = await participationCounts(allIds);
 
     return {
-      hosted: (hostedRows ?? []).map((r) => mapActivityRow(r, counts[r.id as string] ?? 0)),
+      hosted: (hostedRows ?? []).map((r) => ({
+        ...mapActivityRow(r, counts[r.id as string] ?? 0),
+        also_participating:
+          participatingIds.has(r.id as string) || Boolean(r.host_is_participating),
+      })),
       joined: joinedRows.map((r) => mapActivityRow(r, counts[r.id as string] ?? 0)),
     };
   },

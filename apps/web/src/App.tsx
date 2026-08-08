@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { AnimatedOutlet } from "./components/AnimatedOutlet";
 import { AuthProvider } from "./lib/AuthProvider";
 import { isSupabaseConfigured } from "./lib/supabase";
 import { DiscoverPage } from "./routes/DiscoverPage";
@@ -24,26 +25,28 @@ import { AuthPage } from "./routes/AuthPage";
 export function App() {
   const routes = (
     <Routes>
-      <Route path="/auth" element={<AuthPage />} />
-      <Route path="/" element={<DiscoverPage />} />
-      <Route path="/filters" element={<FilterPage />} />
-      <Route path="/feed/exhausted" element={<EndOfFeedPage />} />
-      <Route path="/activities/:id" element={<ActivityDetailPage />} />
-      <Route path="/activities/:id/chat" element={<ActivityChatPage />} />
-      <Route path="/activities/:id/feedback" element={<FeedbackPage />} />
-      <Route path="/host/requests" element={<JoinRequestsPage />} />
-      <Route path="/waitlist/:requestId" element={<WaitlistClaimPage />} />
-      <Route path="/create/describe" element={<CreateDescribePage />} />
-      <Route path="/create/review" element={<CreateReviewPage />} />
-      <Route path="/onboarding/interests" element={<InterestsOnboardingPage />} />
-      <Route path="/onboarding/availability" element={<AvailabilityOnboardingPage />} />
-      <Route path="/plans" element={<MyPlansPage />} />
-      <Route path="/chats" element={<ChatsPage />} />
-      <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/profile/edit" element={<EditProfilePage />} />
-      <Route path="/a/:slug" element={<PublicActivityPage />} />
-      <Route path="/groups/:id" element={<GroupPage />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route element={<AnimatedOutlet />}>
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/" element={<DiscoverPage />} />
+        <Route path="/filters" element={<FilterPage />} />
+        <Route path="/feed/exhausted" element={<EndOfFeedPage />} />
+        <Route path="/activities/:id" element={<ActivityDetailPage />} />
+        <Route path="/activities/:id/chat" element={<ActivityChatPage />} />
+        <Route path="/activities/:id/feedback" element={<FeedbackPage />} />
+        <Route path="/host/requests" element={<JoinRequestsPage />} />
+        <Route path="/waitlist/:requestId" element={<WaitlistClaimPage />} />
+        <Route path="/create/describe" element={<CreateDescribePage />} />
+        <Route path="/create/review" element={<CreateReviewPage />} />
+        <Route path="/onboarding/interests" element={<InterestsOnboardingPage />} />
+        <Route path="/onboarding/availability" element={<AvailabilityOnboardingPage />} />
+        <Route path="/plans" element={<MyPlansPage />} />
+        <Route path="/chats" element={<ChatsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/edit" element={<EditProfilePage />} />
+        <Route path="/a/:slug" element={<PublicActivityPage />} />
+        <Route path="/groups/:id" element={<GroupPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
     </Routes>
   );
 

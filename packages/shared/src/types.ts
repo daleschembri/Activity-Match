@@ -80,7 +80,8 @@ export interface ActivityDetail extends ActivitySummary {
   acceptance_mode: AcceptanceMode;
   visibility: Visibility;
   public_slug: string;
-  participants?: Array<Pick<UserProfile, "id" | "display_name" | "avatar_ref">>;
+  host: Pick<UserProfile, "id" | "display_name" | "avatar_ref" | "bio">;
+  participants?: Array<Pick<UserProfile, "id" | "display_name" | "avatar_ref"> & { is_host?: boolean }>;
   participant_count_visible: number;
   viewer_role: "anonymous" | "viewer" | "requester" | "participant" | "host";
   viewer_join_request_id?: string;

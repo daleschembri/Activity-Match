@@ -8,12 +8,23 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   .material-symbols-outlined {
     font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   }
 
   .btn-press:active {
-    transform: scale(0.98);
+    transform: scale(0.96);
   }
 
   .safe-area-pb {

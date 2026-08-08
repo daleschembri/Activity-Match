@@ -22,7 +22,7 @@ export function PrimaryButton({
 }: PrimaryButtonProps) {
   return (
     <button
-      className={`btn-press rounded-xl px-5 py-3.5 text-label-bold font-bold transition-colors disabled:opacity-50 min-h-[48px] ${
+      className={`btn-press rounded-xl px-5 py-3.5 text-label-bold font-bold transition-all duration-200 disabled:opacity-50 min-h-[48px] active:scale-[0.97] ${
         variants[variant]
       } ${fullWidth ? "w-full" : ""} ${className}`}
       {...props}

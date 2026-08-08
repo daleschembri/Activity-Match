@@ -16,6 +16,7 @@
     "@activity-match/ui": "*",
     "@supabase/supabase-js": "^2.49.1",
     "@tanstack/react-query": "^5.67.2",
+    "framer-motion": "^13.0.0",
     "leaflet": "^1.9.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

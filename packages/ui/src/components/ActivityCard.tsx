@@ -7,9 +7,10 @@ interface ActivityCardProps {
   onOpen?: () => void;
   actions?: ReactNode;
   variant?: "compact" | "hero";
+  roleLabel?: string;
 }
 
-export function ActivityCard({ activity, onOpen, actions, variant = "compact" }: ActivityCardProps) {
+export function ActivityCard({ activity, onOpen, actions, variant = "compact", roleLabel }: ActivityCardProps) {
   const when = activity.starts_at
     ? new Date(activity.starts_at).toLocaleString(undefined, {
         weekday: "short",
@@ -53,13 +54,18 @@ export function ActivityCard({ activity, onOpen, actions, variant = "compact" }:
       )}
       <button type="button" onClick={onOpen} className="w-full text-left p-4 space-y-3">
         <div className="flex items-start justify-between gap-3">
-          <div>
+          <div className="min-w-0">
             {!isHero && (
               <p className="text-label-sm uppercase text-on-surface-variant tracking-wide">
                 {activity.category.name} · {activity.listing_type}
               </p>
             )}
             <h2 className="text-headline-md font-bold mt-1">{activity.title}</h2>
+            {roleLabel && (
+              <span className="inline-block mt-1.5 text-label-sm font-label-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">
+                {roleLabel}
+              </span>
+            )}
           </div>
           {activity.cost_amount > 0 ? (
             <span className="text-label-bold text-primary-container bg-primary-fixed px-2 py-1 rounded-lg">
