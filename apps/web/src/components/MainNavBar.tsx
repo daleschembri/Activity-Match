@@ -11,6 +11,9 @@ export function MainNavBar() {
     queryKey: ["notifications-unread"],
     queryFn: () => api.getUnreadNotificationCount(),
     refetchInterval: 30_000,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
+    staleTime: 0,
     enabled: isMainNavRoute(location.pathname),
   });
 
@@ -18,6 +21,8 @@ export function MainNavBar() {
 
   const items = mainNavItems.map((item) => ({
     ...item,
+    icon:
+      item.to === "/notifications" && unreadCount > 0 ? "notifications_active" : item.icon,
     badge: item.to === "/notifications" ? unreadCount : undefined,
   }));
 
