@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Interests Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e5e2e0",
+                    "on-surface": "#1c1c1a",
+                    "primary": "#004c22",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#663500",
+                    "surface-dim": "#dcd9d7",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#ffb77d",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f6f3f1",
+                    "primary-container": "#166534",
+                    "on-primary-fixed": "#00210b",
+                    "inverse-primary": "#8bd79b",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#1f6c3a",
+                    "surface": "#fcf9f6",
+                    "on-tertiary-container": "#ffbfc6",
+                    "surface-container": "#f0edeb",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#fe932c",
+                    "on-background": "#1c1c1a",
+                    "on-surface-variant": "#404940",
+                    "on-secondary-fixed-variant": "#6e3900",
+                    "surface-container-high": "#ebe8e5",
+                    "on-tertiary-fixed": "#3f0112",
+                    "outline-variant": "#bfc9bd",
+                    "tertiary": "#722736",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed": "#ffd9dd",
+                    "on-primary-container": "#93e0a2",
+                    "tertiary-container": "#8f3e4c",
+                    "secondary-fixed": "#ffdcc3",
+                    "inverse-on-surface": "#f3f0ee",
+                    "surface-variant": "#e5e2e0",
+                    "on-secondary-fixed": "#2f1500",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#ffb2bb",
+                    "background": "#fcf9f6",
+                    "primary-fixed": "#a6f4b5",
+                    "on-primary-fixed-variant": "#005226",
+                    "outline": "#707a6f",
+                    "secondary": "#904d00",
+                    "primary-fixed-dim": "#8bd79b",
+                    "surface-bright": "#fcf9f6",
+                    "on-tertiary-fixed-variant": "#792d3b",
+                    "inverse-surface": "#31302f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "xs": "4px",
+                    "margin-mobile": "20px",
+                    "md": "16px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Hanken Grotesk"],
+                    "headline-xl": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "label-bold": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-xl": ["40px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .interest-tile {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .interest-tile:active {
+            transform: scale(0.96);
+        }
+        
+        .interest-tile.selected {
+            border-color: theme('colors.primary');
+            background-color: theme('colors.primary-container');
+            color: theme('colors.on-primary-container');
+        }
+        
+        .interest-tile.selected .icon-container {
+            color: theme('colors.primary');
+            background-color: theme('colors.on-primary');
+        }
+
+        .interest-tile.selected .check-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .check-icon {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col font-body-md">
+<!-- Top Navigation / Progress Indicator -->
+<header class="w-full px-margin-mobile pt-lg pb-sm sticky top-0 bg-background/90 backdrop-blur-md z-10 flex items-center justify-between">
+<button class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+<div class="w-8 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+</div>
+<div class="w-11 h-11"></div> <!-- Spacer for balance -->
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col px-margin-mobile pt-sm pb-32">
+<div class="mb-xl">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background mb-sm">What do you enjoy?</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Select a few activities to help us find the right plans for you.</p>
+</div>
+<!-- Bento Grid for Interests -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-md">
+<!-- Tile 1 -->
+<button class="interest-tile group relative flex flex-col items-center justify-center p-lg rounded-xl border-2 border-surface-container bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] aspect-square text-left w-full h-full selected">
+<div class="absolute top-sm right-sm w-6 h-6 rounded-full bg-primary flex items-center justify-center check-icon">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold" data-icon="check">check</span>
+</div>
+<div class="icon-container w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-md text-on-surface-variant group-hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[32px]" data-icon="sports_tennis" data-weight="fill" style="font-variation-settings: 'FILL' 1;">sports_tennis</span>
+</div>
+<span class="font-label-bold text-label-bold text-center w-full">Padel</span>
+</button>
+<!-- Tile 2 -->
+<button class="interest-tile group relative flex flex-col items-center justify-center p-lg rounded-xl border-2 border-surface-container bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] aspect-square text-left w-full h-full">
+<div class="absolute top-sm right-sm w-6 h-6 rounded-full bg-primary flex items-center justify-center check-icon">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold" data-icon="check">check</span>
+</div>
+<div class="icon-container w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-md text-on-surface-variant group-hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[32px]" data-icon="sports_soccer">sports_soccer</span>
+</div>
+<span class="font-label-bold text-label-bold text-center w-full">Football</span>
+</button>
+<!-- Tile 3 -->
+<button class="interest-tile group relative flex flex-col items-center justify-center p-lg rounded-xl border-2 border-surface-container bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] aspect-square text-left w-full h-full">
+<div class="absolute top-sm right-sm w-6 h-6 rounded-full bg-primary flex items-center justify-center check-icon">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold" data-icon="check">check</span>
+</div>
+<div class="icon-container w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-md text-on-surface-variant group-hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[32px]" data-icon="extension">extension</span>
+</div>
+<span class="font-label-bold text-label-bold text-center w-full">Board games</span>
+</button>
+<!-- Tile 4 -->
+<button class="interest-tile group relative flex flex-col items-center justify-center p-lg rounded-xl border-2 border-surface-container bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] aspect-square text-left w-full h-full selected">
+<div class="absolute top-sm right-sm w-6 h-6 rounded-full bg-primary flex items-center justify-center check-icon">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold" data-icon="check">check</span>
+</div>
+<div class="icon-container w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-md text-on-surface-variant group-hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[32px]" data-icon="hiking" data-weight="fill" style="font-variation-settings: 'FILL' 1;">hiking</span>
+</div>
+<span class="font-label-bold text-label-bold text-center w-full">Hiking</span>
+</button>
+<!-- Tile 5 -->
+<button class="interest-tile group relative flex flex-col items-center justify-center p-lg rounded-xl border-2 border-surface-container bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] aspect-square text-left w-full h-full">
+<div class="absolute top-sm right-sm w-6 h-6 rounded-full bg-primary flex items-center justify-center check-icon">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold" data-icon="check">check</span>
+</div>
+<div class="icon-container w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-md text-on-surface-variant group-hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[32px]" data-icon="movie">movie</span>
+</div>
+<span class="font-label-bold text-label-bold text-center w-full">Cinema</span>
+</button>
+<!-- Tile 6 -->
+<button class="interest-tile group relative flex flex-col items-center justify-center p-lg rounded-xl border-2 border-surface-container bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] aspect-square text-left w-full h-full">
+<div class="absolute top-sm right-sm w-6 h-6 rounded-full bg-primary flex items-center justify-center check-icon">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold" data-icon="check">check</span>
+</div>
+<div class="icon-container w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-md text-on-surface-variant group-hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[32px]" data-icon="directions_run">directions_run</span>
+</div>
+<span class="font-label-bold text-label-bold text-center w-full">Running</span>
+</button>
+<!-- Tile 7 -->
+<button class="interest-tile group relative flex flex-col items-center justify-center p-lg rounded-xl border-2 border-surface-container bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] aspect-square text-left w-full h-full">
+<div class="absolute top-sm right-sm w-6 h-6 rounded-full bg-primary flex items-center justify-center check-icon">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold" data-icon="check">check</span>
+</div>
+<div class="icon-container w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-md text-on-surface-variant group-hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[32px]" data-icon="photo_camera">photo_camera</span>
+</div>
+<span class="font-label-bold text-label-bold text-center w-full">Photography</span>
+</button>
+<!-- Tile 8 -->
+<button class="interest-tile group relative flex flex-col items-center justify-center p-lg rounded-xl border-2 border-surface-container bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] aspect-square text-left w-full h-full selected">
+<div class="absolute top-sm right-sm w-6 h-6 rounded-full bg-primary flex items-center justify-center check-icon">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold" data-icon="check">check</span>
+</div>
+<div class="icon-container w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-md text-on-surface-variant group-hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[32px]" data-icon="restaurant" data-weight="fill" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<span class="font-label-bold text-label-bold text-center w-full">Food &amp; Drink</span>
+</button>
+<!-- Tile 9 -->
+<button class="interest-tile group relative flex flex-col items-center justify-center p-lg rounded-xl border-2 border-surface-container bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] aspect-square text-left w-full h-full col-span-2 md:col-span-1">
+<div class="absolute top-sm right-sm w-6 h-6 rounded-full bg-primary flex items-center justify-center check-icon">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold" data-icon="check">check</span>
+</div>
+<div class="icon-container w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-md text-on-surface-variant group-hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[32px]" data-icon="terrain">terrain</span>
+</div>
+<span class="font-label-bold text-label-bold text-center w-full">Climbing</span>
+</button>
+</div>
+</main>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-0 left-0 w-full p-margin-mobile bg-gradient-to-t from-background via-background to-transparent pb-safe">
+<button class="w-full bg-primary text-on-primary font-label-bold text-label-bold py-4 rounded-xl flex items-center justify-center shadow-[0_4px_12px_rgba(0,76,34,0.2)] hover:bg-primary-container transition-colors active:scale-95 duration-100">
+            Continue (3 selected)
+        </button>
+</div>
+<script>
+        // Simple toggle logic for demonstration
+        document.querySelectorAll('.interest-tile').forEach(tile => {
+            tile.addEventListener('click', () => {
+                tile.classList.toggle('selected');
+                const icon = tile.querySelector('.icon-container .material-symbols-outlined');
+                
+                // Toggle fill state for selected items
+                if(tile.classList.contains('selected')){
+                     icon.style.fontVariationSettings = "'FILL' 1";
+                } else {
+                     icon.style.fontVariationSettings = "'FILL' 0";
+                }
+
+                // Update button text logic (mock)
+                const selectedCount = document.querySelectorAll('.interest-tile.selected').length;
+                const btn = document.querySelector('.fixed.bottom-0 button');
+                if(selectedCount > 0) {
+                    btn.textContent = `Continue (${selectedCount} selected)`;
+                    btn.style.opacity = '1';
+                    btn.disabled = false;
+                } else {
+                    btn.textContent = 'Select at least one';
+                    btn.style.opacity = '0.5';
+                    btn.disabled = true;
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Discover Activities</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#31302f",
+                        "surface-container-low": "#f6f3f1",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffbfc6",
+                        "on-tertiary-fixed-variant": "#792d3b",
+                        "on-surface": "#1c1c1a",
+                        "surface-container-highest": "#e5e2e0",
+                        "on-secondary-container": "#663500",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#6e3900",
+                        "primary-fixed": "#a6f4b5",
+                        "surface-container": "#f0edeb",
+                        "primary-fixed-dim": "#8bd79b",
+                        "secondary": "#904d00",
+                        "outline-variant": "#bfc9bd",
+                        "surface-variant": "#e5e2e0",
+                        "surface": "#fcf9f6",
+                        "on-primary-container": "#93e0a2",
+                        "surface-bright": "#fcf9f6",
+                        "on-secondary-fixed": "#2f1500",
+                        "outline": "#707a6f",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#166534",
+                        "surface-dim": "#dcd9d7",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "secondary-fixed": "#ffdcc3",
+                        "on-primary": "#ffffff",
+                        "background": "#fcf9f6",
+                        "surface-container-high": "#ebe8e5",
+                        "surface-tint": "#1f6c3a",
+                        "inverse-on-surface": "#f3f0ee",
+                        "tertiary": "#722736",
+                        "on-primary-fixed": "#00210b",
+                        "tertiary-container": "#8f3e4c",
+                        "on-surface-variant": "#404940",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "tertiary-fixed": "#ffd9dd",
+                        "inverse-primary": "#8bd79b",
+                        "on-primary-fixed-variant": "#005226",
+                        "on-background": "#1c1c1a",
+                        "on-tertiary-fixed": "#3f0112",
+                        "on-secondary": "#ffffff",
+                        "primary": "#004c22",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#fe932c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "margin-mobile": "20px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-bold": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "headline-xl": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            /* Warm off-white #FAF8F4 approx via bg-surface */
+            background-color: theme('colors.surface');
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Hide scrollbar for clean card stack */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Interactive touch feeling */
+        .btn-press {
+            transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-press:active {
+            transform: scale(0.96);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface h-screen flex flex-col overflow-hidden relative select-none">
+<!-- TopAppBar from JSON -->
+<!-- active nav mapping: Discover (Home) -->
+<header class="w-full top-0 sticky bg-surface dark:bg-background flex justify-between items-center px-margin-mobile py-sm z-50">
+<!-- Leading Avatar -->
+<button class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high flex items-center justify-center btn-press">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A close-up, softly lit portrait of an adventurous individual wearing practical outdoor gear, smiling warmly. Natural daylight, shallow depth of field, highlighting reliability and active lifestyle in a modern, tactile aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMBD8YdVKWv0QXKF6h5ALLIzSz4ImEWmvgPh_wq3M4PPgnhhDSdWjY_G0hZm27C5Y4ZcDXG3Zrk2Wj_jjnt2Hg7ALywzeiy2ztFvia_Bm4G5JIpf7N639641sBrfom6atjx70BRVhqEJAa_5qktdTOlmExQokTxU2TfRXzt_Gx9qTQSRuWirriL-itM0fuasKLdE2q26zO4uL-ROrYpbt_Uy4_3wsldkk0jq4EFanETX0OoqH1c2x_DA"/>
+</button>
+<!-- Headline (Discover is active context) -->
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-on-primary-container">Discover</h1>
+<!-- Trailing Actions (Filter & Map Toggle per prompt) -->
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors w-10 h-10 rounded-full flex items-center justify-center btn-press">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors w-10 h-10 rounded-full flex items-center justify-center btn-press">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas (Card Stack) -->
+<main class="flex-1 relative w-full overflow-hidden flex flex-col items-center justify-center pb-24 px-4">
+<!-- Background Stack Indicator (Edge of next card) -->
+<div class="absolute w-full max-w-md px-8 top-12 z-0 transform scale-95 opacity-50 translate-y-8">
+<div class="bg-surface-container-low w-full h-[574px] rounded-[24px] shadow-sm border border-outline-variant/20"></div>
+</div>
+<!-- Foreground Active Card -->
+<div class="relative z-10 w-full max-w-md bg-surface-container-lowest rounded-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col h-[601px] border border-surface-container max-h-[600px]">
+<!-- Hero Image Header -->
+<div class="relative h-[45%] w-full bg-surface-container-high shrink-0">
+<img alt="Sunset walk location" class="w-full h-full object-cover" data-alt="A breathtaking view of Dingli Cliffs at golden hour, capturing the rugged coastline of Malta bathed in warm, soft sunlight. The scene suggests a tranquil yet adventurous late afternoon walk, reflecting a premium, tactile, and naturalistic style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIvC2N4meV1sVe9rOOUi-63ejv50IjdN32aP0iwcIy4GjHRy64hosxll1xpfGIoLv-SQIA7AYCCIs6epE_16y8ybXTRTmDxwk2gKsVOb8ky-gDW368I37vAfYtuFDfjXlpwyAyjfhXttLV1fyqIvK8Cdky0EbiLRBvG2wr2IXSWfRhMLTHKTw33M25HQOUr2gFMfEuwyFuc-fvpg1LCfhJGfk4fxHFYyUTJVubXKWSM8TMiFNFYHlleQ"/>
+<!-- Status Badges Overlay -->
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="px-3 py-1 bg-primary-container text-on-primary-container font-label-bold text-label-sm rounded-full bg-opacity-90 backdrop-blur-sm shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] leading-none" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Confirmed
+                    </span>
+<span class="px-3 py-1 bg-surface-container-highest text-on-surface font-label-bold text-label-sm rounded-full bg-opacity-90 backdrop-blur-sm shadow-sm">
+                        One-off
+                    </span>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-lg flex flex-col flex-1 bg-surface-container-lowest">
+<!-- Title & Meta -->
+<div class="mb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Sunset walk and coffee</h2>
+<div class="flex flex-col gap-1 text-on-surface-variant font-body-md text-body-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+<span>Friday, 18:30</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Dingli Cliffs, 12 min away</span>
+</div>
+</div>
+</div>
+<!-- Capacity Progress (4 of 8 spaces) -->
+<div class="mb-5">
+<div class="flex justify-between items-end mb-2">
+<span class="font-label-bold text-label-bold text-on-surface">Capacity</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4 of 8 spaces filled</span>
+</div>
+<div class="flex gap-1 h-2 w-full">
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-surface-variant rounded-full"></div>
+<div class="flex-1 bg-surface-variant rounded-full"></div>
+<div class="flex-1 bg-surface-variant rounded-full"></div>
+<div class="flex-1 bg-surface-variant rounded-full"></div>
+</div>
+</div>
+<!-- Tags -->
+<div class="flex flex-wrap gap-2 mb-auto">
+<span class="px-3 py-1 bg-secondary/10 text-secondary font-label-sm text-label-sm rounded-full">Beginner-friendly</span>
+<span class="px-3 py-1 bg-primary/10 text-primary font-label-sm text-label-sm rounded-full">Free</span>
+</div>
+<hr class="border-outline-variant/30 my-4"/>
+<!-- Host Row -->
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant/20">
+<img alt="Host Sarah" class="w-full h-full object-cover" data-alt="A friendly, approachable portrait of Sarah, a community host, smiling softly outdoors. Natural lighting highlights her genuine expression, conveying trust and approachability in a clean, high-contrast visual style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBv707VnnGOaB4n3X6wNRD3Nkliz1S727QSK0icEolKd9GlHB2i7Vktsc0m68Rrc18nsbiJGoPKC9gd7pdKo67D4qZPKxBOriRd9-ayP_VCzcxZLvF-J9AAI0MZZ1-LC9PbDIT5ndF2Rv5gjl2NvIU9GZI6LPA2CtZHR8wtCzMOAyUbVwevDAYawn3SPrG9I4RGWCYKYOpvzNv-xBkBXy756ocf4uqbl23OzCHU7uavfvkj69uZqJ5cng"/>
+</div>
+<div>
+<p class="font-label-bold text-label-bold text-on-surface">Sarah</p>
+<p class="font-label-sm text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                                High Reliability
+                            </p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Action Buttons (Skip, Save, Interested) -->
+<div class="w-full max-w-md flex justify-center gap-6 mt-6 z-20">
+<!-- Skip -->
+<button class="w-14 h-14 rounded-full bg-surface-container-highest border border-outline-variant text-on-surface-variant shadow-[0_4px_12px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center gap-1 btn-press hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<!-- Interested (Primary Action) -->
+<button class="w-16 h-16 rounded-full bg-primary text-on-primary shadow-[0_6px_16px_rgba(0,76,34,0.2)] flex flex-col items-center justify-center gap-1 btn-press hover:bg-primary-fixed-dim transition-colors scale-110">
+<span class="material-symbols-outlined text-[28px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+<!-- Save -->
+<button class="w-14 h-14 rounded-full bg-surface-container-lowest border border-outline-variant text-secondary shadow-[0_4px_12px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center gap-1 btn-press hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[24px]">bookmark_border</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar from JSON -->
+<!-- Responsive pivot: Render on mobile/md:hidden -->
+<nav class="md:hidden fixed bottom-0 w-full flex justify-around items-center px-4 pb-safe bg-surface dark:bg-inverse-surface h-20 shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-50">
+<!-- Discover (Active) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-label-bold text-label-bold after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 scale-90 transition-transform duration-200 w-16 h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="explore" data-weight="fill" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span>Discover</span>
+</a>
+<!-- My plans (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-lg w-16 h-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="event_note">event_note</span>
+<span>My plans</span>
+</a>
+<!-- Create (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-lg w-16 h-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="add_circle">add_circle</span>
+<span>Create</span>
+</a>
+<!-- Profile (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-lg w-16 h-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span>Profile</span>
+</a>
+</nav>
+<!-- Spacer for safe area on mobile if needed, usually handled by padding, adding empty div to ensure content isn't totally blocked on some devices -->
+<div class="h-safe md:hidden"></div>
+</body></html>

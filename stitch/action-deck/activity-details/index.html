@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Activity Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "inverse-surface": "#31302f",
+                "surface-container-low": "#f6f3f1",
+                "on-error": "#ffffff",
+                "on-tertiary-container": "#ffbfc6",
+                "on-tertiary-fixed-variant": "#792d3b",
+                "on-surface": "#1c1c1a",
+                "surface-container-highest": "#e5e2e0",
+                "on-secondary-container": "#663500",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-fixed-variant": "#6e3900",
+                "primary-fixed": "#a6f4b5",
+                "surface-container": "#f0edeb",
+                "primary-fixed-dim": "#8bd79b",
+                "secondary": "#904d00",
+                "outline-variant": "#bfc9bd",
+                "surface-variant": "#e5e2e0",
+                "surface": "#fcf9f6",
+                "on-primary-container": "#93e0a2",
+                "surface-bright": "#fcf9f6",
+                "on-secondary-fixed": "#2f1500",
+                "outline": "#707a6f",
+                "on-tertiary": "#ffffff",
+                "on-error-container": "#93000a",
+                "error-container": "#ffdad6",
+                "primary-container": "#166534",
+                "surface-dim": "#dcd9d7",
+                "secondary-fixed-dim": "#ffb77d",
+                "secondary-fixed": "#ffdcc3",
+                "on-primary": "#ffffff",
+                "background": "#fcf9f6",
+                "surface-container-high": "#ebe8e5",
+                "surface-tint": "#1f6c3a",
+                "inverse-on-surface": "#f3f0ee",
+                "tertiary": "#722736",
+                "on-primary-fixed": "#00210b",
+                "tertiary-container": "#8f3e4c",
+                "on-surface-variant": "#404940",
+                "tertiary-fixed-dim": "#ffb2bb",
+                "tertiary-fixed": "#ffd9dd",
+                "inverse-primary": "#8bd79b",
+                "on-primary-fixed-variant": "#005226",
+                "on-background": "#1c1c1a",
+                "on-tertiary-fixed": "#3f0112",
+                "on-secondary": "#ffffff",
+                "primary": "#004c22",
+                "error": "#ba1a1a",
+                "secondary-container": "#fe932c"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "gutter": "16px",
+                "margin-mobile": "20px",
+                "sm": "8px",
+                "lg": "24px",
+                "base": "4px",
+                "md": "16px",
+                "xs": "4px",
+                "xl": "32px"
+        },
+        "fontFamily": {
+                "headline-lg-mobile": [
+                        "Hanken Grotesk"
+                ],
+                "body-md": [
+                        "Hanken Grotesk"
+                ],
+                "headline-md": [
+                        "Hanken Grotesk"
+                ],
+                "body-lg": [
+                        "Hanken Grotesk"
+                ],
+                "label-sm": [
+                        "Hanken Grotesk"
+                ],
+                "headline-xl": [
+                        "Hanken Grotesk"
+                ],
+                "headline-lg": [
+                        "Hanken Grotesk"
+                ],
+                "label-bold": [
+                        "Hanken Grotesk"
+                ]
+        },
+        "fontSize": {
+                "headline-lg-mobile": [
+                        "28px",
+                        {
+                                "lineHeight": "32px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-md": [
+                        "20px",
+                        {
+                                "lineHeight": "28px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.04em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-xl": [
+                        "40px",
+                        {
+                                "lineHeight": "44px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "36px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "label-bold": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "700"
+                        }
+                ]
+        }
+},
+    },
+  }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased min-h-screen pb-24 md:pb-32">
+<!-- Top Navigation (Transactional intent, suppressed nav shell, providing simple back action) -->
+<header class="w-full top-0 sticky bg-surface z-40 flex justify-between items-center px-margin-mobile py-sm h-[64px] border-b border-surface-container-high md:px-lg">
+<button aria-label="Go back" class="p-2 -ml-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<div class="flex gap-2">
+<button aria-label="More options" class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface">more_vert</span>
+</button>
+</div>
+</header>
+<main class="max-w-3xl mx-auto px-margin-mobile md:px-lg pt-lg">
+<!-- Hero Section -->
+<section class="mb-xl">
+<div class="flex gap-2 mb-4">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-label-bold text-label-bold">Walking</span>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-label-bold">Half full</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg mb-4 text-on-background">Sunset walk and coffee</h1>
+<div class="flex items-center gap-2 text-on-surface-variant mb-6">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span class="font-body-md text-body-md">Sat, Oct 14 • 4:30 PM</span>
+</div>
+<!-- Capacity Bar -->
+<div class="bg-surface-container rounded-lg p-4 mb-2">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-bold text-label-bold text-on-surface">Capacity</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4 of 8 spaces filled</span>
+</div>
+<div class="flex gap-1 h-3 w-full">
+<div class="flex-1 bg-primary rounded-l-full"></div>
+<div class="flex-1 bg-primary"></div>
+<div class="flex-1 bg-primary"></div>
+<div class="flex-1 bg-primary"></div>
+<div class="flex-1 bg-surface-container-highest"></div>
+<div class="flex-1 bg-surface-container-highest"></div>
+<div class="flex-1 bg-surface-container-highest"></div>
+<div class="flex-1 bg-surface-container-highest rounded-r-full"></div>
+</div>
+</div>
+</section>
+<!-- Description -->
+<section class="mb-xl">
+<h2 class="font-headline-md text-headline-md mb-4 text-on-background">About this activity</h2>
+<p class="font-body-md text-body-md text-on-surface-variant whitespace-pre-line">
+                Join us for a relaxed evening stroll through the park just as the sun begins to set. We'll enjoy the crisp evening air, take some photos, and finish up at a local cafe for warm drinks and conversation. 
+                
+                The pace will be easy-going, perfect for unwinding after a long week.
+            </p>
+</section>
+<!-- Meeting Point Map -->
+<section class="mb-xl">
+<h2 class="font-headline-md text-headline-md mb-4 text-on-background">Meeting point</h2>
+<div class="bg-surface-container rounded-xl overflow-hidden mb-3 h-48 w-full relative">
+<img class="w-full h-full object-cover" data-alt="A detailed map view showing a green park area with winding paths in the center of a city. The map uses a minimalist, modern light-mode aesthetic with soft grays, off-whites, and subtle muted greens for the park space. A distinct deep green pin marks the meeting location near the park entrance. The overall look is clean, professional, and tactile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5BwxpytmMxAfjJWa8I8xqEYiRahrrZ7LkF6ETcjk6lNl0WTDLzrjvEHUMiBxq5P1UOJKyoKw4LWCpmpmgtWFWFWqY19TKnEEJJdk3p8K3LRoS9K6FPTUbJc-Gq-owBdDAbVPEsKBQ76883TfKJ7r8937wt9N4iFezqB0u_C6FThKLIDauOkRsKaJTiomnRjXkdIQveOjX9g5wpmYmrzs5LyRG8Xysw7DQcwX7ckkV68mGQtRbmIbPOQ"/>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">location_on</span>
+<div>
+<h3 class="font-label-bold text-label-bold text-on-surface">North Gate, City Park</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Meet by the main fountain entrance on 4th Street.</p>
+</div>
+</div>
+</section>
+<!-- What to Bring -->
+<section class="mb-xl">
+<h2 class="font-headline-md text-headline-md mb-4 text-on-background">What to bring</h2>
+<ul class="flex flex-col gap-3">
+<li class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">water_drop</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Water bottle</span>
+</li>
+<li class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">photo_camera</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Camera (optional)</span>
+</li>
+<li class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">apparel</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Light jacket for the evening</span>
+</li>
+</ul>
+</section>
+<!-- Participants -->
+<section class="mb-xl">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-headline-md text-headline-md text-on-background">Participants (4/8)</h2>
+</div>
+<div class="flex flex-wrap gap-2">
+<!-- Host -->
+<div class="relative w-12 h-12 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A close-up portrait of a friendly young woman with curly hair, smiling warmly in natural daylight. She is wearing a simple casual sweater. The lighting is soft and natural, emphasizing a welcoming, grounded personality typical of a community group host. The background is a soft, out-of-focus outdoor setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV2_tfju78rSYcPUew6IuEga6pcgGokWL-Y1TY4Shwb58osz38UqVgtkrUpgl7rDjXdbgWcqZD5Lu6QJfH_swIzNByKpq68E7fTL9UxHJVE272akmrvIulirtouNJjnj69Gd0PSOfYACsBhZDpC8JfZFlcEo0uPJxJ65RNUB5O1T_fja-XHxQiKRHCpXSF7Xt1-ldyKec6n66LB0DnOAFcP3U8-DvtvUumwsm0AqPT3teGUXxOHtHosg"/>
+</div>
+<!-- Participants -->
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A casual portrait of a man in his thirties wearing a beanie and a denim jacket, standing outside in a park setting. He has a slight smile. The image has a clean, natural light-mode aesthetic with soft, neutral tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_oLY3kogr6oztEV2YGHPKXYd3_QKezf4r-XGOPw6PNpydnNwBfqcOqjw-d583IneVO_dunurFndoFhket0a5lWpFP6aJ-32ius99Wg0GuQ_TaxCXdFc6yGoRf42UHrFvvm-zIS-Kl5KVTMvXqARYSSpVX1dj8urPs6IF0qlsFKXgpexMhsbuDCN899wccSwwwjh9xb4DtQ8kgRq61jZALQY9nrUTvbtOY-JXJp4tD1XgdNaNrqnhHyg"/>
+</div>
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A candid profile shot of a person looking slightly off-camera, wearing glasses and a light-colored scarf. The background is softly blurred greenery. The lighting is bright and clean, fitting a modern, friendly app aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAK9bQSc9V6QhAK0OAJPtSy3jMzblcxHrJLi2T2QJiuvLlniVffRMWOq3AsmSjdazI3zmxOmZNwQ5zcBlqXlybbyiz93yg4habEZCU1w33r1fR8fX3RVfvRY1_2LUntx5DX-_r6gqZ2ON3sdUo3U5gAvu2rU-Jv91POEpc9YGXFQDq4H-BHPgvDxUb4sSP1A8slhICnnMath-t0IXJU4kMd2i4Hx525NrYEv9Yj8XmXarT_V5wpR_aZHA"/>
+</div>
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A portrait of an older gentleman with silver hair, smiling genuinely towards the camera. He is wearing a practical outdoor jacket. The photo is well-lit with natural sunlight, portraying a sense of reliability and community." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBk0CAIoxfZV0FNCSnGymltpb8vtaxNK5STQsATAhxCoafc99OLHfRY85l3RFQzQEo3J9qg_BkEl_R2Pu1lutb9QwCCuyrohoqZsy1RLXdvbiTrpVYcyy377nWjiV0q4RPp98-zIBpiGXRKBLff1CNksdPwDkH-IikGhRmvo8f9mYBjaZXd8fTz5lCtRj2RdNOICDZCymIrIwbWUuCcW12byZZMTe20s1N-Ts1UF_9t-1-CxdJPO8eZbA"/>
+</div>
+<!-- Empty Slots -->
+<div class="w-12 h-12 rounded-full border border-dashed border-outline-variant flex items-center justify-center"></div>
+<div class="w-12 h-12 rounded-full border border-dashed border-outline-variant flex items-center justify-center"></div>
+<div class="w-12 h-12 rounded-full border border-dashed border-outline-variant flex items-center justify-center"></div>
+<div class="w-12 h-12 rounded-full border border-dashed border-outline-variant flex items-center justify-center"></div>
+</div>
+</section>
+</main>
+<!-- Sticky Bottom Action Bar -->
+<div class="fixed bottom-0 w-full bg-surface border-t border-surface-container-high px-margin-mobile py-4 shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-50 md:px-lg flex items-center gap-4 pb-safe">
+<button class="flex-1 bg-primary text-on-primary font-label-bold text-label-bold h-12 rounded-full flex items-center justify-center shadow-sm active:scale-[0.98] transition-transform">
+            Request a place
+        </button>
+<button class="w-12 h-12 rounded-full border-2 border-surface-container-high flex items-center justify-center hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</body></html>

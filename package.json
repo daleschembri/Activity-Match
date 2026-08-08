@@ -1,0 +1,21 @@
+{
+  "name": "activity-match",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@activity-match/web",
+    "dev:clean": "npm run dev:clean --workspace=@activity-match/web",
+    "start": "npm run dev",
+    "build": "npm run build --workspaces --if-present",
+    "preview": "npm run preview --workspace=@activity-match/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

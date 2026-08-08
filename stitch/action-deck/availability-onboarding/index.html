@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Availability Setup</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e5e2e0",
+                        "on-surface": "#1c1c1a",
+                        "primary": "#004c22",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#663500",
+                        "surface-dim": "#dcd9d7",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f6f3f1",
+                        "primary-container": "#166534",
+                        "on-primary-fixed": "#00210b",
+                        "inverse-primary": "#8bd79b",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#1f6c3a",
+                        "surface": "#fcf9f6",
+                        "on-tertiary-container": "#ffbfc6",
+                        "surface-container": "#f0edeb",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#fe932c",
+                        "on-background": "#1c1c1a",
+                        "on-surface-variant": "#404940",
+                        "on-secondary-fixed-variant": "#6e3900",
+                        "surface-container-high": "#ebe8e5",
+                        "on-tertiary-fixed": "#3f0112",
+                        "outline-variant": "#bfc9bd",
+                        "tertiary": "#722736",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffd9dd",
+                        "on-primary-container": "#93e0a2",
+                        "tertiary-container": "#8f3e4c",
+                        "secondary-fixed": "#ffdcc3",
+                        "inverse-on-surface": "#f3f0ee",
+                        "surface-variant": "#e5e2e0",
+                        "on-secondary-fixed": "#2f1500",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "background": "#fcf9f6",
+                        "primary-fixed": "#a6f4b5",
+                        "on-primary-fixed-variant": "#005226",
+                        "outline": "#707a6f",
+                        "secondary": "#904d00",
+                        "primary-fixed-dim": "#8bd79b",
+                        "surface-bright": "#fcf9f6",
+                        "on-tertiary-fixed-variant": "#792d3b",
+                        "inverse-surface": "#31302f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin-mobile": "20px",
+                        "md": "16px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-bold": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-xl": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .slot-active {
+            background-color: #004c22 !important;
+            color: #ffffff !important;
+            border-color: #004c22 !important;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #004c22;
+            cursor: pointer;
+            margin-top: -10px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #bfc9bd;
+            border-radius: 2px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-background text-on-background flat no shadows flex justify-between items-center px-margin-mobile py-sm z-50">
+<div class="flex items-center gap-sm">
+<button class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary">Availability</h1>
+<div class="w-11 h-11 flex items-center justify-center">
+<span class="font-label-bold text-label-bold text-outline">3 of 3</span>
+</div>
+</header>
+<main class="flex-grow px-margin-mobile pb-[100px] pt-md md:px-lg max-w-2xl mx-auto w-full">
+<div class="mb-xl">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-xs">When are you free?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Tap the slots that work best for your regular walks.</p>
+</div>
+<!-- Weekly Grid -->
+<section class="mb-xl">
+<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-xs sm:gap-sm bg-surface-container p-sm rounded-xl">
+<!-- Headers -->
+<div></div>
+<div class="text-center font-label-sm text-label-sm text-on-surface-variant pb-xs">Morn</div>
+<div class="text-center font-label-sm text-label-sm text-on-surface-variant pb-xs">Aft</div>
+<div class="text-center font-label-sm text-label-sm text-on-surface-variant pb-xs">Eve</div>
+<!-- Monday -->
+<div class="flex items-center justify-end pr-sm font-label-bold text-label-bold text-on-surface">Mon</div>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm slot-active"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<!-- Tuesday -->
+<div class="flex items-center justify-end pr-sm font-label-bold text-label-bold text-on-surface">Tue</div>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<!-- Wednesday -->
+<div class="flex items-center justify-end pr-sm font-label-bold text-label-bold text-on-surface">Wed</div>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm slot-active"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm slot-active"></button>
+<!-- Thursday -->
+<div class="flex items-center justify-end pr-sm font-label-bold text-label-bold text-on-surface">Thu</div>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<!-- Friday -->
+<div class="flex items-center justify-end pr-sm font-label-bold text-label-bold text-on-surface">Fri</div>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm slot-active"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<!-- Saturday -->
+<div class="flex items-center justify-end pr-sm font-label-bold text-label-bold text-on-surface">Sat</div>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm slot-active"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm slot-active"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm"></button>
+<!-- Sunday -->
+<div class="flex items-center justify-end pr-sm font-label-bold text-label-bold text-on-surface">Sun</div>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm slot-active"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm slot-active"></button>
+<button class="slot-btn h-12 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm slot-active"></button>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-sm text-center">Tap a slot to toggle availability.</p>
+</section>
+<!-- Travel Distance Slider -->
+<section class="bg-surface-container-low p-md rounded-xl border border-surface-variant">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">How far will you travel?</h3>
+<span class="font-label-bold text-label-bold text-primary bg-primary-container/10 px-sm py-xs rounded-full" id="sliderValue">20 mins</span>
+</div>
+<input class="w-full appearance-none bg-transparent" id="travelSlider" max="60" min="5" step="5" type="range" value="20"/>
+<div class="flex justify-between mt-sm font-label-sm text-label-sm text-outline">
+<span>5m</span>
+<span>60m</span>
+</div>
+</section>
+</main>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-0 w-full bg-surface border-t border-surface-variant px-margin-mobile py-md pb-safe z-40 flex justify-center">
+<button class="w-full max-w-2xl bg-primary text-on-primary font-label-bold text-label-bold h-12 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm active:scale-95 duration-100">
+            Finish
+        </button>
+</div>
+<script>
+        // Slot toggling
+        document.querySelectorAll('.slot-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('slot-active');
+            });
+        });
+
+        // Slider value update
+        const slider = document.getElementById('travelSlider');
+        const output = document.getElementById('sliderValue');
+        slider.oninput = function() {
+            output.innerHTML = this.value + ' mins';
+        }
+    </script>
+</body></html>

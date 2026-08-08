@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>No More Activities</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#fe932c",
+                        "surface-container-high": "#ebe8e5",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#8bd79b",
+                        "surface-bright": "#fcf9f6",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#00210b",
+                        "on-surface": "#1c1c1a",
+                        "on-secondary-container": "#663500",
+                        "outline": "#707a6f",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "inverse-primary": "#8bd79b",
+                        "surface-container-highest": "#e5e2e0",
+                        "background": "#fcf9f6",
+                        "primary-container": "#166534",
+                        "secondary-fixed": "#ffdcc3",
+                        "tertiary": "#722736",
+                        "on-tertiary-fixed": "#3f0112",
+                        "surface": "#fcf9f6",
+                        "on-tertiary-fixed-variant": "#792d3b",
+                        "surface-tint": "#1f6c3a",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f6f3f1",
+                        "primary-fixed": "#a6f4b5",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "primary": "#004c22",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "secondary": "#904d00",
+                        "inverse-on-surface": "#f3f0ee",
+                        "tertiary-fixed": "#ffd9dd",
+                        "inverse-surface": "#31302f",
+                        "on-secondary-fixed-variant": "#6e3900",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#005226",
+                        "on-tertiary-container": "#ffbfc6",
+                        "surface-variant": "#e5e2e0",
+                        "tertiary-container": "#8f3e4c",
+                        "surface-container": "#f0edeb",
+                        "on-surface-variant": "#404940",
+                        "surface-dim": "#dcd9d7",
+                        "error": "#ba1a1a",
+                        "on-background": "#1c1c1a",
+                        "outline-variant": "#bfc9bd",
+                        "on-primary-container": "#93e0a2",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#2f1500"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "margin-mobile": "20px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Hanken Grotesk"],
+                        "label-bold": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+<!-- Top App Bar - Semantic Intent: Discover (Active) -->
+<header class="w-full top-0 sticky bg-surface dark:bg-background flat no shadows flex justify-between items-center px-margin-mobile py-sm z-40 transition-colors duration-300 hidden md:flex">
+<div class="flex items-center gap-md">
+<!-- Brand Logo / Headline -->
+<h1 class="font-headline-lg text-headline-lg text-primary dark:text-on-primary-container">Discover</h1>
+</div>
+<!-- Navigation Cluster (Web only) -->
+<nav class="hidden md:flex gap-lg">
+<a class="text-primary dark:text-on-primary-container font-label-bold text-label-bold hover:bg-surface-container-high transition-colors px-md py-sm rounded-full flex flex-col items-center after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1" href="#">
+                Discover
+            </a>
+<a class="text-on-surface-variant dark:text-outline font-label-bold text-label-bold hover:bg-surface-container-high transition-colors px-md py-sm rounded-full" href="#">
+                My plans
+            </a>
+<a class="text-on-surface-variant dark:text-outline font-label-bold text-label-bold hover:bg-surface-container-high transition-colors px-md py-sm rounded-full" href="#">
+                Create
+            </a>
+<a class="text-on-surface-variant dark:text-outline font-label-bold text-label-bold hover:bg-surface-container-high transition-colors px-md py-sm rounded-full" href="#">
+                Profile
+            </a>
+</nav>
+<div class="flex items-center gap-md">
+<!-- Trailing Icon -->
+<button class="p-sm rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-100 flex items-center justify-center text-on-surface-variant dark:text-outline">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<!-- Leading Avatar (Repurposed for end of row here as it's typical for web nav) -->
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden border border-outline-variant shrink-0 cursor-pointer hover:opacity-90 transition-opacity">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A small, circular avatar portrait of a person outdoors. The portrait is high-quality, professional, and well-lit. The background features blurred, bright green foliage hinting at a natural environment. The person appears approachable and active, matching a lifestyle app aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo2V9wemkICPvwJw9WSGOd22AUBWwN-wxz9F6FXurMJFf67oZ9QZJ8RPCWom7PP9FzEmAosQfx7FRN99eXG3dpW-cZ0dR0hCevSzeiZxL2f480aOIsQxDk2XaalVtFILOrAwZuV1TWgZ_eusUh-wiDDYOGiHfwNXCzfCE9mKxmPeg23TO3BggQjxXk0-EQXtzmomBf0uDQc6W9S3OXKwVeViCtaghntZO4MuyruSS7-8p2eLlTHqUzsg"/>
+</div>
+</div>
+</header>
+<!-- Mobile Top App Bar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-background flat no shadows flex justify-between items-center px-margin-mobile py-sm z-40 transition-colors duration-300 md:hidden">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden border border-outline-variant shrink-0 cursor-pointer hover:opacity-90 transition-opacity">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A small, circular avatar portrait of a person outdoors. The portrait is high-quality, professional, and well-lit. The background features blurred, bright green foliage hinting at a natural environment. The person appears approachable and active, matching a lifestyle app aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpDnrPKdAT04eLatQZPDsuOwbbOMytYYusHwGlGvZ0QgudhIYmDmPoFHdd8T14l1YJFtdE6aaSE-7AIhnV_KCbIdtv-nG2TeK9pBxTRixk86bKnxvr6InNIlx28oHg_eSfgkla7xi5N59iY6F06Lgs29DuTR4_iEkFc-xwzj3J6HOqKLRUAiTfD_XIyXxgCTfHgYWT8lwbCydDbvO2d008QZ9akoFgRSX8WoPWKnBCRzF2XDTxk1bxUg"/>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-on-primary-container">Discover</h1>
+<button class="p-sm rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-100 flex items-center justify-center text-on-surface-variant dark:text-outline">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col items-center justify-center px-margin-mobile py-xl md:py-20 w-full max-w-2xl mx-auto">
+<div class="w-full bg-surface dark:bg-inverse-surface rounded-xl p-lg md:p-xl flex flex-col items-center text-center shadow-[0_8px_20px_rgba(0,0,0,0.04)] border border-surface-container">
+<!-- Icon State Indicator -->
+<div class="w-20 h-20 rounded-full bg-surface-container-low flex items-center justify-center mb-md border border-surface-container-highest">
+<span class="material-symbols-outlined text-4xl text-outline" data-icon="check_circle">check_circle</span>
+</div>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mb-sm">All caught up</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto mb-xl">
+                You've seen all activities for now. Adjust your preferences to find more, or start something new yourself.
+            </p>
+<!-- Actions Bento Layout -->
+<div class="w-full grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Primary Action (Full Width on mobile, spans 2 cols on md) -->
+<button class="md:col-span-2 w-full flex items-center justify-center gap-sm bg-primary text-on-primary py-md px-lg rounded-lg font-label-bold text-label-bold hover:bg-primary-container transition-all active:scale-[0.98] active:shadow-none shadow-[0_4px_12px_rgba(0,0,0,0.08)] group">
+<span class="material-symbols-outlined text-[20px]" data-icon="tune">tune</span>
+                    Widen filters
+                </button>
+<!-- Secondary Action 1 -->
+<button class="w-full flex flex-col items-center justify-center gap-xs bg-surface-bright border-[1.5px] border-outline text-on-surface py-md px-lg rounded-lg font-label-bold text-label-bold hover:bg-surface-container-low transition-all active:scale-[0.98] group">
+<span class="material-symbols-outlined text-[24px] text-outline group-hover:text-primary transition-colors" data-icon="notifications_active">notifications_active</span>
+                    Save an alert
+                </button>
+<!-- Secondary Action 2 -->
+<button class="w-full flex flex-col items-center justify-center gap-xs bg-surface-bright border-[1.5px] border-outline text-on-surface py-md px-lg rounded-lg font-label-bold text-label-bold hover:bg-surface-container-low transition-all active:scale-[0.98] group">
+<span class="material-symbols-outlined text-[24px] text-outline group-hover:text-primary transition-colors" data-icon="add_circle">add_circle</span>
+                    Create activity
+                </button>
+</div>
+</div>
+</main>
+<!-- Bottom Nav Bar (Mobile Only) - Semantic Intent: Discover (Active) -->
+<nav class="fixed bottom-0 w-full flex justify-around items-center px-4 pb-safe bg-surface dark:bg-inverse-surface shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-50 h-20 md:hidden">
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-label-bold text-label-bold after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 hover:bg-surface-container-low dark:hover:bg-surface-container-highest active:scale-90 transition-transform duration-200 p-sm rounded-lg" href="#">
+<span class="material-symbols-outlined mb-xs" data-icon="explore" data-weight="fill" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="font-label-sm text-label-sm">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest active:scale-90 transition-transform duration-200 p-sm rounded-lg" href="#">
+<span class="material-symbols-outlined mb-xs" data-icon="event_note">event_note</span>
+<span class="font-label-sm text-label-sm">My plans</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest active:scale-90 transition-transform duration-200 p-sm rounded-lg" href="#">
+<span class="material-symbols-outlined mb-xs" data-icon="add_circle">add_circle</span>
+<span class="font-label-sm text-label-sm">Create</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest active:scale-90 transition-transform duration-200 p-sm rounded-lg" href="#">
+<span class="material-symbols-outlined mb-xs" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Spacer for safe area at bottom on mobile -->
+<div class="h-20 md:h-0 w-full shrink-0"></div>
+</body></html>

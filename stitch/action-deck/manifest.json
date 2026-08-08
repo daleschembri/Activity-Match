@@ -1,0 +1,249 @@
+{
+  "project": {
+    "title": "Action Deck",
+    "id": "18213223677131290523"
+  },
+  "exportedAt": "2026-08-08T15:17:39.947Z",
+  "screens": [
+    {
+      "title": "Discover Activities",
+      "stitchTitle": "Discover Activities",
+      "id": "a0c1b0841cb2440d9d1c53b0f434a7aa",
+      "slug": "discover-activities",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNDBmMDI1ZDMwMjNiZDQ1ZDJmMjE2NGEyEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLsNorOXEZxGh8RNwNrqbq0I694026-PuQTO7rpBSOY_AY5t64bOzdrdh718r3KIIInPJZ2IezW7x735zozC9nVn6MDP02cQZ4_12ih2YPcvYkvQtKgzyp4K_T-idU1oLnD7rBBdfPMOPc4BjnMFCV_5dw9aMSwa8lN1UHqc_nzh5Sy3jOsFg-AwOmED6Pt_Q_zrYkNiP0d_u5B_tCGrggUAAk5DNlhQ6iLTvYMwLd1yy1jgaTxDWs-D77E",
+      "paths": {
+        "html": "stitch\\action-deck\\discover-activities\\index.html",
+        "screenshot": "stitch\\action-deck\\discover-activities\\screenshot.png"
+      }
+    },
+    {
+      "title": "Activity Details",
+      "stitchTitle": "Activity Details",
+      "id": "fc3f87fd28d3409789e381045874bd5d",
+      "slug": "activity-details",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "2936",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNDEwMzYyYzMwNDVhZGJlMDEyMTM4NDY5EgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLu2yKp1vesX39RZfOj6GIrYpY2whMSH9GvCHQrvUckXVPiyeTUaQuCtKTF5bjJDlO2ebi_Hc0uQ8PqpU3Mm1m1boAlwwLtvWcCr0ZMfnjbO2qLNaQxiptHUP4Znmi9Fih-Vd1AEmtA7qkwabi2n5sZkDjlj5kZX7otIyvCOBN5u_JBvM56iz0jBZEHTFK-E5eqZlgdUvKZNa5rPyxktQt4mS-ryvM_deh2VYn2P5ctxpNCRofnlPb-3u6rM",
+      "paths": {
+        "html": "stitch\\action-deck\\activity-details\\index.html",
+        "screenshot": "stitch\\action-deck\\activity-details\\screenshot.png"
+      }
+    },
+    {
+      "title": "New Activity - Review",
+      "stitchTitle": "New Activity - Review",
+      "id": "c008bd5265ea4bb6b064b90c6f5b0cd2",
+      "slug": "new-activity-review",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "2532",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNDA5Njg0M2QwNDRmNzM1ZjNjMGI3YjcxEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLvBMdJfy45Z32IfnUo1QlEcnClAHl-iJiT88YixTA7UTXDPujro1gDyjg0dW9guL6YxDc9zVCV_HcIWi2u27WBat_QaUqhIZDSZ8BEWyt7y3-pIRrNScgXV4YeQVW2yrKQzyarFkeQUDBS-O42FdlyNOQ5pgdzx5C0Qm86KsIOaxRpOgEgvKNS5Jamych90YCVl0MU0uvkBNA1b7wlCQZDK9I8wcaM8UBN4W8i8qpoTduCfaOrDojDRMzpj",
+      "paths": {
+        "html": "stitch\\action-deck\\new-activity-review\\index.html",
+        "screenshot": "stitch\\action-deck\\new-activity-review\\screenshot.png"
+      }
+    },
+    {
+      "title": "New Activity - Describe",
+      "stitchTitle": "New Activity - Describe",
+      "id": "b57850eebc25401599d27f07ee1f72e9",
+      "slug": "new-activity-describe",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhM2ZkNTUxNzIwMjNiZDQ1ZDJmMjE2NGEyEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLvLVoMhIL7Ujb0XosS5eaZ0npaHdCoptdYh3wN7A2A40JInZkqI1UN399J0jrTuaxyJA7MUKK5ay-53M5ZCm_FrBTi9VcCnanrZPEDkMqI9y__OH9g3t_4AvXz6hvfYfh6DYzMPdzICKaVr-gH7xxSP55TmnzGVg7NhvmBNzzs31Frf6nHrt7FM1a8wJ0SHQJ_CaPyRB6Df-ttn6LJkb4RSkVIqjUr5cdiXq3f9KSqc1TjYF68ypHmglZ3s",
+      "paths": {
+        "html": "stitch\\action-deck\\new-activity-describe\\index.html",
+        "screenshot": "stitch\\action-deck\\new-activity-describe\\screenshot.png"
+      }
+    },
+    {
+      "title": "Interests Onboarding",
+      "stitchTitle": "Interests Onboarding",
+      "id": "d6828d53a10c4780a0c4f2c384248955",
+      "slug": "interests-onboarding",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "2844",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNTAwN2FlNDMwMjNiZDQ1ZDJmMjE2NGEyEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLutgfSLEIHhRNCd0RqQT-2Yi_nHwZt2D19UMeFj7JP3032Q5ydklLJInPYtHHhjBGSdQxlw20uLi32lc_YJr0nRntsmkwTReIjK-2RwyZKLBQxYGUpJdEPa5nY3Ou9Yei8weCG3Zx_aB4smnFc4YEfQRLK9HDBKOLBNVf5A4Bs3q-N26Tc9Vict4LAPbumunQK0_mjEgGtWH2J649-gZqbCR8u46RkxcEsNnb9Xk1Tsih4VfV8WOJi1oRt8",
+      "paths": {
+        "html": "stitch\\action-deck\\interests-onboarding\\index.html",
+        "screenshot": "stitch\\action-deck\\interests-onboarding\\screenshot.png"
+      }
+    },
+    {
+      "title": "My Plans",
+      "stitchTitle": "My Plans",
+      "id": "1ae914ce14754761b01384950087375f",
+      "slug": "my-plans",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNTA5OGY1NzkwOTY4YTFlMDU0MDE2ZTRhEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLv_5cXjFVZb3vvy6nKZS0kl9XsjNoVkd8FQQAYCNpn2ZYyCsCVM9-bFoRkqCK8GFOvRehrQ8edwijtvua-YVn1DYANa3k1Qt1LT3xHPTCG7IG3CdA2DnmKzISfUSjXyF26hDGY1-ese5edDVxSkNbb0IyTyR2ICWzzsG8Ts52rLsbd3uhFHRXRY3amHwANMSZQTmj0N95NZiA5mdTI9NMMB0xRxlQUFyrJ8e-GclalaJqIqd0Nlgl1Ny9af",
+      "paths": {
+        "html": "stitch\\action-deck\\my-plans\\index.html",
+        "screenshot": "stitch\\action-deck\\my-plans\\screenshot.png"
+      }
+    },
+    {
+      "title": "Availability Onboarding",
+      "stitchTitle": "Availability Onboarding",
+      "id": "674c2216b46445cab61dd5331f9b8b47",
+      "slug": "availability-onboarding",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNGY4ODBjZWYwMjNiZTAwOGNiMjE4ZDZjEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLunyvi5AWsjAaP0rEhjm3NROzfMnG7Swqa_7fP_o7haTxYfnI3cfilkktthqCFpX0jzXtHcFxBvtXjdFn9nJKDQ4WWkyl9LZSJbqBMkOdL7w9Z4akoNNMY6zwFwvcGl2xB4tRhonBwgL7bwRCMay_lCTTrxs_cG4gxhojTkZothkUo_VJ9q-iRWSoNqF168HAh_w4HsYmohE7py-7pKLF61t2NfbtNSTH0Qh5AIIwsB26lWFh-6MxjuHFzE",
+      "paths": {
+        "html": "stitch\\action-deck\\availability-onboarding\\index.html",
+        "screenshot": "stitch\\action-deck\\availability-onboarding\\screenshot.png"
+      }
+    },
+    {
+      "title": "Tuesday Board Games Group",
+      "stitchTitle": "Tuesday Board Games Group",
+      "id": "2b0ffad1b7e7443e9d6bcb35762a76e7",
+      "slug": "tuesday-board-games-group",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "2582",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNTFiMGM1NGEwMjNiZWIyODg0MmQxN2VmEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLsST8f6lDLjaHbMvs5UxLOc5DCtqZLlMOp4S6GTV2O6SuQR4b1Y46PWovuVeAMnEs1tDlPs64QYX5KEU8vq7ZiT5nHHinFEhd2_IwzRwhPgwtCy_1b9nPd8gkT7Kvcw5H2nZwgDHiIZ2Q3RmHeghUeayWERmxzGruoIw88g7msCvEYpJZEce8UpDYaJaV4G3VxtsnjtZrw8UriWCk4ERKUB6kmpfo2efHXaDBwBQa2RJvC4WEZAQPbiOwCl",
+      "paths": {
+        "html": "stitch\\action-deck\\tuesday-board-games-group\\index.html",
+        "screenshot": "stitch\\action-deck\\tuesday-board-games-group\\screenshot.png"
+      }
+    },
+    {
+      "title": "Profile",
+      "stitchTitle": "Profile",
+      "id": "1cbb98ed4aec43dd965e9850ffb72abf",
+      "slug": "profile",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "2072",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNGZmOGY2NDQwMzU2ZDRiNmE3MTc0M2MxEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLsy76Kn99j729RYGKZ5ZQEvx6ik_CT5UWaBpCo3xC6dH2Cw5a6O31aGYhKKRFqzoXrxr_bWJwp4BEDQWvcm5rqrir6DZxMWj7uc679pnnit30hw0WSCGrP6dLa9IaWZ-BFID3APFpdAHNjUwidmlPz6bs677g2Kw5AJbLeIa0BxeLC61SWuBWA5B80ttCd-RS3p1SSpukkYTXhliHGGiUqNr9vR-Qq48cSsX22evHMAfl3OBTZTLljm07ZQ",
+      "paths": {
+        "html": "stitch\\action-deck\\profile\\index.html",
+        "screenshot": "stitch\\action-deck\\profile\\screenshot.png"
+      }
+    },
+    {
+      "title": "Shared Activity Web View",
+      "stitchTitle": "Shared Activity Web View",
+      "id": "98b907efe93b4966a0479f137230a6f6",
+      "slug": "shared-activity-web-view",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNGZjNWFmMWQwMjNiZTAwOGNiMjE4ZDZjEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLtqN9x2foKEUA693iejCN0LuW8MW5UTe0vB87gkh83rkDlM89I0zHHk4dm07nLdamwM50SXJVRU5v7bv6Kiu2Wvwqs3roqIPtnLR7udLK06dNg_GbE5Tlq_yfUVc4d78yKi2rJ79rObX21kxyHdFNsxEFxmCOlWye6einiQfGZgoXi6wwag8eXfLuJaWlpbgbDrlgOQeo1zlZ8REnRbdXjVHyZ6aE_ett_6AF4kt56iYX2EpEwt5f_GMYAt",
+      "paths": {
+        "html": "stitch\\action-deck\\shared-activity-web-view\\index.html",
+        "screenshot": "stitch\\action-deck\\shared-activity-web-view\\screenshot.png"
+      }
+    },
+    {
+      "title": "Filter Activities",
+      "stitchTitle": "Filter Activities",
+      "id": "92f498b6f5c44dfc8abb1bc1bdc92bd6",
+      "slug": "filter-activities",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNWZmMjRiOTUwMjNiZTAwOGNiMjE4ZDZjEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLuwkjAeJbVdKiqwsNbjGHjAGXqL-F6HhHYxcz-f8Z4UdNSBLSEKX1SzQkYQDxTYmRKPoSgeIll3GyHnYmK9xMn5JfTVsuLA3DMzovozqfvHZul8xyK-u8ENAfE6Age60ELVKL7zofy1Tk7nP3Y9TyT7OsQY6RXA5JBPReEcYo1V9QEcaJiCBW001VFKNdYDBC5fPelwtkuXmrG197pO6wK5GAP3yxWX8cs_IA-UZ3X7tz2-C-5P9JmyAhHK",
+      "paths": {
+        "html": "stitch\\action-deck\\filter-activities\\index.html",
+        "screenshot": "stitch\\action-deck\\filter-activities\\screenshot.png"
+      }
+    },
+    {
+      "title": "Post-Activity Feedback",
+      "stitchTitle": "Post-Activity Feedback",
+      "id": "e514937ed70d4ad29c77143a63369f72",
+      "slug": "post-activity-feedback",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNjBlNzVmNDUwNDRmNzM1ZjNjMGI3YjcxEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLtPFoLaozZ8yQF5uMMUnt3G6VpAhYBqlL4O4I2g3eUD-cwe2NDX1ZfkrOb_emsf5gsBPhA5NjVviGNBJrGUF01KaNNITxZT6xJBiEMKZd3onTDjXeUbK7IwUVjR2EO2zOVGjzPCmL_NX9cS2tz14T_ygCL79i-GqqbIr1oq81tCtkV4_d8sBq0YnUJKB1OPbug30rZJveKKEVvm4-gtHbbTmL4-5WHfYPoRy-jicqJQhw3IOX0WAf3duRQz",
+      "paths": {
+        "html": "stitch\\action-deck\\post-activity-feedback\\index.html",
+        "screenshot": "stitch\\action-deck\\post-activity-feedback\\screenshot.png"
+      }
+    },
+    {
+      "title": "Waitlist Claim",
+      "stitchTitle": "Waitlist Claim",
+      "id": "2a6b482d5a084bd5b02807cdee94eb19",
+      "slug": "waitlist-claim",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNjAxYWIwYjIwMjNiZTA0NjE3MjJiMGZmEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLszR5f72GlvY8Er9EsJ57lSBFpF1S5wS24AfWSOUenLenENEgEfE3XORoIrlizwGoeJPAD0-pTl58NpdF-BT5EW1besJGFxr4BDD5Opu9vK_SfGfKfVchWtHwbPmZPxASlIgFn0LLMB-t1AnzuDQIZUZQ2z660YaZqW5neErslXWaWapWlIVsGpLA6vW5SBJfPcZqo3_-o3wlPfXWSr5LrcLqqQdeoZECOn-Evr5CnzgQaqxuSQ9IIZGoQ",
+      "paths": {
+        "html": "stitch\\action-deck\\waitlist-claim\\index.html",
+        "screenshot": "stitch\\action-deck\\waitlist-claim\\screenshot.png"
+      }
+    },
+    {
+      "title": "End of Feed",
+      "stitchTitle": "End of Feed",
+      "id": "1f12d30f134747489cd4f5e0ffdf9e54",
+      "slug": "end-of-feed",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNjAzNjI1ZTIwNWYxM2ZkNTcxMDM3NDVlEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLthMDKa-jDKvJDDomdLJ0mGkaPdwwZECmRqnpJNEDtvowIAZgXkfYa6LtUAa4TLDykKNfiIxRgykBy9mDK0L76KdAoE6eyEuIJuYb2tlVNazsNuequylr7ArEMS-Pl3gHD6KNI965_TJZdi3jLgXxNPnwyXt5LsQiuHykx75Y8Bi7RuKP3GIW684gj6K8lZHFyet0IGQOcHqf2bDYdeybZcZ4dTZJ--hiutwlYhhOo95lwDCbAeTeWRCExf",
+      "paths": {
+        "html": "stitch\\action-deck\\end-of-feed\\index.html",
+        "screenshot": "stitch\\action-deck\\end-of-feed\\screenshot.png"
+      }
+    },
+    {
+      "title": "Join Requests",
+      "stitchTitle": "Join Requests",
+      "id": "e9bcaa3edd914c179b132e8654de5aa3",
+      "slug": "join-requests",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNDAxNmFhMjMwNWYxM2ZkNTcxMDM3NDVlEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLvIDU2EZKYUGPyHHnNwEcQFNNu5ycXmd7HPLYbtcPOoDq62HHTUYMYVngVCIrz_dFG698g7SkS7N4txG5nKEwcxBFtJcJWKx5LrS99BY_Umg_UBGXZcQMODezvGARLWi1sPKNj9FAXQQtCKvxaB4WrilUlcoNe2DLjuGDd6AOuzxdfhTJ5DBlwPeLl6sc3139Kuc57fKwUPTQ7Nh3isiygRjafRucBkHB3UX74Tyaa9hmM34uCLbtdBsLbM",
+      "paths": {
+        "html": "stitch\\action-deck\\join-requests\\index.html",
+        "screenshot": "stitch\\action-deck\\join-requests\\screenshot.png"
+      }
+    },
+    {
+      "title": "Activity Chat",
+      "stitchTitle": "Activity Chat",
+      "id": "89513428ea7f4add913509a7831e48a8",
+      "slug": "activity-chat",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODhhNDA4NmZiOTkwNDRmNzM1ZjNjMGI3YjcxEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLs1UZVgIAxAQ82uPw6i0AtO2d4AthF0jIE8jQEMEjuGKWstT47583GSiztg3l0qqPIid_bazESYyRLmQvmV-k7anSjDjsNL2IdrVAm21csGo7BVzbX8miNOkqfJna5q48khKlKAf9BVKrEZPHicFVFoLbXgsIzBzGdji_gw2-PH9zPsac3pBCSDCmg6ojbsj1CJFhVF13usXOJoKdo_mtXfH8VoiI5lCkPbE0DEdMOsQKVrzNIguqhC-RiJ",
+      "paths": {
+        "html": "stitch\\action-deck\\activity-chat\\index.html",
+        "screenshot": "stitch\\action-deck\\activity-chat\\screenshot.png"
+      }
+    }
+  ]
+}

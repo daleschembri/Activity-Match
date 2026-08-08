@@ -1,0 +1,798 @@
+import type {
+  ActivityDetail,
+  ActivityDraft,
+  ActivitySummary,
+  ApiResponse,
+  FeedPage,
+  Group,
+  JoinRequest,
+  Message,
+  ReliabilityDisplay,
+  UserProfile,
+} from "@activity-match/shared";
+import { DEFAULT_CONFIG } from "@activity-match/shared";
+import { getAccessToken, isSupabaseConfigured, supabase } from "./supabase";
+
+async function invoke<T>(name: string, body: Record<string, unknown>): Promise<ApiResponse<T>> {
+  const token = await getAccessToken();
+  const { data, error } = await supabase.functions.invoke(name, {
+    body,
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
+  if (error) return { error: { code: "VALIDATION_FAILED", message: error.message } };
+  return data as ApiResponse<T>;
+}
+
+function mapActivityRow(row: Record<string, unknown>, participationCount = 0): ActivitySummary {
+  const capacity = row.capacity as number | null;
+  const spacesRemaining = capacity != null ? Math.max(0, capacity - participationCount) : null;
+  const location = row.location as { area_label?: string } | null;
+  const category = (row.category as ActivitySummary["category"] | null) ?? {
+    id: (row.category_id as string) ?? "",
+    name: "Uncategorized",
+    parent_id: null,
+    is_active: true,
+  };
+  const host = (row.host as ActivitySummary["host"] | null) ?? {
+    id: (row.host_user_id as string) ?? "",
+    display_name: "Host",
+    avatar_ref: null,
+  };
+
+  return {
+    id: row.id as string,
+    title: row.title as string,
+    listing_type: row.listing_type as ActivitySummary["listing_type"],
+    status: row.status as ActivitySummary["status"],
+    category,
+    starts_at: (row.starts_at as string) ?? null,
+    duration_minutes: (row.duration_minutes as number) ?? null,
+    area_label: location?.area_label ?? null,
+    distance_from_viewer_minutes: null,
+    cost_amount: Number(row.cost_amount ?? 0),
+    cost_currency: (row.cost_currency as string) ?? "EUR",
+    skill_level: row.skill_level as ActivitySummary["skill_level"],
+    capacity,
+    participation_count: participationCount,
+    spaces_remaining: spacesRemaining,
+    is_full: capacity != null && participationCount >= capacity,
+    is_joinable: row.status === "published" && (capacity == null || participationCount < capacity),
+    host,
+    tags: [],
+    cover_image_ref: (row.cover_image_ref as string | null) ?? null,
+    published_at: row.published_at as string | undefined,
+  };
+}
+
+async function participationCounts(activityIds: string[]): Promise<Record<string, number>> {
+  if (!activityIds.length) return {};
+  const { data } = await supabase
+    .from("participations")
+    .select("activity_id")
+    .in("activity_id", activityIds)
+    .eq("status", "confirmed");
+  const counts: Record<string, number> = {};
+  for (const row of data ?? []) {
+    counts[row.activity_id] = (counts[row.activity_id] ?? 0) + 1;
+  }
+  return counts;
+}
+
+const ACTIVITY_SELECT = `
+  id, title, listing_type, status, starts_at, duration_minutes,
+  cost_amount, cost_currency, skill_level, capacity, published_at, cover_image_ref,
+  description, quorum, cost_note, equipment_note, equipment_provided,
+  accessibility_note, min_age, max_age, join_deadline, acceptance_mode,
+  visibility, public_slug, host_user_id,
+  category:categories(id, name, parent_id, is_active),
+  host:profiles!activities_host_user_id_fkey(id, display_name, avatar_ref),
+  location:locations(id, name, area_label, is_public_place, timezone)
+`;
+
+export const api = {
+  async getProfile(): Promise<UserProfile | null> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
+    const { data, error } = await supabase.from("profiles").select("*").eq("id", user.id).single();
+    if (error) throw new Error(error.message);
+    return data as UserProfile;
+  },
+
+  async getFeed(_filters?: Record<string, unknown>, cursor?: string): Promise<FeedPage> {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    let query = supabase
+      .from("activities")
+      .select(ACTIVITY_SELECT)
+      .eq("status", "published")
+      .eq("visibility", "public")
+      .order("published_at", { ascending: false })
+      .limit(20);
+
+    if (cursor) query = query.lt("published_at", cursor);
+
+    const { data, error } = await query;
+    if (error) throw new Error(error.message);
+
+    let rows = data ?? [];
+
+    if (user) {
+      const [{ data: swipes }, { data: joinRequests }] = await Promise.all([
+        supabase
+          .from("swipe_events")
+          .select("activity_id, direction, created_at")
+          .eq("user_id", user.id),
+        supabase
+          .from("join_requests")
+          .select("activity_id")
+          .eq("user_id", user.id)
+          .in("status", ["pending", "waitlisted", "accepted"]),
+      ]);
+
+      const suppressionMs = DEFAULT_CONFIG.left_swipe_suppression_days * 24 * 60 * 60 * 1000;
+      const now = Date.now();
+      const excludedIds = new Set<string>();
+
+      for (const swipe of swipes ?? []) {
+        if (swipe.direction === "left") {
+          const age = now - new Date(swipe.created_at as string).getTime();
+          if (age < suppressionMs) excludedIds.add(swipe.activity_id as string);
+        } else {
+          excludedIds.add(swipe.activity_id as string);
+        }
+      }
+
+      for (const request of joinRequests ?? []) {
+        excludedIds.add(request.activity_id as string);
+      }
+
+      rows = rows.filter((row) => {
+        if ((row.host_user_id as string) === user.id) return false;
+        return !excludedIds.has(row.id as string);
+      });
+    }
+
+    const ids = rows.map((r) => r.id as string);
+    const counts = await participationCounts(ids);
+    const items = rows.map((row) => mapActivityRow(row, counts[row.id as string] ?? 0));
+
+    return {
+      items,
+      next_cursor: items.length ? (rows[rows.length - 1]?.published_at as string) ?? null : null,
+      total_available: items.length,
+      exhausted: items.length === 0,
+      filters_widened: false,
+    };
+  },
+
+  async getActivity(id: string): Promise<ActivityDetail | null> {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data, error } = await supabase
+      .from("activities")
+      .select(ACTIVITY_SELECT)
+      .eq("id", id)
+      .single();
+
+    if (error || !data) return null;
+
+    const counts = await participationCounts([id]);
+    const participationCount = counts[id] ?? 0;
+    const summary = mapActivityRow(data, participationCount);
+
+    let viewer_role: ActivityDetail["viewer_role"] = user ? "viewer" : "anonymous";
+    if (user) {
+      if (data.host_user_id === user.id) viewer_role = "host";
+      else {
+        const { data: participation } = await supabase
+          .from("participations")
+          .select("id")
+          .eq("activity_id", id)
+          .eq("user_id", user.id)
+          .eq("status", "confirmed")
+          .maybeSingle();
+        if (participation) viewer_role = "participant";
+        else {
+          const { data: request } = await supabase
+            .from("join_requests")
+            .select("id")
+            .eq("activity_id", id)
+            .eq("user_id", user.id)
+            .in("status", ["pending", "waitlisted"])
+            .maybeSingle();
+          if (request) viewer_role = "requester";
+        }
+      }
+    }
+
+    return {
+      ...summary,
+      description: data.description as string,
+      quorum: data.quorum as number | null,
+      cost_note: data.cost_note as string | null,
+      equipment_note: data.equipment_note as string | null,
+      equipment_provided: data.equipment_provided as boolean,
+      accessibility_note: data.accessibility_note as string | null,
+      min_age: data.min_age as number | null,
+      max_age: data.max_age as number | null,
+      join_deadline: data.join_deadline as string | null,
+      acceptance_mode: data.acceptance_mode as ActivityDetail["acceptance_mode"],
+      visibility: data.visibility as ActivityDetail["visibility"],
+      public_slug: data.public_slug as string,
+      participant_count_visible: participationCount,
+      viewer_role,
+    };
+  },
+
+  async updateProfile(updates: {
+    display_name?: string;
+    bio?: string | null;
+    home_area_label?: string;
+    avatar_ref?: string | null;
+  }): Promise<UserProfile> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const payload: Record<string, unknown> = {};
+    if (updates.display_name !== undefined) {
+      const name = updates.display_name.trim();
+      if (name.length < 2 || name.length > 40) {
+        throw new Error("Display name must be 2–40 characters.");
+      }
+      payload.display_name = name;
+    }
+    if (updates.bio !== undefined) {
+      const bio = updates.bio?.trim() ?? "";
+      if (bio.length > 300) throw new Error("Bio must be 300 characters or less.");
+      payload.bio = bio || null;
+    }
+    if (updates.home_area_label !== undefined) {
+      const area = updates.home_area_label.trim();
+      if (!area) throw new Error("Location is required.");
+      payload.home_area_label = area;
+    }
+    if (updates.avatar_ref !== undefined) payload.avatar_ref = updates.avatar_ref;
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .update(payload)
+      .eq("id", user.id)
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data as UserProfile;
+  },
+
+  async uploadAvatar(file: File): Promise<string> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+    if (!file.type.startsWith("image/")) throw new Error("Please choose an image file.");
+
+    const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+    const path = `${user.id}/avatar.${ext}`;
+    const { error: uploadError } = await supabase.storage
+      .from("avatars")
+      .upload(path, file, { upsert: true, contentType: file.type });
+    if (uploadError) throw new Error(uploadError.message);
+
+    const { data } = supabase.storage.from("avatars").getPublicUrl(path);
+    await api.updateProfile({ avatar_ref: data.publicUrl });
+    return data.publicUrl;
+  },
+
+  async uploadActivityCover(file: File): Promise<string> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+    if (!file.type.startsWith("image/")) throw new Error("Please choose an image file.");
+    if (file.size > 5 * 1024 * 1024) throw new Error("Image must be 5 MB or smaller.");
+
+    const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+    const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
+    const { error: uploadError } = await supabase.storage
+      .from("activity-covers")
+      .upload(path, file, { upsert: false, contentType: file.type });
+    if (uploadError) throw new Error(uploadError.message);
+
+    const { data } = supabase.storage.from("activity-covers").getPublicUrl(path);
+    return data.publicUrl;
+  },
+
+  async getLocations() {
+    const { data, error } = await supabase.rpc("get_locations_geo");
+    if (error) throw new Error(error.message);
+    return (data ?? []) as Array<{ id: string; name: string; area_label: string; lat: number; lng: number }>;
+  },
+
+  async createLocationFromPin(pin: { name: string; area_label: string; lat: number; lng: number }) {
+    const { data, error } = await supabase.rpc("create_location_from_pin", {
+      p_name: pin.name,
+      p_area_label: pin.area_label,
+      p_lat: pin.lat,
+      p_lng: pin.lng,
+    });
+    if (error) throw new Error(error.message);
+    return data as string;
+  },
+
+  async resolveLocationId(payload: Record<string, unknown>): Promise<string | null> {
+    if (payload.location_id) return payload.location_id as string;
+    const pin = payload.location_pin as
+      | { name: string; area_label: string; lat: number; lng: number }
+      | undefined;
+    if (pin) return api.createLocationFromPin(pin);
+    return null;
+  },
+
+  buildActivityPayload(payload: Record<string, unknown>) {
+    const title = String(payload.title ?? "").trim();
+    if (title.length < 3) throw new Error("Title must be at least 3 characters.");
+    if (!payload.category_id) throw new Error("Please choose a category.");
+
+    return {
+      listing_type: payload.listing_type ?? "confirmed",
+      title,
+      description: String(payload.description ?? "").slice(0, 2000),
+      category_id: payload.category_id,
+      capacity: Number(payload.capacity ?? 8),
+      cost_amount: Number(payload.cost_amount ?? 0),
+      cost_currency: payload.cost_currency ?? "EUR",
+      cost_note: payload.cost_note ? String(payload.cost_note).slice(0, 200) : null,
+      skill_level: payload.skill_level ?? "any",
+      starts_at: payload.starts_at ?? null,
+      duration_minutes: payload.duration_minutes ? Number(payload.duration_minutes) : null,
+      location_id: payload.location_id ?? null,
+      acceptance_mode: payload.acceptance_mode ?? "auto",
+      host_is_participating: payload.host_is_participating ?? true,
+      visibility: payload.visibility ?? "public",
+      cover_image_ref: payload.cover_image_ref ?? null,
+    };
+  },
+
+  validateActivityForPublish(payload: Record<string, unknown>) {
+    if (!payload.starts_at) throw new Error("Date and time are required.");
+    if (!payload.location_id && !payload.location_pin) throw new Error("Please drop a pin on the map.");
+    const pin = payload.location_pin as { name?: string; area_label?: string } | undefined;
+    if (pin) {
+      if (!String(pin.name ?? "").trim()) throw new Error("Place name is required.");
+      if (!String(pin.area_label ?? "").trim()) throw new Error("Area is required.");
+    }
+    const capacity = Number(payload.capacity ?? 0);
+    if (capacity < 2) throw new Error("Capacity must be at least 2.");
+    const startsAt = new Date(String(payload.starts_at));
+    if (Number.isNaN(startsAt.getTime()) || startsAt.getTime() <= Date.now()) {
+      throw new Error("Start time must be in the future.");
+    }
+  },
+
+  async createActivity(payload: Record<string, unknown>) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const activity = api.buildActivityPayload(payload);
+    const locationId = await api.resolveLocationId(payload);
+    if (!locationId) throw new Error("Please drop a pin on the map and name the place.");
+
+    const { data, error } = await supabase
+      .from("activities")
+      .insert({
+        ...activity,
+        location_id: locationId,
+        starts_at: activity.starts_at ?? new Date(Date.now() + 7 * 86400000).toISOString(),
+        host_user_id: user.id,
+        status: "draft",
+      })
+      .select()
+      .single();
+
+    if (error) throw new Error(error.message);
+    return { data };
+  },
+
+  async publishActivity(id: string) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { data, error } = await supabase
+      .from("activities")
+      .update({ status: "published", published_at: new Date().toISOString() })
+      .eq("id", id)
+      .eq("host_user_id", user.id)
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return { data };
+  },
+
+  async createAndPublishActivity(payload: Record<string, unknown>) {
+    api.validateActivityForPublish(payload);
+    const { data: draft } = await api.createActivity(payload);
+    const { data: published } = await api.publishActivity(draft.id);
+    return published;
+  },
+
+  async recordSwipe(payload: Record<string, unknown>) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { error: swipeError } = await supabase.from("swipe_events").upsert({
+      user_id: user.id,
+      activity_id: payload.activity_id,
+      direction: payload.direction,
+      position_in_feed: payload.position_in_feed,
+      dwell_ms: payload.dwell_ms ?? 0,
+    }, { onConflict: "user_id,activity_id" });
+    if (swipeError) throw new Error(swipeError.message);
+
+    if (payload.direction === "right") {
+      try {
+        await api.createJoinRequest({
+          activity_id: payload.activity_id,
+          availability_confirmed: true,
+          idempotency_key: payload.idempotency_key,
+          source: "swipe",
+        });
+      } catch {
+        // Swipe is saved even if join fails (own activity, full, already requested, etc.)
+      }
+    }
+    if (payload.direction === "up") {
+      const { error: saveError } = await supabase.from("saved_activities").upsert({
+        user_id: user.id,
+        activity_id: payload.activity_id as string,
+      });
+      if (saveError) throw new Error(saveError.message);
+    }
+    return { data: { ok: true } };
+  },
+
+  async createJoinRequest(payload: Record<string, unknown>) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { data, error } = await supabase.rpc("create_join_request_atomic", {
+      p_user_id: user.id,
+      p_activity_id: payload.activity_id,
+      p_introduction: payload.introduction ?? null,
+      p_availability_confirmed: payload.availability_confirmed ?? true,
+      p_source: (payload.source as string) ?? "detail",
+    });
+    if (error) throw new Error(error.message);
+    if (data?.error) throw new Error(data.error.message ?? data.error.code);
+    return data;
+  },
+
+  async getJoinRequests(): Promise<JoinRequest[]> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    const { data: hosted } = await supabase.from("activities").select("id").eq("host_user_id", user.id);
+    const activityIds = hosted?.map((a) => a.id) ?? [];
+    if (!activityIds.length) return [];
+
+    const { data, error } = await supabase
+      .from("join_requests")
+      .select("*, user:profiles!join_requests_user_id_fkey(id, display_name, avatar_ref)")
+      .eq("status", "pending")
+      .in("activity_id", activityIds);
+
+    if (error) throw new Error(error.message);
+    return (data ?? []) as JoinRequest[];
+  },
+
+  async respondToJoinRequest(requestId: string, decision: "accept" | "decline" | "waitlist") {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    if (decision === "accept") {
+      const { data, error } = await supabase.rpc("accept_join_request", {
+        p_request_id: requestId,
+        p_actor_id: user.id,
+      });
+      if (error) throw new Error(error.message);
+      return data;
+    }
+
+    const status = decision === "decline" ? "declined" : "waitlisted";
+    const { error } = await supabase
+      .from("join_requests")
+      .update({ status, resolved_at: new Date().toISOString() })
+      .eq("id", requestId);
+    if (error) throw new Error(error.message);
+    return { data: { ok: true } };
+  },
+
+  async claimWaitlist(requestId: string) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+    const { data, error } = await supabase.rpc("accept_join_request", {
+      p_request_id: requestId,
+      p_actor_id: user.id,
+    });
+    if (error) throw new Error(error.message);
+    return data;
+  },
+
+  async leaveActivity(activityId: string) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { data, error } = await supabase.rpc("leave_activity", {
+      p_activity_id: activityId,
+      p_user_id: user.id,
+    });
+    if (error) throw new Error(error.message);
+    if (data?.error) throw new Error(data.error.message ?? data.error.code);
+    return data;
+  },
+
+  async withdrawJoinRequest(activityId: string) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { data, error } = await supabase.rpc("withdraw_join_request", {
+      p_activity_id: activityId,
+      p_user_id: user.id,
+    });
+    if (error) throw new Error(error.message);
+    if (data?.error) throw new Error(data.error.message ?? data.error.code);
+    return data;
+  },
+
+  async canAccessActivityChat(activityId: string): Promise<boolean> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return false;
+
+    const { data: activity } = await supabase
+      .from("activities")
+      .select("host_user_id")
+      .eq("id", activityId)
+      .maybeSingle();
+    if (!activity) return false;
+    if (activity.host_user_id === user.id) return true;
+
+    const { data: participation } = await supabase
+      .from("participations")
+      .select("id")
+      .eq("activity_id", activityId)
+      .eq("user_id", user.id)
+      .eq("status", "confirmed")
+      .maybeSingle();
+    return Boolean(participation);
+  },
+
+  async getMyChats(): Promise<Array<ActivitySummary & { chat_role: "host" | "participant" }>> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    const plans = await api.getMyPlans();
+    const byId = new Map<string, ActivitySummary & { chat_role: "host" | "participant" }>();
+
+    for (const activity of plans.hosted) {
+      if (activity.status === "published") {
+        byId.set(activity.id, { ...activity, chat_role: "host" });
+      }
+    }
+    for (const activity of plans.joined) {
+      if (!byId.has(activity.id)) {
+        byId.set(activity.id, { ...activity, chat_role: "participant" });
+      }
+    }
+
+    return [...byId.values()].sort((a, b) => {
+      const aTime = a.starts_at ? new Date(a.starts_at).getTime() : 0;
+      const bTime = b.starts_at ? new Date(b.starts_at).getTime() : 0;
+      return aTime - bTime;
+    });
+  },
+
+  async getMessages(activityId: string): Promise<Message[]> {
+    const allowed = await api.canAccessActivityChat(activityId);
+    if (!allowed) throw new Error("Chat is only available after you are accepted.");
+
+    const { data: conv } = await supabase.from("conversations").select("id").eq("activity_id", activityId).maybeSingle();
+    if (!conv) return [];
+    const { data, error } = await supabase
+      .from("messages")
+      .select("*")
+      .eq("conversation_id", conv.id)
+      .order("created_at");
+    if (error) throw new Error(error.message);
+    return (data ?? []) as Message[];
+  },
+
+  async sendMessage(activityId: string, body: string) {
+    const allowed = await api.canAccessActivityChat(activityId);
+    if (!allowed) throw new Error("Chat is only available after you are accepted.");
+
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data: conv } = await supabase.from("conversations").select("id").eq("activity_id", activityId).single();
+    if (!conv || !user) throw new Error("Cannot send message");
+    const { error } = await supabase.from("messages").insert({
+      conversation_id: conv.id,
+      sender_user_id: user.id,
+      body,
+      type: "user_text",
+    });
+    if (error) throw new Error(error.message);
+    return { data: { ok: true } };
+  },
+
+  async draftFromText(freeText: string): Promise<ActivityDraft> {
+    if (isSupabaseConfigured) {
+      const res = await invoke<ActivityDraft>("draft-from-text", {
+        free_text: freeText,
+        viewer_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        viewer_location: { lat: 35.9, lng: 14.5 },
+      });
+      if (!("error" in res) && res.data) return res.data;
+    }
+    return {
+      title: { value: freeText.split(/[.!?\n]/)[0].slice(0, 80), confidence: 0.7, origin: "inferred" },
+      description: { value: freeText, confidence: 0.9, origin: "extracted" },
+      suggested_tags: ["social", "casual"],
+    };
+  },
+
+  async getUserInterests(): Promise<string[]> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+    const { data, error } = await supabase
+      .from("user_interests")
+      .select("category_id")
+      .eq("user_id", user.id);
+    if (error) throw new Error(error.message);
+    return (data ?? []).map((row) => row.category_id as string);
+  },
+
+  async saveUserInterests(categoryIds: string[]) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { error: deleteError } = await supabase.from("user_interests").delete().eq("user_id", user.id);
+    if (deleteError) throw new Error(deleteError.message);
+
+    if (categoryIds.length) {
+      const { error } = await supabase.from("user_interests").insert(
+        categoryIds.map((category_id) => ({ user_id: user.id, category_id, weight: 1 })),
+      );
+      if (error) throw new Error(error.message);
+    }
+  },
+
+  async saveOnboarding(categoryIds: string[], availability: Array<{ day_of_week: string; time_start: string; time_end: string }>) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { error: deleteInterestsError } = await supabase.from("user_interests").delete().eq("user_id", user.id);
+    if (deleteInterestsError) throw new Error(deleteInterestsError.message);
+    if (categoryIds.length) {
+      const { error } = await supabase.from("user_interests").insert(
+        categoryIds.map((category_id) => ({ user_id: user.id, category_id, weight: 1 })),
+      );
+      if (error) throw new Error(error.message);
+    }
+
+    const { error: deleteAvailabilityError } = await supabase.from("user_availability").delete().eq("user_id", user.id);
+    if (deleteAvailabilityError) throw new Error(deleteAvailabilityError.message);
+    if (availability.length) {
+      const { error } = await supabase.from("user_availability").insert(
+        availability.map((slot) => ({ user_id: user.id, ...slot })),
+      );
+      if (error) throw new Error(error.message);
+    }
+
+    const { error } = await supabase.from("profiles").update({ onboarding_completed: true }).eq("id", user.id);
+    if (error) throw new Error(error.message);
+  },
+
+  async getReliability(userId: string): Promise<ReliabilityDisplay> {
+    const { data } = await supabase.from("reliability_records").select("*").eq("user_id", userId).maybeSingle();
+    if (!data || data.attended_count + data.hosted_count < 3) return { label: "New to the platform" };
+    return {
+      label: "Reliability",
+      attended_count: data.attended_count,
+      late_cancellation_count: data.late_cancellation_count,
+      no_show_count: data.no_show_count,
+      hosted_count: data.hosted_count,
+    };
+  },
+
+  async resolvePublicActivity(slug: string): Promise<ActivityDetail | null> {
+    const { data } = await supabase
+      .from("activities")
+      .select(ACTIVITY_SELECT)
+      .eq("public_slug", slug)
+      .eq("status", "published")
+      .maybeSingle();
+    if (!data) return null;
+    return api.getActivity(data.id as string);
+  },
+
+  async createGuestInterest(payload: Record<string, unknown>) {
+    return invoke("create-guest-interest", payload);
+  },
+
+  async getGroup(id: string): Promise<Group | null> {
+    const { data, error } = await supabase
+      .from("activity_groups")
+      .select("*, category:categories(*)")
+      .eq("id", id)
+      .single();
+    if (error || !data) return null;
+
+    const { data: sessions } = await supabase
+      .from("activities")
+      .select(ACTIVITY_SELECT)
+      .eq("group_id", id)
+      .eq("status", "published")
+      .gte("starts_at", new Date().toISOString())
+      .order("starts_at")
+      .limit(5);
+
+    const counts = await participationCounts((sessions ?? []).map((s) => s.id as string));
+
+    return {
+      ...(data as unknown as Group),
+      member_count: 0,
+      upcoming_sessions: (sessions ?? []).map((s) => mapActivityRow(s, counts[s.id as string] ?? 0)),
+    };
+  },
+
+  async getMyPlans(): Promise<{ hosted: ActivitySummary[]; joined: ActivitySummary[] }> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { hosted: [], joined: [] };
+
+    const { data: hostedRows, error: hostedError } = await supabase
+      .from("activities")
+      .select(ACTIVITY_SELECT)
+      .eq("host_user_id", user.id)
+      .in("status", ["published", "draft"])
+      .order("starts_at", { ascending: true });
+    if (hostedError) throw new Error(hostedError.message);
+
+    const { data: joinedParticipations, error: joinedError } = await supabase
+      .from("participations")
+      .select("activity_id")
+      .eq("user_id", user.id)
+      .eq("status", "confirmed");
+    if (joinedError) throw new Error(joinedError.message);
+
+    const joinedIds = joinedParticipations?.map((p) => p.activity_id) ?? [];
+    let joinedRows: Record<string, unknown>[] = [];
+    if (joinedIds.length) {
+      const { data } = await supabase
+        .from("activities")
+        .select(ACTIVITY_SELECT)
+        .in("id", joinedIds);
+      joinedRows = data ?? [];
+    }
+
+    const allIds = [
+      ...(hostedRows ?? []).map((r) => r.id as string),
+      ...joinedIds,
+    ];
+    const counts = await participationCounts(allIds);
+
+    return {
+      hosted: (hostedRows ?? []).map((r) => mapActivityRow(r, counts[r.id as string] ?? 0)),
+      joined: joinedRows.map((r) => mapActivityRow(r, counts[r.id as string] ?? 0)),
+    };
+  },
+
+  async submitFeedback(activityId: string, rating: number, comment?: string) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+    const { error } = await supabase.from("activity_feedback").upsert({
+      activity_id: activityId,
+      user_id: user.id,
+      rating,
+      comment,
+    });
+    if (error) throw new Error(error.message);
+  },
+
+  async getCategories() {
+    const { data, error } = await supabase.from("categories").select("*").eq("is_active", true).order("name");
+    if (error) throw new Error(error.message);
+    return data ?? [];
+  },
+};

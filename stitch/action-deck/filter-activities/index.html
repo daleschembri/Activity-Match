@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Filter Activities</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#fe932c",
+                        "surface-container-high": "#ebe8e5",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#8bd79b",
+                        "surface-bright": "#fcf9f6",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#00210b",
+                        "on-surface": "#1c1c1a",
+                        "on-secondary-container": "#663500",
+                        "outline": "#707a6f",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "inverse-primary": "#8bd79b",
+                        "surface-container-highest": "#e5e2e0",
+                        "background": "#fcf9f6",
+                        "primary-container": "#166534",
+                        "secondary-fixed": "#ffdcc3",
+                        "tertiary": "#722736",
+                        "on-tertiary-fixed": "#3f0112",
+                        "surface": "#fcf9f6",
+                        "on-tertiary-fixed-variant": "#792d3b",
+                        "surface-tint": "#1f6c3a",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f6f3f1",
+                        "primary-fixed": "#a6f4b5",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "primary": "#004c22",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "secondary": "#904d00",
+                        "inverse-on-surface": "#f3f0ee",
+                        "tertiary-fixed": "#ffd9dd",
+                        "inverse-surface": "#31302f",
+                        "on-secondary-fixed-variant": "#6e3900",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#005226",
+                        "on-tertiary-container": "#ffbfc6",
+                        "surface-variant": "#e5e2e0",
+                        "tertiary-container": "#8f3e4c",
+                        "surface-container": "#f0edeb",
+                        "on-surface-variant": "#404940",
+                        "surface-dim": "#dcd9d7",
+                        "error": "#ba1a1a",
+                        "on-background": "#1c1c1a",
+                        "outline-variant": "#bfc9bd",
+                        "on-primary-container": "#93e0a2",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#2f1500"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "sheet": "20px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "margin-mobile": "20px",
+                        "xl": "32px",
+                        "touch": "44px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Hanken Grotesk"],
+                        "label-bold": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom range slider styling for minimalist look */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #004c22;
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #e5e2e0;
+            border-radius: 2px;
+        }
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            background: #e5e2e0;
+        }
+        
+        /* Checkbox styling */
+        .custom-checkbox {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #707a6f;
+            border-radius: 4px;
+            outline: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+        .custom-checkbox:checked {
+            background-color: #004c22;
+            border-color: #004c22;
+        }
+        .custom-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 3px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-high h-screen w-full flex items-end justify-center font-body-md text-on-surface overflow-hidden relative antialiased">
+<!-- Scrim / Overlay Background -->
+<div aria-hidden="true" class="absolute inset-0 bg-on-surface/40 z-10"></div>
+<!-- Bottom Sheet -->
+<div class="bg-surface w-full max-w-md h-[751px] rounded-t-sheet z-20 flex flex-col shadow-[0_-8px_24px_rgba(0,0,0,0.08)] transform transition-transform duration-300">
+<!-- Drag Handle Indicator -->
+<div class="w-full flex justify-center pt-4 pb-2">
+<div class="w-12 h-1.5 bg-outline-variant rounded-full"></div>
+</div>
+<!-- Header -->
+<div class="px-margin-mobile pb-sm flex justify-between items-center border-b border-surface-container-high">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Filters</h2>
+<button class="w-touch h-touch flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-margin-mobile py-lg space-y-xl pb-24">
+<!-- Distance -->
+<section class="space-y-md">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Distance</h3>
+<span class="font-label-bold text-label-bold text-primary" id="distance-value">25 km</span>
+</div>
+<div class="pt-sm">
+<input class="w-full" max="50" min="1" oninput="document.getElementById('distance-value').innerText = this.value + ' km'" type="range" value="25"/>
+<div class="flex justify-between mt-2 font-label-sm text-label-sm text-on-surface-variant">
+<span>1 km</span>
+<span>50 km</span>
+</div>
+</div>
+</section>
+<!-- Date Range (Simplified visually) -->
+<section class="space-y-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">Date Range</h3>
+<div class="flex gap-sm">
+<div class="flex-1 bg-surface-container-low rounded-lg border-b border-outline p-md flex items-center justify-between cursor-pointer focus-within:border-b-2 focus-within:border-primary">
+<span class="font-body-md text-on-surface">Today</span>
+<span class="material-symbols-outlined text-on-surface-variant">calendar_today</span>
+</div>
+<div class="flex items-center justify-center px-2 text-on-surface-variant">-</div>
+<div class="flex-1 bg-surface-container-low rounded-lg border-b border-outline p-md flex items-center justify-between cursor-pointer focus-within:border-b-2 focus-within:border-primary">
+<span class="font-body-md text-on-surface-variant">End Date</span>
+<span class="material-symbols-outlined text-on-surface-variant">calendar_today</span>
+</div>
+</div>
+</section>
+<!-- Days of Week -->
+<section class="space-y-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">Days</h3>
+<div class="flex flex-wrap gap-sm">
+<!-- Active Chip Example -->
+<button class="h-touch px-md rounded-full bg-primary/10 border border-primary/20 text-primary font-label-bold text-label-bold flex items-center justify-center transition-all active:scale-95">Mon</button>
+<!-- Inactive Chips -->
+<button class="h-touch px-md rounded-full bg-surface-container border border-outline-variant text-on-surface font-label-bold text-label-bold flex items-center justify-center transition-all active:scale-95 hover:bg-surface-container-high">Tue</button>
+<button class="h-touch px-md rounded-full bg-surface-container border border-outline-variant text-on-surface font-label-bold text-label-bold flex items-center justify-center transition-all active:scale-95 hover:bg-surface-container-high">Wed</button>
+<button class="h-touch px-md rounded-full bg-surface-container border border-outline-variant text-on-surface font-label-bold text-label-bold flex items-center justify-center transition-all active:scale-95 hover:bg-surface-container-high">Thu</button>
+<button class="h-touch px-md rounded-full bg-surface-container border border-outline-variant text-on-surface font-label-bold text-label-bold flex items-center justify-center transition-all active:scale-95 hover:bg-surface-container-high">Fri</button>
+<button class="h-touch px-md rounded-full bg-surface-container border border-outline-variant text-on-surface font-label-bold text-label-bold flex items-center justify-center transition-all active:scale-95 hover:bg-surface-container-high">Sat</button>
+<button class="h-touch px-md rounded-full bg-primary/10 border border-primary/20 text-primary font-label-bold text-label-bold flex items-center justify-center transition-all active:scale-95">Sun</button>
+</div>
+</section>
+<!-- Time of Day -->
+<section class="space-y-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">Time of Day</h3>
+<div class="flex flex-wrap gap-sm">
+<button class="h-touch px-md rounded-full bg-primary/10 border border-primary/20 text-primary font-label-bold text-label-bold flex items-center justify-center transition-all active:scale-95">
+<span class="material-symbols-outlined mr-2 text-[18px]">light_mode</span> Morning
+                    </button>
+<button class="h-touch px-md rounded-full bg-surface-container border border-outline-variant text-on-surface font-label-bold text-label-bold flex items-center justify-center transition-all active:scale-95 hover:bg-surface-container-high">
+<span class="material-symbols-outlined mr-2 text-[18px]">wb_sunny</span> Afternoon
+                    </button>
+<button class="h-touch px-md rounded-full bg-surface-container border border-outline-variant text-on-surface font-label-bold text-label-bold flex items-center justify-center transition-all active:scale-95 hover:bg-surface-container-high">
+<span class="material-symbols-outlined mr-2 text-[18px]">nights_stay</span> Evening
+                    </button>
+</div>
+</section>
+<!-- Cost -->
+<section class="space-y-md">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Max Cost</h3>
+<span class="font-label-bold text-label-bold text-primary" id="cost-value">$50</span>
+</div>
+<div class="pt-sm">
+<input class="w-full" max="200" min="0" oninput="document.getElementById('cost-value').innerText = this.value == 200 ? '$200+' : '$' + this.value" step="5" type="range" value="50"/>
+<div class="flex justify-between mt-2 font-label-sm text-label-sm text-on-surface-variant">
+<span>Free</span>
+<span>$200+</span>
+</div>
+</div>
+</section>
+<!-- Skill Level -->
+<section class="space-y-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">Skill Level</h3>
+<div class="flex flex-col gap-sm">
+<label class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
+<input checked="" class="custom-checkbox" type="checkbox"/>
+<span class="font-body-lg text-body-lg text-on-surface flex-1">Beginner</span>
+</label>
+<label class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
+<input checked="" class="custom-checkbox" type="checkbox"/>
+<span class="font-body-lg text-body-lg text-on-surface flex-1">Intermediate</span>
+</label>
+<label class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
+<input class="custom-checkbox" type="checkbox"/>
+<span class="font-body-lg text-body-lg text-on-surface flex-1">Advanced</span>
+</label>
+</div>
+</section>
+<!-- Commitment Type -->
+<section class="space-y-md border-t border-surface-container-high pt-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface">Activity Type</h3>
+<div class="flex gap-md">
+<label class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors flex-1">
+<input checked="" class="custom-checkbox" type="checkbox"/>
+<span class="font-body-lg text-body-lg text-on-surface">One-off</span>
+</label>
+<label class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors flex-1">
+<input class="custom-checkbox" type="checkbox"/>
+<span class="font-body-lg text-body-lg text-on-surface">Recurring</span>
+</label>
+</div>
+</section>
+</div>
+<!-- Sticky Footer Actions -->
+<div class="absolute bottom-0 left-0 w-full bg-surface border-t border-surface-container-high p-margin-mobile flex gap-md shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-30">
+<button class="flex-1 h-[56px] rounded-full border-2 border-outline text-on-surface font-label-bold text-label-bold active:scale-[0.98] transition-all bg-transparent flex justify-center items-center">
+                Reset
+            </button>
+<button class="flex-1 h-[56px] rounded-full bg-primary text-on-primary font-label-bold text-label-bold active:scale-[0.98] transition-all flex justify-center items-center shadow-sm">
+                Apply Filters
+            </button>
+</div>
+</div>
+</body></html>

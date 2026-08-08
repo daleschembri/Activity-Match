@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shared Activity - Sunset Walk &amp; Coffee</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e5e2e0",
+                        "on-surface": "#1c1c1a",
+                        "primary": "#004c22",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#663500",
+                        "surface-dim": "#dcd9d7",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f6f3f1",
+                        "primary-container": "#166534",
+                        "on-primary-fixed": "#00210b",
+                        "inverse-primary": "#8bd79b",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#1f6c3a",
+                        "surface": "#fcf9f6",
+                        "on-tertiary-container": "#ffbfc6",
+                        "surface-container": "#f0edeb",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#fe932c",
+                        "on-background": "#1c1c1a",
+                        "on-surface-variant": "#404940",
+                        "on-secondary-fixed-variant": "#6e3900",
+                        "surface-container-high": "#ebe8e5",
+                        "on-tertiary-fixed": "#3f0112",
+                        "outline-variant": "#bfc9bd",
+                        "tertiary": "#722736",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffd9dd",
+                        "on-primary-container": "#93e0a2",
+                        "tertiary-container": "#8f3e4c",
+                        "secondary-fixed": "#ffdcc3",
+                        "inverse-on-surface": "#f3f0ee",
+                        "surface-variant": "#e5e2e0",
+                        "on-secondary-fixed": "#2f1500",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "background": "#fcf9f6",
+                        "primary-fixed": "#a6f4b5",
+                        "on-primary-fixed-variant": "#005226",
+                        "outline": "#707a6f",
+                        "secondary": "#904d00",
+                        "primary-fixed-dim": "#8bd79b",
+                        "surface-bright": "#fcf9f6",
+                        "on-tertiary-fixed-variant": "#792d3b",
+                        "inverse-surface": "#31302f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin-mobile": "20px",
+                        "md": "16px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-bold": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-xl": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .shadow-ambient {
+            box-shadow: 0 4px 20px rgba(28, 28, 26, 0.06);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:hidden">
+<!-- Main Content Canvas -->
+<main class="flex-grow px-margin-mobile pt-lg pb-32 flex flex-col items-center">
+<!-- App Logo / Branding (Minimal) -->
+<div class="w-full flex justify-center mb-xl">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">directions_walk</span>
+<span class="font-label-bold text-label-bold text-primary tracking-widest uppercase">Pace</span>
+</div>
+</div>
+<!-- Activity Card -->
+<div class="w-full max-w-sm bg-surface rounded-xl shadow-ambient overflow-hidden flex flex-col relative">
+<!-- Hero Image -->
+<div class="relative h-64 w-full">
+<img class="w-full h-full object-cover" data-alt="A warm, golden-hour photograph of a scenic urban walking path lined with autumn trees. The setting sun casts long, inviting shadows across the paved trail. In the background, a cozy neighborhood coffee shop is faintly visible, glowing warmly. The aesthetic is tactile, naturalistic, and emphasizes outdoor activity in a crisp, clean light-mode friendly environment. The mood is relaxed, energetic, and community-focused." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfa3G79NeR9BI2u6FZm2F5R74up0KqJ1N3d0gUR_jVKrQRAF7zkoF9NTRWDelRfsaKgMizmu_WcpcHf1bUONWPi61JNrFSF9d9fPOtlfn-zFvx2_g762eiEGBZEPVFXUXo01rObYAz3mIzFjv2P90jN2gEfT3-7jZJrcQFrFkvEOD7ZLvaN8EgJM666G5978RjWjPi4DhDwhaD0XMuQlsGxGYQO0So_jPuCCywmXzfEF1t2oOa8kc--Q"/>
+<!-- Date/Time Badge Floating -->
+<div class="absolute top-md right-md bg-surface/90 backdrop-blur-sm px-md py-sm rounded-full flex flex-col items-center shadow-sm">
+<span class="font-label-bold text-label-bold text-primary">OCT</span>
+<span class="font-headline-md text-headline-md text-on-surface leading-none">24</span>
+</div>
+</div>
+<!-- Card Content -->
+<div class="p-lg flex flex-col gap-md">
+<!-- Category Tags -->
+<div class="flex gap-sm">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-label-sm text-label-sm">Urban Walk</span>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-label-sm text-label-sm">Social</span>
+</div>
+<!-- Title -->
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Sunset walk and coffee</h1>
+<!-- Location & Time Details -->
+<div class="flex flex-col gap-sm text-on-surface-variant font-body-md text-body-md mt-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline">schedule</span>
+<span>5:30 PM - 7:00 PM</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline">location_on</span>
+<span>Riverfront Park Trailhead</span>
+</div>
+</div>
+<!-- Divider -->
+<hr class="border-surface-variant my-sm"/>
+<!-- Host & Capacity Info -->
+<div class="flex items-center justify-between">
+<!-- Host -->
+<div class="flex items-center gap-md">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-surface-container-high" data-alt="A close-up, friendly headshot of an athletic woman in her 30s wearing outdoor activewear. She has a warm, welcoming smile. The background is softly blurred greenery, matching a naturalistic and approachable aesthetic. The lighting is bright, clear, and perfectly suited for a pristine light-mode profile picture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB05SVJ9--HxtBaTkLxiRYGjCKl1YnZs5cOdm_-TQDlKJCuFrOgt62wVKShmCm7CFYqNSGY3OqnL47ueDAZedNxqJFxN19OmekOupL9dFDqqvtPWAAPoTuvhLcKc9WclI1UOuOj3dYaQod4eCnQVBZ3xoLYuu5T4ZBK6tT8oMLQ1fnO1BRxPqmA-x3vVRyULAXsFUG-T4XjTj_qugHWsBQl89qdxuRkWXDrcDPGvutq6gkkjuTO4TkDRw"/>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hosted by</span>
+<span class="font-label-bold text-label-bold text-on-surface">Sarah J.</span>
+</div>
+</div>
+<!-- Capacity -->
+<div class="flex flex-col items-end">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Spots left</span>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="material-symbols-outlined text-surface-variant text-sm" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="material-symbols-outlined text-surface-variant text-sm" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold mt-1">2 / 4</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Description Snippet (Optional but adds value) -->
+<p class="mt-lg px-md font-body-md text-body-md text-on-surface-variant text-center max-w-sm">
+            Join us for an easy 3-mile loop as the sun goes down, followed by warm drinks at The Roast. All paces welcome!
+        </p>
+</main>
+<!-- Fixed Bottom Action Area (Transactional, no nav shell) -->
+<div class="fixed bottom-0 w-full bg-surface/95 backdrop-blur-md border-t border-surface-variant p-margin-mobile flex flex-col gap-sm pb-safe pt-md shadow-[0_-4px_20px_rgba(28,28,26,0.08)] z-50 rounded-t-xl">
+<button class="w-full bg-primary text-on-primary py-4 rounded-full font-label-bold text-label-bold flex items-center justify-center gap-sm active:scale-[0.98] transition-transform duration-150">
+            I'm interested
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+</button>
+<button class="w-full text-on-surface-variant py-2 font-label-sm text-label-sm text-center underline decoration-outline-variant underline-offset-4 active:text-primary transition-colors">
+            Continue without creating an account
+        </button>
+</div>
+</body></html>

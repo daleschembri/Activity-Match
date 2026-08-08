@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tuesday Board Games</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e5e2e0",
+                        "on-surface": "#1c1c1a",
+                        "primary": "#004c22",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#663500",
+                        "surface-dim": "#dcd9d7",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f6f3f1",
+                        "primary-container": "#166534",
+                        "on-primary-fixed": "#00210b",
+                        "inverse-primary": "#8bd79b",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#1f6c3a",
+                        "surface": "#fcf9f6",
+                        "on-tertiary-container": "#ffbfc6",
+                        "surface-container": "#f0edeb",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#fe932c",
+                        "on-background": "#1c1c1a",
+                        "on-surface-variant": "#404940",
+                        "on-secondary-fixed-variant": "#6e3900",
+                        "surface-container-high": "#ebe8e5",
+                        "on-tertiary-fixed": "#3f0112",
+                        "outline-variant": "#bfc9bd",
+                        "tertiary": "#722736",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffd9dd",
+                        "on-primary-container": "#93e0a2",
+                        "tertiary-container": "#8f3e4c",
+                        "secondary-fixed": "#ffdcc3",
+                        "inverse-on-surface": "#f3f0ee",
+                        "surface-variant": "#e5e2e0",
+                        "on-secondary-fixed": "#2f1500",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "background": "#fcf9f6",
+                        "primary-fixed": "#a6f4b5",
+                        "on-primary-fixed-variant": "#005226",
+                        "outline": "#707a6f",
+                        "secondary": "#904d00",
+                        "primary-fixed-dim": "#8bd79b",
+                        "surface-bright": "#fcf9f6",
+                        "on-tertiary-fixed-variant": "#792d3b",
+                        "inverse-surface": "#31302f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin-mobile": "20px",
+                        "md": "16px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-bold": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-xl": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen pb-24 md:pb-0">
+<!-- Top Navigation (Desktop) -->
+<div class="hidden md:flex justify-between items-center px-lg py-md w-full bg-surface top-0 sticky z-50">
+<div class="flex items-center gap-md">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A small circular avatar placeholder image showing a generic user silhouette in soft lighting. The background is a muted warm neutral tone. High quality, simple, modern UI element." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3Fd9ntSWbWktukLbixQtFnEef8KDkeuid3I4_pZGVqxX7DVcDTIeiEDLZsf7ssDn_HYANNjlD6NHn1ielN8w4p0PBXXvPuPnbFQX-gchLWZe8G9GqSvkSsmiz2KiNsX4P0-p6UQ_FlAjbJuqUpO-PmlYbHzFAcDvnvGVZsbo66gxxZIfxjRIHKNT7k8K9FhDMGBbaKm4_LAJiEaziuDRsiHTyvtTpUv4m9zAsoH3t7WIuMeBipxyPuQ"/>
+<h1 class="font-headline-md text-headline-md text-primary">Discover</h1>
+</div>
+<div class="flex items-center gap-lg">
+<nav class="flex gap-lg">
+<a class="text-on-surface-variant font-label-bold text-label-bold hover:text-primary transition-colors" href="#">Discover</a>
+<a class="text-primary font-label-bold text-label-bold" href="#">My plans</a>
+<a class="text-on-surface-variant font-label-bold text-label-bold hover:text-primary transition-colors" href="#">Create</a>
+<a class="text-on-surface-variant font-label-bold text-label-bold hover:text-primary transition-colors" href="#">Profile</a>
+</nav>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-high rounded-full p-2 transition-colors">notifications</span>
+</div>
+</div>
+<!-- Top Navigation (Mobile) -->
+<div class="md:hidden flex justify-between items-center px-margin-mobile py-sm w-full top-0 sticky bg-surface z-50">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A small circular avatar placeholder image showing a generic user silhouette in soft lighting. The background is a muted warm neutral tone. High quality, simple, modern UI element." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4o9C4ZSNX0PmXJK_FumVmMF9C3uS9H2naOzNH9P3HhY99sE3AIwdl9SdaYBrEESezG-FVeOlpkEKrdR8Kbs6HxUqjcnSvik6qQznK73zz0H9oUsj2KTnXFga9it4EWvtdynU_EO3qIosyEWAPcGL-iGtpLveWcVCmTH05p0EnJLlMLAb-m6AnD4yMra1pd5egG8biePSQxIUuefkxeZNw2rEnqgTvHYDR2GB0YDDD8ktV2kBSCHdQ9A"/>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Discover</h1>
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</div>
+<!-- Main Content -->
+<main class="max-w-3xl mx-auto px-margin-mobile md:px-lg py-xl">
+<!-- Group Header Card -->
+<section class="bg-surface-container rounded-xl p-lg md:p-xl mb-xl shadow-[0_4px_20px_rgba(28,28,26,0.04)] relative overflow-hidden">
+<!-- Decorative Pattern/Gradient -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+<div class="relative z-10 flex flex-col md:flex-row md:items-start justify-between gap-md">
+<div>
+<div class="flex items-center gap-sm mb-sm">
+<span class="px-3 py-1 bg-primary/10 text-primary font-label-sm text-label-sm rounded-full inline-flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary inline-block"></span>
+                            Open to new members
+                        </span>
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant font-label-sm text-label-sm rounded-full">Weekly</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-2">Tuesday Board Games</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-lg mb-md">We meet every Tuesday evening to play strategy games, deck builders, and social deduction games. Everyone is welcome!</p>
+<div class="flex items-center gap-2">
+<div class="flex -space-x-3">
+<img class="w-10 h-10 rounded-full border-2 border-surface-container object-cover" data-alt="A small circular portrait of a smiling person wearing glasses. Warm lighting, modern UI avatar style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGV0MuXAruqm1ba8UGVAHqDC1ReNzJAKw9MDV7D4A7i1tAVqiKZeK7MAu0pTMx9xy8qxuubS52O1GmsN3LgLRGI4bDH3MgcwYRFMm7ToaMxEx0BcSGqVl9rzbTkVQSW1DWETx5-MwJpNN9yTmqeBXBMJWuGVpqxsjoD5VNeyHY5gkhu1I-P3dILvmc4mRWPtS772eLf_Remauhkmf9Sxo91q7WSMDheAsp5JLnEhbttPsk0iHLYPeWCw"/>
+<img class="w-10 h-10 rounded-full border-2 border-surface-container object-cover" data-alt="A small circular portrait of a person with curly hair. Warm lighting, modern UI avatar style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAolOdso3V0AWRKhCP4o4AkDzJvMSQRtYCVEvtp6CGr2Orf1zef2MzBiQes1zkY30YF2L6ogA7KR3ZNKTJZVe1recGzlRBH3hRJoBtbGniRJePxA3mTgQS6wuva4gi7yE4o_qtmlTjyGrIbBL2g5Ssn2g6rF69W2RGkJi8Ub8Gso56mSlp2Kcy3le2VE-txAXNBnYf4yJkfai41VaEXSN5gzVG7h3WK0dwfiOCpJ3WzPoW0HxU_JsRILQ"/>
+<img class="w-10 h-10 rounded-full border-2 border-surface-container object-cover" data-alt="A small circular portrait of a person looking thoughtful. Warm lighting, modern UI avatar style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC69u9ZtRZ0x6Entqnsiul7LUeMPjvy_8JNf7jUP0klCnfSE-46nj-tpwmSxaZtb2_j-1Sms1EvEuspCTFOxejeKeCyUGP2UchMA6vgO4riX2XA01FdBIpcqujn1mbylQmUmfh5m5VRnwuZ7EJaTOEFdLJ9JkQTXrOkTiytQz0NRSYrQLTkWQMsT_LBl7mhSZChZbcUPBl564Fx3PvHLRJgxSRWGGQT12EEEirCvv4VliPW9X_bIaDcmw"/>
+<img class="w-10 h-10 rounded-full border-2 border-surface-container object-cover" data-alt="A small circular portrait of a person in a bright green shirt. Warm lighting, modern UI avatar style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX9R4P-ih0qsww4VmOGe5c4Dyh0RerB-owuunVitUSCtRH2bugQlmmwclmfH_PMu4lXSzu4ZeOIG4uAz5pCp-P7I8L1o1XDXFzcjHOGkV0PbzfBcNmtte3WVTsEM4vUjGhwghkkFW-2qwENxT1mwGWXHOEgho11YkcBbeHqLQJXfzQwVdBThYiyy_LuKLgVawOAVmBXt8Pz_CTgP-4SB2PBLeJ-65FopMopVBG2GZf1YPt1j80_U0OHQ"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant ml-2">+12 members</span>
+</div>
+</div>
+<button aria-label="Group Settings" class="mt-4 md:mt-0 p-3 bg-surface hover:bg-surface-container-high rounded-full text-on-surface-variant transition-colors shadow-sm self-start flex-shrink-0">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</section>
+<!-- Next Session Card (Hero) -->
+<section class="mb-xl">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-md">Next Session</h2>
+<div class="bg-surface rounded-xl p-lg border border-surface-variant shadow-[0_8px_24px_rgba(28,28,26,0.06)]">
+<div class="flex flex-col md:flex-row justify-between md:items-center gap-lg">
+<div class="flex items-start gap-md">
+<div class="bg-primary-container/20 p-4 rounded-lg flex flex-col items-center justify-center min-w-[80px]">
+<span class="font-label-bold text-label-bold text-primary uppercase">Oct</span>
+<span class="font-headline-lg text-headline-lg text-on-surface">24</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1">Catan &amp; Carcassonne Night</h3>
+<div class="flex flex-col gap-1">
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-base">schedule</span>
+                                    7:00 PM - 10:00 PM
+                                </span>
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-base">location_on</span>
+                                    The Meeple Cafe, Downtown
+                                </span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-lg border border-surface-variant w-full md:w-auto">
+<p class="font-label-bold text-label-bold text-on-surface mb-sm text-center">Are you going?</p>
+<div class="flex gap-sm">
+<button class="flex-1 md:flex-none px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded-full hover:scale-[0.98] transition-transform shadow-[0_4px_12px_rgba(0,76,34,0.2)]">Yes</button>
+<button class="flex-1 md:flex-none px-6 py-2 border-2 border-outline-variant text-on-surface font-label-bold text-label-bold rounded-full hover:bg-surface-container-high transition-colors">No</button>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-sm text-center">8 people attending</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Upcoming Sessions List -->
+<section>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-md">Upcoming</h2>
+<div class="flex flex-col gap-4">
+<!-- Session Item -->
+<div class="bg-surface rounded-lg p-md border border-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer flex justify-between items-center group">
+<div class="flex items-center gap-md">
+<div class="bg-surface-container p-2 rounded w-16 text-center">
+<div class="font-label-sm text-label-sm text-on-surface-variant">OCT</div>
+<div class="font-headline-md text-headline-md text-on-surface">31</div>
+</div>
+<div>
+<h4 class="font-label-bold text-label-bold text-on-surface">Halloween Special: Arkham Horror</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">7:00 PM • The Meeple Cafe</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+<!-- Session Item -->
+<div class="bg-surface rounded-lg p-md border border-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer flex justify-between items-center group">
+<div class="flex items-center gap-md">
+<div class="bg-surface-container p-2 rounded w-16 text-center">
+<div class="font-label-sm text-label-sm text-on-surface-variant">NOV</div>
+<div class="font-headline-md text-headline-md text-on-surface">07</div>
+</div>
+<div>
+<h4 class="font-label-bold text-label-bold text-on-surface">Heavy Strategy: Scythe</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">7:00 PM • The Meeple Cafe</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation (Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full h-20 bg-surface dark:bg-inverse-surface flex justify-around items-center px-4 pb-safe shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-lg p-2" href="#">
+<span class="material-symbols-outlined mb-1">explore</span>
+<span class="font-label-sm text-label-sm">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-label-bold text-label-bold after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-lg p-2 scale-90 duration-200" href="#">
+<span class="material-symbols-outlined fill mb-1">event_note</span>
+<span class="font-label-sm text-label-sm">My plans</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-lg p-2" href="#">
+<span class="material-symbols-outlined mb-1">add_circle</span>
+<span class="font-label-sm text-label-sm">Create</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-lg p-2" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+</body></html>

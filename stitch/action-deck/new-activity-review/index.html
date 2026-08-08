@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Review Activity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#31302f",
+                    "surface-container-low": "#f6f3f1",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#ffbfc6",
+                    "on-tertiary-fixed-variant": "#792d3b",
+                    "on-surface": "#1c1c1a",
+                    "surface-container-highest": "#e5e2e0",
+                    "on-secondary-container": "#663500",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#6e3900",
+                    "primary-fixed": "#a6f4b5",
+                    "surface-container": "#f0edeb",
+                    "primary-fixed-dim": "#8bd79b",
+                    "secondary": "#904d00",
+                    "outline-variant": "#bfc9bd",
+                    "surface-variant": "#e5e2e0",
+                    "surface": "#fcf9f6",
+                    "on-primary-container": "#93e0a2",
+                    "surface-bright": "#fcf9f6",
+                    "on-secondary-fixed": "#2f1500",
+                    "outline": "#707a6f",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#166534",
+                    "surface-dim": "#dcd9d7",
+                    "secondary-fixed-dim": "#ffb77d",
+                    "secondary-fixed": "#ffdcc3",
+                    "on-primary": "#ffffff",
+                    "background": "#fcf9f6",
+                    "surface-container-high": "#ebe8e5",
+                    "surface-tint": "#1f6c3a",
+                    "inverse-on-surface": "#f3f0ee",
+                    "tertiary": "#722736",
+                    "on-primary-fixed": "#00210b",
+                    "tertiary-container": "#8f3e4c",
+                    "on-surface-variant": "#404940",
+                    "tertiary-fixed-dim": "#ffb2bb",
+                    "tertiary-fixed": "#ffd9dd",
+                    "inverse-primary": "#8bd79b",
+                    "on-primary-fixed-variant": "#005226",
+                    "on-background": "#1c1c1a",
+                    "on-tertiary-fixed": "#3f0112",
+                    "on-secondary": "#ffffff",
+                    "primary": "#004c22",
+                    "error": "#ba1a1a",
+                    "secondary-container": "#fe932c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "margin-mobile": "20px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "base": "4px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"],
+                    "headline-xl": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "label-bold": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "headline-xl": ["40px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["32px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- Top Navigation (Mobile) -->
+<header class="w-full top-0 sticky bg-surface z-50 shadow-sm border-b border-surface-container-high md:hidden">
+<div class="flex justify-between items-center px-margin-mobile py-sm w-full h-16">
+<button class="text-on-surface p-2 -ml-2 rounded-full hover:bg-surface-container-high transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary text-center flex-1 pr-10">Review</h1>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-3xl mx-auto px-margin-mobile pt-lg pb-xl space-y-xl">
+<!-- Header Section -->
+<section class="space-y-sm">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">Almost there.</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Review the details we've gathered. You can edit any field before publishing.</p>
+</section>
+<!-- Editable Details List -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-surface-container-high overflow-hidden">
+<div class="divide-y divide-surface-container-high">
+<!-- Title Row -->
+<div class="p-md hover:bg-surface-container-low transition-colors group cursor-pointer flex justify-between items-center">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Title</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface font-medium">Sunset Bouldering Session</p>
+</div>
+<button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+<!-- Date & Time Row -->
+<div class="p-md hover:bg-surface-container-low transition-colors group cursor-pointer flex justify-between items-center">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Date &amp; Time</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface">Thu, Oct 24 • 5:30 PM - 8:00 PM</p>
+</div>
+<button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+<!-- Location Row -->
+<div class="p-md hover:bg-surface-container-low transition-colors group cursor-pointer flex justify-between items-center">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Location</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed font-label-sm text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1"><span class="material-symbols-outlined text-[12px] filled-icon">auto_awesome</span> Suggested</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface">Crag Peak, North Trailhead</p>
+</div>
+<button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+<!-- Capacity Row -->
+<div class="p-md hover:bg-surface-container-low transition-colors group cursor-pointer flex justify-between items-center">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Capacity</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface">6 people</p>
+</div>
+<button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+<!-- Cost Row -->
+<div class="p-md hover:bg-surface-container-low transition-colors group cursor-pointer flex justify-between items-center">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Cost</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface">Free</p>
+</div>
+<button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+<!-- Skill Level Row -->
+<div class="p-md hover:bg-surface-container-low transition-colors group cursor-pointer flex justify-between items-center">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Skill Level</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed font-label-sm text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1"><span class="material-symbols-outlined text-[12px] filled-icon">auto_awesome</span> Suggested</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface">Intermediate (V3-V5)</p>
+</div>
+<button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Auto-generated Tags Section -->
+<section class="space-y-md">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-md text-headline-md text-on-surface">Tags</h3>
+<span class="bg-primary-fixed-dim/20 text-primary-container font-label-sm text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1"><span class="material-symbols-outlined text-[12px] filled-icon">auto_awesome</span> Auto-generated</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<div class="bg-primary-container/10 text-primary-container border border-primary-container/20 px-3 py-1.5 rounded-full flex items-center gap-2 font-label-bold text-label-bold">
+<span>Bouldering</span>
+<button class="text-primary-container/60 hover:text-primary-container transition-colors rounded-full flex items-center justify-center p-0.5 hover:bg-primary-container/10">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<div class="bg-primary-container/10 text-primary-container border border-primary-container/20 px-3 py-1.5 rounded-full flex items-center gap-2 font-label-bold text-label-bold">
+<span>Outdoors</span>
+<button class="text-primary-container/60 hover:text-primary-container transition-colors rounded-full flex items-center justify-center p-0.5 hover:bg-primary-container/10">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<div class="bg-primary-container/10 text-primary-container border border-primary-container/20 px-3 py-1.5 rounded-full flex items-center gap-2 font-label-bold text-label-bold">
+<span>Evening</span>
+<button class="text-primary-container/60 hover:text-primary-container transition-colors rounded-full flex items-center justify-center p-0.5 hover:bg-primary-container/10">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<button class="bg-surface border border-dashed border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-full flex items-center gap-2 font-label-bold text-label-bold hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add Tag</span>
+</button>
+</div>
+</section>
+<!-- Acceptance Mode Selector (Bento Style) -->
+<section class="space-y-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">How should people join?</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+<!-- Auto-accept (Selected) -->
+<label class="relative flex cursor-pointer rounded-xl border-2 border-primary bg-primary/5 p-4 shadow-sm hover:bg-primary/10 transition-colors">
+<input checked="" class="peer sr-only" name="acceptance" type="radio"/>
+<div class="flex w-full items-start gap-4">
+<div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-primary bg-primary text-white">
+<span class="material-symbols-outlined text-[16px] filled-icon">check</span>
+</div>
+<div>
+<p class="font-label-bold text-label-bold text-on-surface mb-1 flex items-center gap-2">
+                                Auto-accept
+                                <span class="material-symbols-outlined text-[16px] text-primary">bolt</span>
+</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Anyone who RSVPs is instantly confirmed.</p>
+</div>
+</div>
+</label>
+<!-- Host approval -->
+<label class="relative flex cursor-pointer rounded-xl border-2 border-surface-container-high bg-surface-container-lowest p-4 shadow-sm hover:bg-surface-container-low transition-colors">
+<input class="peer sr-only" name="acceptance" type="radio"/>
+<div class="flex w-full items-start gap-4">
+<div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-outline-variant bg-transparent peer-checked:border-primary peer-checked:bg-primary">
+</div>
+<div>
+<p class="font-label-bold text-label-bold text-on-surface mb-1 flex items-center gap-2">
+                                Host approval
+                                <span class="material-symbols-outlined text-[16px] text-on-surface-variant">how_to_reg</span>
+</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">You manually review and approve each request.</p>
+</div>
+</div>
+</label>
+</div>
+</section>
+</main>
+<!-- Bottom Action Bar (Fixed) -->
+<div class="fixed bottom-0 left-0 w-full bg-surface/90 backdrop-blur-md border-t border-surface-container-high p-4 z-50">
+<div class="max-w-3xl mx-auto flex gap-4">
+<button class="flex-1 py-3 px-6 rounded-full border border-outline text-on-surface font-label-bold text-label-bold text-center hover:bg-surface-container-low transition-colors">
+                Save Draft
+            </button>
+<button class="flex-[2] py-3 px-6 rounded-full bg-primary text-on-primary font-label-bold text-label-bold text-center hover:bg-primary-container transition-colors shadow-sm active:scale-[0.98]">
+                Publish Activity
+            </button>
+</div>
+</div>
+</body></html>
