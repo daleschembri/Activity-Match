@@ -11,6 +11,7 @@
     "dev:clean": "npm run dev:clean --workspace=@activity-match/web",
     "start": "npm run dev",
     "build": "npm run build --workspaces --if-present",
+    "build:vercel": "npm run build --workspace=@activity-match/web && node scripts/prepare-vercel-output.mjs",
     "preview": "npm run preview --workspace=@activity-match/web",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present"

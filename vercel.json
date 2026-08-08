@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm install",
-  "buildCommand": "npm run build --workspace=@activity-match/web",
-  "outputDirectory": "apps/web/dist",
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/((?!assets/|favicon\\.svg|manifest\\.webmanifest|registerSW\\.js|sw\\.js|workbox-.*\\.js).*)", "destination": "/index.html" }
   ]
