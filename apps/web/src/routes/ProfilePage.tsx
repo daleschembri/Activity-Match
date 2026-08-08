@@ -1,14 +1,13 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { BottomNav, Icon, PrimaryButton, ScreenShell } from "@activity-match/ui";
+import { Icon, PrimaryButton, ScreenShell } from "@activity-match/ui";
 import { api } from "@/lib/api";
+import { formatProfileAgeGender } from "@/lib/profile";
 import { useAuth } from "@/lib/AuthProvider";
 import { isSupabaseConfigured } from "@/lib/supabase";
-import { mainNavCurrentPath, mainNavItems } from "@/lib/mainNav";
 
 export function ProfilePage() {
   const navigate = useNavigate();
-  const location = useLocation();
   const { signOut } = useAuth();
   const { data: profile } = useQuery({ queryKey: ["profile"], queryFn: () => api.getProfile() });
   const { data: reliability } = useQuery({
@@ -27,12 +26,10 @@ export function ProfilePage() {
   const interestNames = categories
     .filter((c: { id: string }) => interestIds.includes(c.id))
     .map((c: { name: string }) => c.name);
+  const ageGender = formatProfileAgeGender(profile?.date_of_birth, profile?.gender);
 
   return (
-    <ScreenShell
-      title="Profile"
-      footer={<BottomNav items={[...mainNavItems]} currentPath={mainNavCurrentPath(location.pathname)} onNavigate={navigate} />}
-    >
+    <ScreenShell title="Profile" reserveBottomNav>
       <div className="space-y-8 pb-8">
         <section className="flex flex-col items-center text-center gap-4">
           {profile?.avatar_ref ? (
@@ -48,6 +45,11 @@ export function ProfilePage() {
           )}
           <div className="space-y-1">
             <h2 className="text-headline-md font-bold">{profile?.display_name ?? "Your profile"}</h2>
+            {ageGender ? (
+              <p className="text-body-md text-on-surface-variant">{ageGender}</p>
+            ) : (
+              <p className="text-body-md text-on-surface-variant">Add your age and gender</p>
+            )}
             <div className="flex items-center justify-center gap-1 text-on-surface-variant">
               <Icon name="location_on" className="text-base" />
               <span>{profile?.home_area_label ?? "Add your area"}</span>

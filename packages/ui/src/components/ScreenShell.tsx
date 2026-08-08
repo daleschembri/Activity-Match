@@ -5,6 +5,8 @@ interface ScreenShellProps {
   children: ReactNode;
   headerRight?: ReactNode;
   footer?: ReactNode;
+  /** Reserve space for the fixed main bottom nav. */
+  reserveBottomNav?: boolean;
   className?: string;
 }
 
@@ -13,12 +15,17 @@ export function ScreenShell({
   children,
   headerRight,
   footer,
+  reserveBottomNav = false,
   className = "",
 }: ScreenShellProps) {
   return (
-    <div className={`min-h-dvh bg-surface text-on-surface flex flex-col ${className}`}>
+    <div
+      className={`${
+        reserveBottomNav ? "h-dvh overflow-hidden" : "min-h-dvh"
+      } bg-surface text-on-surface flex flex-col ${className}`}
+    >
       {(title || headerRight) && (
-        <header className="sticky top-0 z-10 bg-surface/95 backdrop-blur border-b border-outline-variant/30 px-margin-mobile py-3 flex items-center justify-between">
+        <header className="sticky top-0 z-10 bg-surface/95 backdrop-blur border-b border-outline-variant/30 px-margin-mobile py-3 flex items-center justify-between shrink-0">
           {title ? (
             <h1 className="text-headline-md font-bold tracking-tight">{title}</h1>
           ) : (
@@ -27,7 +34,13 @@ export function ScreenShell({
           {headerRight}
         </header>
       )}
-      <main className="flex-1 px-margin-mobile py-gutter overflow-y-auto">{children}</main>
+      <main
+        className={`flex-1 px-margin-mobile py-gutter overflow-y-auto min-h-0 ${
+          reserveBottomNav ? "pb-24" : ""
+        }`}
+      >
+        {children}
+      </main>
       {footer}
     </div>
   );

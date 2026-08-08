@@ -54,11 +54,25 @@ export const MessageType = {
   POLL: "poll",
 } as const;
 
+export const NotificationType = {
+  JOIN_REQUEST_RECEIVED: "join_request_received",
+  JOIN_REQUEST_ACCEPTED: "join_request_accepted",
+  JOIN_REQUEST_DECLINED: "join_request_declined",
+  JOIN_REQUEST_WAITLISTED: "join_request_waitlisted",
+} as const;
+
 export const SkillLevel = {
   ANY: "any",
   BEGINNER: "beginner",
   INTERMEDIATE: "intermediate",
   ADVANCED: "advanced",
+} as const;
+
+export const ProfileGender = {
+  WOMAN: "woman",
+  MAN: "man",
+  NON_BINARY: "non_binary",
+  PREFER_NOT_TO_SAY: "prefer_not_to_say",
 } as const;
 
 export type ListingType = (typeof ListingType)[keyof typeof ListingType];
@@ -71,4 +85,6 @@ export type ParticipationStatus =
   (typeof ParticipationStatus)[keyof typeof ParticipationStatus];
 export type SwipeDirection = (typeof SwipeDirection)[keyof typeof SwipeDirection];
 export type MessageType = (typeof MessageType)[keyof typeof MessageType];
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType];
 export type SkillLevel = (typeof SkillLevel)[keyof typeof SkillLevel];
+export type ProfileGender = (typeof ProfileGender)[keyof typeof ProfileGender];

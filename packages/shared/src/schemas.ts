@@ -110,7 +110,7 @@ export const swipeSchema = z.object({
 
 export const joinRequestSchema = z.object({
   activity_id: z.string().uuid(),
-  introduction: z.string().max(300).optional(),
+  introduction: z.string().trim().min(1, "Write a message to the host").max(300),
   availability_confirmed: z.boolean(),
   screening_answers: z
     .array(z.object({ question_id: z.string().uuid(), answer: z.string().max(300) }))

@@ -54,7 +54,8 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ["@activity-match/shared", "@activity-match/ui"],
+    // Workspace packages change often; pre-bundling caches stale exports (e.g. ToggleSwitch).
+    exclude: ["@activity-match/shared", "@activity-match/ui"],
   },
   server: {
     port: 5173,
@@ -63,6 +64,10 @@ export default defineConfig({
     open: true,
     fs: {
       allow: [path.resolve(__dirname, "../..")],
+    },
+    watch: {
+      // Rebuild when shared workspace packages change.
+      ignored: ["!**/packages/**"],
     },
   },
 });

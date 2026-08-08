@@ -7,4 +7,5 @@ export * from "./components/PrimaryButton";
 export * from "./components/ScreenShell";
 export * from "./components/SystemMessage";
 export * from "./components/TextField";
+export * from "./components/ToggleSwitch";
 export { stitchColors, stitchTheme } from "../tailwind.preset";

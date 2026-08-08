@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { AcceptanceMode, SkillLevel } from "@activity-match/shared";
-import { BottomNav, FilterChip, Icon, PrimaryButton, ScreenShell, TextField } from "@activity-match/ui";
+import { FilterChip, Icon, PrimaryButton, ScreenShell, TextField, ToggleSwitch } from "@activity-match/ui";
 import { api } from "@/lib/api";
 import {
   acceptanceModeOptions,
@@ -15,7 +15,6 @@ import {
 } from "@/lib/activityForm";
 import { MapPinPicker, type MapPinValue } from "@/components/MapPinPicker";
 import { resolvePinLocation } from "@/lib/geocode";
-import { mainNavCurrentPath, mainNavItems } from "@/lib/mainNav";
 
 function draftField<T>(field: { value?: T } | undefined, fallback: T): T {
   return field?.value ?? fallback;
@@ -35,7 +34,6 @@ function Section({ title, hint, children }: { title: string; hint?: string; chil
 
 export function CreateReviewPage() {
   const navigate = useNavigate();
-  const location = useLocation();
   const queryClient = useQueryClient();
   const stored = sessionStorage.getItem("activity-draft");
   const parsed = stored ? JSON.parse(stored) : null;
@@ -209,10 +207,7 @@ export function CreateReviewPage() {
   };
 
   return (
-    <ScreenShell
-      title="Review"
-      footer={<BottomNav items={[...mainNavItems]} currentPath={mainNavCurrentPath(location.pathname)} onNavigate={navigate} />}
-    >
+    <ScreenShell title="Review" reserveBottomNav>
       <div className="space-y-6 pb-4">
         <section className="space-y-2">
           <h2 className="text-headline-lg-mobile font-extrabold">Almost there.</h2>
@@ -422,11 +417,21 @@ export function CreateReviewPage() {
         </section>
 
         <Section title="Hosting">
-          <FilterChip
-            label="I'll participate too"
-            selected={hostIsParticipating}
-            onClick={() => setHostIsParticipating((prev) => !prev)}
-          />
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <p className="font-label-bold text-on-surface">I&apos;ll participate too</p>
+              <p className="text-label-sm text-on-surface-variant mt-0.5">
+                {hostIsParticipating
+                  ? "On — you're counted in the activity capacity"
+                  : "Off — you're hosting only, not joining as a participant"}
+              </p>
+            </div>
+            <ToggleSwitch
+              checked={hostIsParticipating}
+              onChange={setHostIsParticipating}
+              label="I'll participate too"
+            />
+          </div>
         </Section>
 
         {error && (

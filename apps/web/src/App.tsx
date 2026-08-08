@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { AnimatedOutlet } from "./components/AnimatedOutlet";
+import { AppShell } from "./components/AppShell";
 import { AuthProvider } from "./lib/AuthProvider";
 import { isSupabaseConfigured } from "./lib/supabase";
 import { DiscoverPage } from "./routes/DiscoverPage";
@@ -15,6 +15,7 @@ import { AvailabilityOnboardingPage } from "./routes/AvailabilityOnboardingPage"
 import { MyPlansPage } from "./routes/MyPlansPage";
 import { ActivityChatPage } from "./routes/ActivityChatPage";
 import { ChatsPage } from "./routes/ChatsPage";
+import { NotificationsPage } from "./routes/NotificationsPage";
 import { FeedbackPage } from "./routes/FeedbackPage";
 import { ProfilePage } from "./routes/ProfilePage";
 import { EditProfilePage } from "./routes/EditProfilePage";
@@ -25,7 +26,7 @@ import { AuthPage } from "./routes/AuthPage";
 export function App() {
   const routes = (
     <Routes>
-      <Route element={<AnimatedOutlet />}>
+      <Route element={<AppShell />}>
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/" element={<DiscoverPage />} />
         <Route path="/filters" element={<FilterPage />} />
@@ -41,6 +42,7 @@ export function App() {
         <Route path="/onboarding/availability" element={<AvailabilityOnboardingPage />} />
         <Route path="/plans" element={<MyPlansPage />} />
         <Route path="/chats" element={<ChatsPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/edit" element={<EditProfilePage />} />
         <Route path="/a/:slug" element={<PublicActivityPage />} />

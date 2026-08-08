@@ -1,34 +1,49 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { BottomNav, FilterChip, PrimaryButton, ScreenShell } from "@activity-match/ui";
+import { FilterChip, Icon, PrimaryButton, ScreenShell } from "@activity-match/ui";
 import { PlanActivityCard } from "@/components/PlanActivityCard";
 import { Stagger, StaggerItem } from "@/components/motion/primitives";
 import { api } from "@/lib/api";
-import { mainNavCurrentPath, mainNavItems } from "@/lib/mainNav";
 
 type PlansTab = "host" | "joined";
 
 export function MyPlansPage() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [tab, setTab] = useState<PlansTab>("host");
   const { data, isLoading } = useQuery({ queryKey: ["my-plans"], queryFn: () => api.getMyPlans() });
+  const { data: joinRequests = [] } = useQuery({
+    queryKey: ["join-requests"],
+    queryFn: () => api.getJoinRequests(),
+  });
 
   const hosting = data?.hosted ?? [];
   const joined = data?.joined ?? [];
   const visible = tab === "host" ? hosting : joined;
+  const pendingRequestCount = joinRequests.length;
 
   return (
     <ScreenShell
       title="My Plans"
-      footer={
-        <BottomNav
-          items={[...mainNavItems]}
-          currentPath={mainNavCurrentPath(location.pathname)}
-          onNavigate={navigate}
-        />
+      reserveBottomNav
+      headerRight={
+        hosting.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => navigate("/host/requests")}
+            className="relative flex items-center gap-1.5 text-primary font-label-bold text-label-sm px-2 py-1.5 rounded-lg hover:bg-surface-container-high transition-colors"
+            aria-label="Manage join requests"
+          >
+            <Icon name="inbox" className="text-[20px]" />
+            <span>Join requests</span>
+            {pendingRequestCount > 0 && (
+              <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-on-primary text-[11px] font-bold flex items-center justify-center">
+                {pendingRequestCount}
+              </span>
+            )}
+          </button>
+        ) : undefined
       }
     >
       <div className="space-y-4">
@@ -94,18 +109,6 @@ export function MyPlansPage() {
             ))}
           </Stagger>
         </AnimatePresence>
-
-        {tab === "host" && hosting.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-          >
-            <PrimaryButton variant="outline" fullWidth onClick={() => navigate("/host/requests")}>
-              Manage join requests
-            </PrimaryButton>
-          </motion.div>
-        )}
       </div>
     </ScreenShell>
   );

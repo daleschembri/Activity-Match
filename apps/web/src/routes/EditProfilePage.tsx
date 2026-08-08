@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Icon, PrimaryButton, ScreenShell, TextField } from "@activity-match/ui";
+import type { ProfileGender } from "@activity-match/shared";
+import { FilterChip, Icon, PrimaryButton, ScreenShell, TextField } from "@activity-match/ui";
 import { api } from "@/lib/api";
+import { genderOptions, maxBirthdate, minBirthdate, toDateInputValue } from "@/lib/profile";
 
 export function EditProfilePage() {
   const navigate = useNavigate();
@@ -12,6 +14,8 @@ export function EditProfilePage() {
   const [displayName, setDisplayName] = useState("");
   const [homeArea, setHomeArea] = useState("");
   const [bio, setBio] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState<ProfileGender | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -21,6 +25,8 @@ export function EditProfilePage() {
     setDisplayName(profile.display_name ?? "");
     setHomeArea(profile.home_area_label ?? "");
     setBio(profile.bio ?? "");
+    setDateOfBirth(toDateInputValue(profile.date_of_birth));
+    setGender(profile.gender ?? null);
     setAvatarPreview(profile.avatar_ref);
   }, [profile]);
 
@@ -47,6 +53,8 @@ export function EditProfilePage() {
         display_name: displayName,
         home_area_label: homeArea,
         bio,
+        date_of_birth: dateOfBirth || null,
+        gender,
       });
       await queryClient.invalidateQueries({ queryKey: ["profile"] });
       navigate("/profile");
@@ -60,6 +68,7 @@ export function EditProfilePage() {
   return (
     <ScreenShell
       title="Edit Profile"
+      reserveBottomNav
       headerRight={
         <button type="button" onClick={() => navigate("/profile")} aria-label="Cancel">
           <Icon name="close" />
@@ -97,6 +106,34 @@ export function EditProfilePage() {
 
         <TextField label="Display name" value={displayName} onChange={(e) => setDisplayName(e.target.value)} hint="2–40 characters" />
         <TextField label="Location" value={homeArea} onChange={(e) => setHomeArea(e.target.value)} hint="e.g. Pacific Northwest" />
+
+        <label className="block space-y-1.5">
+          <span className="text-label-bold text-on-surface">Date of birth</span>
+          <input
+            type="date"
+            value={dateOfBirth}
+            min={minBirthdate()}
+            max={maxBirthdate()}
+            onChange={(e) => setDateOfBirth(e.target.value)}
+            className="w-full rounded-xl border border-outline-variant bg-surface-container-lowest px-4 py-3 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 min-h-[48px]"
+          />
+          <span className="text-label-sm text-on-surface-variant">Used to show your age on your profile.</span>
+        </label>
+
+        <div className="space-y-2">
+          <span className="text-label-bold text-on-surface">Gender</span>
+          <div className="flex flex-wrap gap-2">
+            {genderOptions.map((option) => (
+              <FilterChip
+                key={option.value}
+                label={option.label}
+                selected={gender === option.value}
+                onClick={() => setGender((current) => (current === option.value ? null : option.value))}
+              />
+            ))}
+          </div>
+        </div>
+
         <label className="block space-y-1.5">
           <span className="text-label-bold">Bio</span>
           <textarea

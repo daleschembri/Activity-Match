@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useMemo, useState, useEffect } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ActivityDetail } from "@activity-match/shared";
 import { Icon, PrimaryButton } from "@activity-match/ui";
 import { ActivityMeetingMap } from "@/components/ActivityMeetingMap";
+import { JoinRequestSheet } from "@/components/JoinRequestSheet";
 import { CapacitySegments, capacityStatusLabel } from "@/components/CapacitySegments";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion/primitives";
 import { api } from "@/lib/api";
@@ -101,8 +102,11 @@ function AboutHostSection({ activity }: { activity: ActivityDetail }) {
 export function ActivityDetailPage() {
   const { id = "" } = useParams();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const queryClient = useQueryClient();
   const [leaving, setLeaving] = useState(false);
+  const [joining, setJoining] = useState(false);
+  const [joinSheetOpen, setJoinSheetOpen] = useState(false);
   const { data: activity, isLoading } = useQuery({
     queryKey: ["activity", id],
     queryFn: () => api.getActivity(id),
@@ -110,6 +114,13 @@ export function ActivityDetailPage() {
   });
 
   const bringItems = useMemo(() => (activity ? parseBringItems(activity) : []), [activity]);
+
+  useEffect(() => {
+    if (searchParams.get("request") === "1" && activity && activity.viewer_role === "viewer") {
+      setJoinSheetOpen(true);
+      setSearchParams({}, { replace: true });
+    }
+  }, [activity, searchParams, setSearchParams]);
 
   const orderedParticipants = useMemo(() => {
     if (!activity) return [];
@@ -154,17 +165,28 @@ export function ActivityDetailPage() {
     ]);
   };
 
-  const join = async () => {
-    trackEvent("join_request_created", { activity_id: id, source: "detail" });
-    await api.createJoinRequest({
-      activity_id: id,
-      availability_confirmed: true,
-      idempotency_key: `join-${id}`,
-    });
-    await invalidateActivityQueries();
-    const updated = await api.getActivity(id);
-    if (updated?.viewer_role === "participant" || updated?.viewer_role === "host") {
-      navigate(`/activities/${id}/chat`);
+  const join = async (introduction: string) => {
+    setJoining(true);
+    try {
+      trackEvent("join_request_created", { activity_id: id, source: "detail" });
+      await api.createJoinRequest({
+        activity_id: id,
+        introduction,
+        availability_confirmed: true,
+        idempotency_key: `join-${id}`,
+      });
+      setJoinSheetOpen(false);
+      await invalidateActivityQueries();
+      void queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      void queryClient.invalidateQueries({ queryKey: ["notifications-unread"] });
+      const updated = await api.getActivity(id);
+      if (updated?.viewer_role === "participant" || updated?.viewer_role === "host") {
+        navigate(`/activities/${id}/chat`);
+      }
+    } catch (err) {
+      window.alert(err instanceof Error ? err.message : "Could not send join request");
+    } finally {
+      setJoining(false);
     }
   };
 
@@ -216,7 +238,7 @@ export function ActivityDetailPage() {
     if (activity.viewer_role === "host") return navigate("/host/requests");
     if (isParticipant) return leave();
     if (joinPending) return withdrawRequest();
-    return join();
+    return setJoinSheetOpen(true);
   };
 
   const primaryLabel = () => {
@@ -429,6 +451,16 @@ export function ActivityDetailPage() {
           <Icon name="share" />
         </button>
       </FadeIn>
+
+      <JoinRequestSheet
+        open={joinSheetOpen}
+        activityTitle={activity.title}
+        hostName={activity.host.display_name}
+        isWaitlist={activity.is_full}
+        loading={joining}
+        onClose={() => setJoinSheetOpen(false)}
+        onSubmit={join}
+      />
     </div>
   );
 }

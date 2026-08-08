@@ -1,17 +1,15 @@
 import { useMemo, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { BottomNav, FilterChip, Icon, PrimaryButton, ScreenShell } from "@activity-match/ui";
+import { FilterChip, Icon, PrimaryButton, ScreenShell } from "@activity-match/ui";
 import { Stagger, StaggerItem } from "@/components/motion/primitives";
 import { api } from "@/lib/api";
-import { mainNavCurrentPath, mainNavItems } from "@/lib/mainNav";
 
 type ChatTab = "host" | "participant";
 
 export function ChatsPage() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [tab, setTab] = useState<ChatTab>("host");
   const { data: chats = [], isLoading } = useQuery({
     queryKey: ["my-chats"],
@@ -23,16 +21,7 @@ export function ChatsPage() {
   const visible = tab === "host" ? hosting : joined;
 
   return (
-    <ScreenShell
-      title="Chats"
-      footer={
-        <BottomNav
-          items={[...mainNavItems]}
-          currentPath={mainNavCurrentPath(location.pathname)}
-          onNavigate={navigate}
-        />
-      }
-    >
+    <ScreenShell title="Chats" reserveBottomNav>
       <div className="space-y-4">
         <motion.div
           className="flex gap-2"

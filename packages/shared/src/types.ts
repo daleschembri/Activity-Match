@@ -3,7 +3,9 @@ import type {
   ActivityStatus,
   JoinRequestStatus,
   ListingType,
+  NotificationType,
   ParticipationStatus,
+  ProfileGender,
   SkillLevel,
   Visibility,
 } from "./enums";
@@ -15,6 +17,8 @@ export interface UserProfile {
   bio: string | null;
   home_area_label: string;
   travel_radius_minutes: number;
+  date_of_birth: string | null;
+  gender: ProfileGender | null;
   verification_status: "unverified" | "pending" | "verified";
   account_status: "active" | "suspended" | "deactivated" | "deleted";
   locale: string;
@@ -98,6 +102,7 @@ export interface JoinRequest {
   claim_expires_at: string | null;
   created_at: string;
   user: Pick<UserProfile, "id" | "display_name" | "avatar_ref">;
+  activity?: Pick<ActivitySummary, "id" | "title">;
 }
 
 export interface Participation {
@@ -150,6 +155,21 @@ export interface ReliabilityDisplay {
   late_cancellation_count?: number;
   no_show_count?: number;
   hosted_count?: number;
+}
+
+export interface AppNotification {
+  id: string;
+  type: NotificationType;
+  title: string;
+  body: string;
+  activity_id: string | null;
+  join_request_id: string | null;
+  actor_user_id: string | null;
+  read_at: string | null;
+  created_at: string;
+  payload: Record<string, unknown>;
+  activity?: Pick<ActivitySummary, "id" | "title"> | null;
+  actor?: Pick<UserProfile, "id" | "display_name" | "avatar_ref"> | null;
 }
 
 export interface DraftField<T> {

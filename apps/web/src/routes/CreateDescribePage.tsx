@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { BottomNav, PrimaryButton, ScreenShell } from "@activity-match/ui";
+import { useNavigate } from "react-router-dom";
+import { PrimaryButton, ScreenShell } from "@activity-match/ui";
 import { api } from "@/lib/api";
-import { mainNavCurrentPath, mainNavItems } from "@/lib/mainNav";
 
 export function CreateDescribePage() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -19,10 +17,7 @@ export function CreateDescribePage() {
   };
 
   return (
-    <ScreenShell
-      title="New Activity"
-      footer={<BottomNav items={[...mainNavItems]} currentPath={mainNavCurrentPath(location.pathname)} onNavigate={navigate} />}
-    >
+    <ScreenShell title="New Activity" reserveBottomNav>
       <div className="space-y-6 pb-4">
         <p className="text-body-md text-on-surface-variant">
           Describe your activity in your own words. We will suggest details you can review before publishing.

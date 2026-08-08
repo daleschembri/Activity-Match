@@ -1,25 +1,27 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { BottomNav, Icon, PrimaryButton } from "@activity-match/ui";
+import { Icon, PrimaryButton } from "@activity-match/ui";
 import { DiscoverFeedCard } from "@/components/DiscoverFeedCard";
+import { JoinRequestSheet } from "@/components/JoinRequestSheet";
 import { Pressable } from "@/components/motion/primitives";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { trackEvent } from "@/lib/analytics";
 import { flushQueue, queueSwipe } from "@/lib/offline-queue";
-import { mainNavCurrentPath, mainNavItems } from "@/lib/mainNav";
 import { springSoft } from "@/lib/motion";
 
 type SwipeAnim = "idle" | "left" | "right" | "up";
 
 export function DiscoverPage() {
   const navigate = useNavigate();
-  const location = useLocation();
   const queryClient = useQueryClient();
   const reducedMotion = useReducedMotion();
   const [swipeAnim, setSwipeAnim] = useState<SwipeAnim>("idle");
   const [isCompletingSwipe, setIsCompletingSwipe] = useState(false);
+  const [joinSheetOpen, setJoinSheetOpen] = useState(false);
+  const [joining, setJoining] = useState(false);
+  const pendingIntroductionRef = useRef<string | null>(null);
   const { data: profile } = useQuery({ queryKey: ["profile"], queryFn: () => api.getProfile() });
   const { data, isLoading, error } = useQuery({
     queryKey: ["feed"],
@@ -32,6 +34,8 @@ export function DiscoverPage() {
       await api.recordSwipe({ ...item.payload, idempotency_key: item.idempotency_key });
       await queryClient.invalidateQueries({ queryKey: ["feed"] });
       await queryClient.invalidateQueries({ queryKey: ["my-chats"] });
+      await queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      await queryClient.invalidateQueries({ queryKey: ["notifications-unread"] });
     });
   }, [queryClient]);
 
@@ -50,12 +54,20 @@ export function DiscoverPage() {
         position_in_feed: 0,
         dwell_ms: 1200,
         idempotency_key: key,
+        introduction: direction === "right" ? pendingIntroductionRef.current ?? undefined : undefined,
       });
       await queryClient.invalidateQueries({ queryKey: ["feed"] });
       await queryClient.invalidateQueries({ queryKey: ["my-chats"] });
+      await queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      await queryClient.invalidateQueries({ queryKey: ["notifications-unread"] });
     } catch {
-      queueSwipe({ activity_id: current.id, direction, position_in_feed: 0, dwell_ms: 1200 }, key);
+      if (direction === "right") {
+        window.alert("Could not send your join request. Try again from the activity page.");
+      } else {
+        queueSwipe({ activity_id: current.id, direction, position_in_feed: 0, dwell_ms: 1200 }, key);
+      }
     }
+    pendingIntroductionRef.current = null;
     trackEvent("swipe", { activity_id: current.id, direction, position: 0 });
     setSwipeAnim("idle");
     setIsCompletingSwipe(false);
@@ -66,8 +78,26 @@ export function DiscoverPage() {
     }
   };
 
+  const beginJoinSwipe = async (introduction: string) => {
+    if (!current || swipeAnim !== "idle" || isCompletingSwipe) return;
+    pendingIntroductionRef.current = introduction;
+    setJoinSheetOpen(false);
+    setJoining(true);
+    if (reducedMotion) {
+      await completeSwipe("right");
+      setJoining(false);
+      return;
+    }
+    setSwipeAnim("right");
+    setJoining(false);
+  };
+
   const handleSwipe = (direction: "left" | "right" | "up") => {
     if (!current || swipeAnim !== "idle" || isCompletingSwipe) return;
+    if (direction === "right") {
+      setJoinSheetOpen(true);
+      return;
+    }
     if (reducedMotion) {
       void completeSwipe(direction);
       return;
@@ -227,11 +257,17 @@ export function DiscoverPage() {
         </AnimatePresence>
       </main>
 
-      <BottomNav
-        items={[...mainNavItems]}
-        currentPath={mainNavCurrentPath(location.pathname)}
-        onNavigate={navigate}
-      />
+      {current && (
+        <JoinRequestSheet
+          open={joinSheetOpen}
+          activityTitle={current.title}
+          hostName={current.host.display_name}
+          isWaitlist={current.is_full}
+          loading={joining}
+          onClose={() => setJoinSheetOpen(false)}
+          onSubmit={beginJoinSwipe}
+        />
+      )}
     </div>
   );
 }

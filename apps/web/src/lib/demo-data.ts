@@ -7,6 +7,8 @@ export const demoProfile: UserProfile = {
   bio: "Always up for board games and outdoor adventures.",
   home_area_label: "St Paul's Bay",
   travel_radius_minutes: 20,
+  date_of_birth: "1995-06-12",
+  gender: "woman",
   verification_status: "verified",
   account_status: "active",
   locale: "en",

@@ -3,6 +3,7 @@ import type {
   ActivityDraft,
   ActivitySummary,
   ApiResponse,
+  AppNotification,
   FeedPage,
   Group,
   JoinRequest,
@@ -290,6 +291,8 @@ export const api = {
     bio?: string | null;
     home_area_label?: string;
     avatar_ref?: string | null;
+    date_of_birth?: string | null;
+    gender?: string | null;
   }): Promise<UserProfile> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Not authenticated");
@@ -313,6 +316,38 @@ export const api = {
       payload.home_area_label = area;
     }
     if (updates.avatar_ref !== undefined) payload.avatar_ref = updates.avatar_ref;
+    if (updates.date_of_birth !== undefined) {
+      const dob = updates.date_of_birth?.trim() ?? "";
+      if (!dob) {
+        payload.date_of_birth = null;
+      } else if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+        throw new Error("Please enter a valid date of birth.");
+      } else {
+        const birth = new Date(`${dob}T00:00:00`);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (Number.isNaN(birth.getTime()) || birth > today) {
+          throw new Error("Date of birth cannot be in the future.");
+        }
+        const minAgeDate = new Date(today);
+        minAgeDate.setFullYear(minAgeDate.getFullYear() - 13);
+        if (birth > minAgeDate) {
+          throw new Error("You must be at least 13 years old.");
+        }
+        payload.date_of_birth = dob;
+      }
+    }
+    if (updates.gender !== undefined) {
+      const allowed = new Set(["woman", "man", "non_binary", "prefer_not_to_say"]);
+      const gender = updates.gender?.trim() ?? "";
+      if (!gender) {
+        payload.gender = null;
+      } else if (!allowed.has(gender)) {
+        throw new Error("Please choose a valid gender option.");
+      } else {
+        payload.gender = gender;
+      }
+    }
 
     const { data, error } = await supabase
       .from("profiles")
@@ -486,8 +521,11 @@ export const api = {
 
     if (payload.direction === "right") {
       try {
+        const introduction = typeof payload.introduction === "string" ? payload.introduction.trim() : "";
+        if (!introduction) throw new Error("A message to the host is required");
         await api.createJoinRequest({
           activity_id: payload.activity_id,
+          introduction,
           availability_confirmed: true,
           idempotency_key: payload.idempotency_key,
           source: "swipe",
@@ -510,15 +548,20 @@ export const api = {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Not authenticated");
 
+    const introduction = typeof payload.introduction === "string" ? payload.introduction.trim() : "";
+    if (!introduction) throw new Error("Write a message to the host before sending your request.");
+
     const { data, error } = await supabase.rpc("create_join_request_atomic", {
       p_user_id: user.id,
       p_activity_id: payload.activity_id,
-      p_introduction: payload.introduction ?? null,
+      p_introduction: introduction,
       p_availability_confirmed: payload.availability_confirmed ?? true,
       p_source: (payload.source as string) ?? "detail",
     });
     if (error) throw new Error(error.message);
-    if (data?.error) throw new Error(data.error.message ?? data.error.code);
+    if (data?.error) {
+      throw new Error(data.error.message ?? data.error.code ?? "Could not send join request");
+    }
     return data;
   },
 
@@ -532,7 +575,7 @@ export const api = {
 
     const { data, error } = await supabase
       .from("join_requests")
-      .select("*, user:profiles!join_requests_user_id_fkey(id, display_name, avatar_ref)")
+      .select("*, user:profiles!join_requests_user_id_fkey(id, display_name, avatar_ref), activity:activities(id, title)")
       .eq("status", "pending")
       .in("activity_id", activityIds);
 
@@ -866,5 +909,64 @@ export const api = {
     const { data, error } = await supabase.from("categories").select("*").eq("is_active", true).order("name");
     if (error) throw new Error(error.message);
     return data ?? [];
+  },
+
+  async getNotifications(): Promise<AppNotification[]> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    const { data, error } = await supabase
+      .from("notifications")
+      .select(`
+        *,
+        activity:activities(id, title),
+        actor:profiles!notifications_actor_user_id_fkey(id, display_name, avatar_ref)
+      `)
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(100);
+
+    if (error) throw new Error(error.message);
+    return (data ?? []) as AppNotification[];
+  },
+
+  async getUnreadNotificationCount(): Promise<number> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return 0;
+
+    const { count, error } = await supabase
+      .from("notifications")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .is("read_at", null);
+
+    if (error) throw new Error(error.message);
+    return count ?? 0;
+  },
+
+  async markNotificationRead(notificationId: string) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { error } = await supabase
+      .from("notifications")
+      .update({ read_at: new Date().toISOString() })
+      .eq("id", notificationId)
+      .eq("user_id", user.id);
+
+    if (error) throw new Error(error.message);
+  },
+
+  async markAllNotificationsRead() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { error } = await supabase
+      .from("notifications")
+      .update({ read_at: new Date().toISOString() })
+      .eq("user_id", user.id)
+      .is("read_at", null);
+
+    if (error) throw new Error(error.message);
   },
 };
