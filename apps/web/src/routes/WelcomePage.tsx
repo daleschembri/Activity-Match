@@ -49,29 +49,35 @@ export function WelcomePage() {
 
   return (
     <div className="min-h-dvh bg-surface text-on-surface flex flex-col p-margin-mobile max-w-md mx-auto w-full">
-      <header className="flex justify-between items-center py-2 min-h-[44px]">
-        {slide > 0 ? (
-          <button
-            type="button"
-            onClick={() => setSlide((value) => value - 1)}
-            aria-label="Go back"
-            className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-container-high text-on-surface-variant"
-          >
-            <Icon name="arrow_back" />
-          </button>
-        ) : (
-          <BrandHeader layout="symbol" size="sm" className="mx-0" />
-        )}
-        {!isLast && (
-          <button
-            type="button"
-            onClick={finish}
-            className="font-label-bold text-label-bold text-on-surface-variant hover:text-on-surface px-4 py-2 rounded-full"
-          >
-            Skip
-          </button>
-        )}
-        {isLast && <div className="w-11" />}
+      <header className="grid grid-cols-3 items-center py-2 min-h-[44px]">
+        <div className="flex justify-start">
+          {slide > 0 ? (
+            <button
+              type="button"
+              onClick={() => setSlide((value) => value - 1)}
+              aria-label="Go back"
+              className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-container-high text-on-surface-variant"
+            >
+              <Icon name="arrow_back" />
+            </button>
+          ) : null}
+        </div>
+
+        <div className="flex justify-center">
+          <BrandHeader layout="lockup" size="sm" className="mx-0" />
+        </div>
+
+        <div className="flex justify-end">
+          {!isLast ? (
+            <button
+              type="button"
+              onClick={finish}
+              className="font-label-bold text-label-bold text-on-surface-variant hover:text-on-surface px-4 py-2 rounded-full"
+            >
+              Skip
+            </button>
+          ) : null}
+        </div>
       </header>
 
       <main className="flex-1 flex flex-col justify-center items-center gap-8 py-6">

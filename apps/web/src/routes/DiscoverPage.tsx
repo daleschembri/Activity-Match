@@ -157,10 +157,10 @@ export function DiscoverPage() {
         </div>
       </motion.header>
 
-      <main className="flex-1 relative w-full overflow-hidden flex flex-col items-center justify-center pb-24 px-4 min-h-0">
+      <main className="flex-1 relative w-full overflow-hidden flex flex-col min-h-0 pb-20 px-margin-mobile">
         {error && (
           <motion.div
-            className="w-full max-w-md bg-error-container text-on-error-container rounded-xl p-4 text-body-md mb-4"
+            className="w-full max-w-md mx-auto bg-error-container text-on-error-container rounded-xl p-4 text-body-md my-4"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
           >
@@ -171,7 +171,7 @@ export function DiscoverPage() {
 
         {isLoading && (
           <motion.div
-            className="flex flex-col items-center gap-3"
+            className="flex-1 flex flex-col items-center justify-center gap-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
@@ -186,7 +186,7 @@ export function DiscoverPage() {
 
         {!isLoading && !current && !error && (
           <motion.div
-            className="text-center py-12 space-y-4 max-w-md"
+            className="flex-1 flex flex-col items-center justify-center text-center py-12 space-y-4 max-w-md mx-auto"
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={springSoft}
@@ -201,7 +201,7 @@ export function DiscoverPage() {
           {current && (
             <motion.div
               key={current.id}
-              className="w-full max-w-md flex flex-col items-center relative"
+              className="flex-1 flex flex-col min-h-0 w-full max-w-md mx-auto relative pt-2"
               initial={reducedMotion ? false : { opacity: 0, scale: 0.9, y: 28 }}
               animate={cardAnimate}
               transition={swipeAnim === "idle" ? springSoft : { duration: 0.34, ease: [0.32, 0.72, 0, 1] }}
@@ -213,20 +213,22 @@ export function DiscoverPage() {
             >
               {hasStack && (
                 <motion.div
-                  className="absolute w-full max-w-md px-8 top-12 z-0 pointer-events-none"
+                  className="absolute inset-x-0 top-4 bottom-[5.5rem] z-0 pointer-events-none flex justify-center"
                   initial={{ opacity: 0, scale: 0.9, y: 40 }}
-                  animate={{ opacity: 0.5, scale: 0.95, y: 32 }}
+                  animate={{ opacity: 0.5, scale: 0.96, y: 8 }}
                   transition={{ delay: 0.1, ...springSoft }}
                   aria-hidden
                 >
-                  <div className="bg-surface-container-low w-full h-[min(574px,68dvh)] rounded-[24px] shadow-sm border border-outline-variant/20" />
+                  <div className="w-full h-full max-w-md bg-surface-container-low rounded-[24px] shadow-sm border border-outline-variant/20" />
                 </motion.div>
               )}
 
-              <DiscoverFeedCard activity={current} onOpen={() => navigate(`/activities/${current.id}`)} />
+              <div className="flex-1 min-h-0 relative z-10">
+                <DiscoverFeedCard activity={current} onOpen={() => navigate(`/activities/${current.id}`)} />
+              </div>
 
               <motion.div
-                className="w-full flex justify-center gap-6 mt-6 z-20"
+                className="shrink-0 w-full flex justify-center gap-6 py-4 z-20"
                 initial={reducedMotion ? false : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15, ...springSoft }}

@@ -7,6 +7,7 @@ import { api } from "@/lib/api";
 interface DiscoverFeedCardProps {
   activity: ActivitySummary;
   onOpen: () => void;
+  className?: string;
 }
 
 function formatDiscoverWhen(startsAt: string | null): string {
@@ -65,7 +66,7 @@ function HostReliability({ userId }: { userId: string }) {
 }
 
 /** Discover card matching stitch/action-deck/discover-activities */
-export function DiscoverFeedCard({ activity, onOpen }: DiscoverFeedCardProps) {
+export function DiscoverFeedCard({ activity, onOpen, className = "" }: DiscoverFeedCardProps) {
   const when = formatDiscoverWhen(activity.starts_at);
   const location = formatLocation(activity);
   const coverUrl = activity.cover_image_ref?.trim() || null;
@@ -75,10 +76,10 @@ export function DiscoverFeedCard({ activity, onOpen }: DiscoverFeedCardProps) {
 
   return (
     <article
-      className="relative z-10 w-full max-w-md bg-surface-container-lowest rounded-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col h-[min(601px,72dvh)] border border-surface-container"
+      className={`relative z-10 w-full bg-surface-container-lowest rounded-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col min-h-0 h-full border border-surface-container ${className}`}
       aria-label={`${activity.title}, ${when}`}
     >
-      <div className="relative h-[45%] w-full bg-surface-container-high shrink-0">
+      <div className="relative h-[42%] min-h-[140px] w-full bg-surface-container-high shrink-0">
         {coverUrl ? (
           <img
             src={coverUrl}
@@ -105,7 +106,7 @@ export function DiscoverFeedCard({ activity, onOpen }: DiscoverFeedCardProps) {
         </div>
       </div>
 
-      <div className="p-6 flex flex-col flex-1 bg-surface-container-lowest min-h-0">
+      <div className="p-5 sm:p-6 flex flex-col flex-1 bg-surface-container-lowest min-h-0 overflow-y-auto">
         <div className="mb-4">
           <h2 className="font-headline-md text-headline-md text-on-surface mb-2">{activity.title}</h2>
           <div className="flex flex-col gap-1 text-on-surface-variant font-body-md text-body-md">
