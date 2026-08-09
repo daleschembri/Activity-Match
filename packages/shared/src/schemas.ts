@@ -98,6 +98,7 @@ export const feedFiltersSchema = z.object({
   listing_types: z.array(z.string()).optional(),
   categories: z.array(z.string().uuid()).optional(),
   recurrence: z.enum(["one_off", "recurring", "any"]).optional(),
+  include_full: z.boolean().optional(),
 });
 
 export const swipeSchema = z.object({

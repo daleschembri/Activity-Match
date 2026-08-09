@@ -102,7 +102,7 @@ export interface JoinRequest {
   claim_expires_at: string | null;
   created_at: string;
   user: Pick<UserProfile, "id" | "display_name" | "avatar_ref">;
-  activity?: Pick<ActivitySummary, "id" | "title">;
+  activity?: Pick<ActivitySummary, "id" | "title" | "capacity" | "participation_count" | "is_full">;
 }
 
 export interface Participation {

@@ -9,6 +9,7 @@ import { EndOfFeedPage } from "./routes/EndOfFeedPage";
 import { ActivityDetailPage } from "./routes/ActivityDetailPage";
 import { JoinRequestsPage } from "./routes/JoinRequestsPage";
 import { WaitlistClaimPage } from "./routes/WaitlistClaimPage";
+import { StarredActivitiesPage } from "./routes/StarredActivitiesPage";
 import { CreateDescribePage } from "./routes/CreateDescribePage";
 import { CreateReviewPage } from "./routes/CreateReviewPage";
 import { InterestsOnboardingPage } from "./routes/InterestsOnboardingPage";
@@ -46,6 +47,7 @@ export function App() {
         <Route path="/auth/verify" element={<VerificationCodePage />} />
         <Route path="/auth/email" element={<AuthPage />} />
         <Route path="/" element={<DiscoverPage />} />
+        <Route path="/starred" element={<StarredActivitiesPage />} />
         <Route path="/filters" element={<FilterPage />} />
         <Route path="/feed/exhausted" element={<EndOfFeedPage />} />
         <Route path="/activities/:id" element={<ActivityDetailPage />} />

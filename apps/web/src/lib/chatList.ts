@@ -61,7 +61,10 @@ export function chatPreviewText(chat: ChatSummary): string {
   const last = chat.last_message;
   if (!last) return "No messages yet";
   if (last.type === "poll") return `${last.sender_name ?? "Someone"}: Poll`;
-  if (last.type === "system") return last.body;
+  if (last.type === "system") {
+    if (last.body === "A participant joined") return "Someone has joined";
+    return last.body;
+  }
   const sender = last.sender_name ?? "Someone";
   return `${sender}: ${last.body}`;
 }

@@ -1,4 +1,4 @@
-import type { Message } from "@activity-match/shared";
+import type { ChatParticipant, Message } from "@activity-match/shared";
 
 export interface ChatMessage extends Message {
   sender?: {
@@ -124,4 +124,32 @@ export function senderInitials(name: string): string {
   if (!parts.length) return "?";
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+}
+
+export function formatSystemMessageBody(
+  message: Message,
+  participants: ChatParticipant[] = [],
+): string {
+  const systemType = (message.payload.system_type as string) ?? "";
+  const userId = message.payload.user_id as string | undefined;
+  const name =
+    (message.payload.display_name as string | undefined)?.trim() ||
+    participants.find((p) => p.id === userId)?.display_name?.trim() ||
+    "Someone";
+
+  if (systemType === "participant_joined") {
+    if (message.body === "A participant joined" || message.body.endsWith(" has joined")) {
+      return message.body.endsWith(" has joined") ? message.body : `${name} has joined`;
+    }
+  }
+
+  return message.body;
+}
+
+export function systemMessageIcon(systemType: string): string {
+  if (systemType === "participant_joined") return "person_add";
+  if (systemType === "participant_left") return "person_remove";
+  if (systemType === "attendance_request") return "event_available";
+  if (systemType === "deadline_reminder") return "info";
+  return "info";
 }

@@ -59,6 +59,8 @@ export const NotificationType = {
   JOIN_REQUEST_ACCEPTED: "join_request_accepted",
   JOIN_REQUEST_DECLINED: "join_request_declined",
   JOIN_REQUEST_WAITLISTED: "join_request_waitlisted",
+  WAITLIST_OFFERED: "waitlist_offered",
+  WAITLIST_SPOT_OPENED: "waitlist_spot_opened",
   ATTENDANCE_RECORD_UPDATED: "attendance_record_updated",
   ATTENDANCE_DISPUTE_SUBMITTED: "attendance_dispute_submitted",
   ACTIVITY_UPDATED: "activity_updated",

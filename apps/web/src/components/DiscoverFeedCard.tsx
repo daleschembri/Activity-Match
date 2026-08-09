@@ -126,7 +126,7 @@ export function DiscoverFeedCard({ activity, onOpen, className = "" }: DiscoverF
             <div className="flex justify-between items-end mb-2">
               <span className="font-label-bold text-label-bold text-on-surface">Capacity</span>
               <span className="font-label-sm text-label-sm text-on-surface-variant">
-                {filled} of {capacity} spaces filled
+                {activity.is_full ? "Full — join waitlist" : `${filled} of ${capacity} spaces filled`}
               </span>
             </div>
             <CapacitySegments filled={filled} total={capacity} />

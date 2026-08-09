@@ -111,7 +111,7 @@ export const api = {
     return data as UserProfile;
   },
 
-  async getFeed(_filters?: Record<string, unknown>, cursor?: string): Promise<FeedPage> {
+  async getFeed(filters?: { include_full?: boolean }, cursor?: string): Promise<FeedPage> {
     const { data: { user } } = await supabase.auth.getUser();
 
     let query = supabase
@@ -167,7 +167,11 @@ export const api = {
 
     const ids = rows.map((r) => r.id as string);
     const counts = await participationCounts(ids);
-    const items = rows.map((row) => mapActivityRow(row, counts[row.id as string] ?? 0));
+    let items = rows.map((row) => mapActivityRow(row, counts[row.id as string] ?? 0));
+
+    if (!filters?.include_full) {
+      items = items.filter((item) => !item.is_full);
+    }
 
     return {
       items,
@@ -626,6 +630,13 @@ export const api = {
     }, { onConflict: "user_id,activity_id" });
     if (swipeError) throw new Error(swipeError.message);
 
+    if (payload.direction === "left") {
+      await supabase
+        .from("saved_activities")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("activity_id", payload.activity_id as string);
+    }
     if (payload.direction === "right") {
       try {
         const introduction = typeof payload.introduction === "string" ? payload.introduction.trim() : "";
@@ -640,6 +651,11 @@ export const api = {
       } catch {
         // Swipe is saved even if join fails (own activity, full, already requested, etc.)
       }
+      await supabase
+        .from("saved_activities")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("activity_id", payload.activity_id as string);
     }
     if (payload.direction === "up") {
       const { error: saveError } = await supabase.from("saved_activities").upsert({
@@ -649,6 +665,61 @@ export const api = {
       if (saveError) throw new Error(saveError.message);
     }
     return { data: { ok: true } };
+  },
+
+  async getStarredActivities(): Promise<ActivitySummary[]> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    const { data: saved, error } = await supabase
+      .from("saved_activities")
+      .select("activity_id, created_at")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    if (error) throw new Error(error.message);
+    if (!saved?.length) return [];
+
+    const activityIds = saved.map((row) => row.activity_id as string);
+
+    const [{ data: joinRequests }, { data: leftSwipes }] = await Promise.all([
+      supabase
+        .from("join_requests")
+        .select("activity_id")
+        .eq("user_id", user.id)
+        .in("activity_id", activityIds)
+        .in("status", ["pending", "waitlisted", "accepted"]),
+      supabase
+        .from("swipe_events")
+        .select("activity_id")
+        .eq("user_id", user.id)
+        .eq("direction", "left")
+        .in("activity_id", activityIds),
+    ]);
+
+    const excluded = new Set<string>([
+      ...(joinRequests ?? []).map((row) => row.activity_id as string),
+      ...(leftSwipes ?? []).map((row) => row.activity_id as string),
+    ]);
+
+    const pendingIds = activityIds.filter((id) => !excluded.has(id));
+    if (!pendingIds.length) return [];
+
+    const { data: rows, error: activitiesError } = await supabase
+      .from("activities")
+      .select(ACTIVITY_SELECT)
+      .in("id", pendingIds)
+      .eq("status", "published")
+      .eq("visibility", "public");
+
+    if (activitiesError) throw new Error(activitiesError.message);
+
+    const counts = await participationCounts(pendingIds);
+    const byId = new Map(
+      (rows ?? []).map((row) => [row.id as string, mapActivityRow(row, counts[row.id as string] ?? 0)]),
+    );
+
+    return pendingIds.map((id) => byId.get(id)).filter((item): item is ActivitySummary => Boolean(item));
   },
 
   async createJoinRequest(payload: Record<string, unknown>) {
@@ -672,7 +743,7 @@ export const api = {
     return data;
   },
 
-  async getJoinRequests(): Promise<JoinRequest[]> {
+  async getJoinRequests(status: "pending" | "waitlisted" = "pending"): Promise<JoinRequest[]> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return [];
 
@@ -682,12 +753,31 @@ export const api = {
 
     const { data, error } = await supabase
       .from("join_requests")
-      .select("*, user:profiles!join_requests_user_id_fkey(id, display_name, avatar_ref), activity:activities(id, title)")
-      .eq("status", "pending")
-      .in("activity_id", activityIds);
+      .select(
+        "*, user:profiles!join_requests_user_id_fkey(id, display_name, avatar_ref), activity:activities(id, title, capacity, acceptance_mode)",
+      )
+      .eq("status", status)
+      .in("activity_id", activityIds)
+      .order("created_at", { ascending: true });
 
     if (error) throw new Error(error.message);
-    return (data ?? []) as JoinRequest[];
+
+    const requests = (data ?? []) as JoinRequest[];
+    const ids = [...new Set(requests.map((r) => r.activity_id))];
+    const counts = await participationCounts(ids);
+
+    return requests.map((req) => ({
+      ...req,
+      activity: req.activity
+        ? {
+            ...req.activity,
+            participation_count: counts[req.activity_id] ?? 0,
+            is_full:
+              req.activity.capacity != null &&
+              (counts[req.activity_id] ?? 0) >= req.activity.capacity,
+          }
+        : req.activity,
+    }));
   },
 
   async respondToJoinRequest(requestId: string, decision: "accept" | "decline" | "waitlist") {
@@ -703,7 +793,17 @@ export const api = {
       return data;
     }
 
-    const status = decision === "decline" ? "declined" : "waitlisted";
+    if (decision === "waitlist") {
+      const { data, error } = await supabase.rpc("host_move_request_to_waitlist", {
+        p_request_id: requestId,
+        p_host_id: user.id,
+      });
+      if (error) throw new Error(error.message);
+      if (data?.error) throw new Error(data.error.message ?? data.error.code);
+      return data;
+    }
+
+    const status = "declined";
     const { error } = await supabase
       .from("join_requests")
       .update({ status, resolved_at: new Date().toISOString() })
@@ -720,7 +820,81 @@ export const api = {
       p_actor_id: user.id,
     });
     if (error) throw new Error(error.message);
+    if (data?.error) throw new Error(data.error.message ?? data.error.code ?? "Could not claim spot");
     return data;
+  },
+
+  async declineWaitlistOffer(requestId: string) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+    const { data, error } = await supabase.rpc("decline_waitlist_offer", {
+      p_request_id: requestId,
+      p_user_id: user.id,
+    });
+    if (error) throw new Error(error.message);
+    if (data?.error) throw new Error(data.error.message ?? data.error.code);
+    return data;
+  },
+
+  async getWaitlistOffer(requestId: string) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { data, error } = await supabase
+      .from("join_requests")
+      .select(
+        `
+        id, status, claim_expires_at, activity_id,
+        activity:activities(
+          id, title, starts_at, duration_minutes, cover_image_ref, capacity,
+          category:categories(id, name),
+          location:locations(area_label, name)
+        )
+      `,
+      )
+      .eq("id", requestId)
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (error) throw new Error(error.message);
+    if (!data || data.status !== "waitlisted") return null;
+
+    const activityRaw = data.activity as unknown;
+    const activity = (Array.isArray(activityRaw) ? activityRaw[0] : activityRaw) as {
+      id: string;
+      title: string;
+      starts_at: string | null;
+      duration_minutes: number | null;
+      cover_image_ref: string | null;
+      capacity: number | null;
+      category: { id: string; name: string } | { id: string; name: string }[] | null;
+      location: { area_label: string | null; name: string | null } | { area_label: string | null; name: string | null }[] | null;
+    } | null;
+
+    if (!activity) return null;
+
+    const category = Array.isArray(activity.category) ? activity.category[0] : activity.category;
+    const location = Array.isArray(activity.location) ? activity.location[0] : activity.location;
+
+    const counts = await participationCounts([activity.id]);
+    const participationCount = counts[activity.id] ?? 0;
+
+    return {
+      request_id: data.id as string,
+      claim_expires_at: data.claim_expires_at as string | null,
+      activity: {
+        id: activity.id,
+        title: activity.title,
+        starts_at: activity.starts_at,
+        duration_minutes: activity.duration_minutes,
+        cover_image_ref: activity.cover_image_ref,
+        category_name: category?.name ?? "Activity",
+        area_label: location?.area_label ?? location?.name ?? null,
+        participation_count: participationCount,
+        capacity: activity.capacity,
+        is_full: activity.capacity != null && participationCount >= activity.capacity,
+      },
+    };
   },
 
   async leaveActivity(activityId: string) {

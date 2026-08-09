@@ -10,6 +10,14 @@ export function getNotificationHref(notification: AppNotification): string {
     case "join_request_declined":
     case "join_request_waitlisted":
       return notification.activity_id ? `/activities/${notification.activity_id}` : "/plans";
+    case "waitlist_offered":
+      return notification.join_request_id
+        ? `/waitlist/${notification.join_request_id}`
+        : notification.activity_id
+          ? `/activities/${notification.activity_id}`
+          : "/plans";
+    case "waitlist_spot_opened":
+      return "/host/requests?tab=waitlisted";
     case "attendance_record_updated":
       return notification.activity_id
         ? `/activities/${notification.activity_id}/attendance/outcome`
@@ -47,6 +55,10 @@ export function getNotificationIcon(type: AppNotification["type"]): string {
       return "cancel";
     case "join_request_waitlisted":
       return "hourglass_top";
+    case "waitlist_offered":
+      return "notifications_active";
+    case "waitlist_spot_opened":
+      return "event_seat";
     case "attendance_record_updated":
       return "event_note";
     case "attendance_dispute_submitted":

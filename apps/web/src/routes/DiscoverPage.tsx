@@ -5,11 +5,13 @@ import { Icon, PrimaryButton } from "@activity-match/ui";
 import { BrandHeader } from "@/components/GathereLogo";
 import { DiscoverFeedCard } from "@/components/DiscoverFeedCard";
 import { JoinRequestSheet } from "@/components/JoinRequestSheet";
+import { UnreadBadge } from "@/components/UnreadBadge";
 import { Pressable } from "@/components/motion/primitives";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { trackEvent } from "@/lib/analytics";
 import { flushQueue, queueSwipe } from "@/lib/offline-queue";
+import { loadFeedFilters } from "@/lib/feedFilters";
 import { springSoft } from "@/lib/motion";
 
 type SwipeAnim = "idle" | "left" | "right" | "up";
@@ -24,9 +26,15 @@ export function DiscoverPage() {
   const [joining, setJoining] = useState(false);
   const pendingIntroductionRef = useRef<string | null>(null);
   const { data: profile } = useQuery({ queryKey: ["profile"], queryFn: () => api.getProfile() });
+  const { data: starred = [] } = useQuery({
+    queryKey: ["starred-activities"],
+    queryFn: () => api.getStarredActivities(),
+    refetchOnMount: "always",
+  });
+  const feedFilters = loadFeedFilters();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["feed"],
-    queryFn: () => api.getFeed(),
+    queryKey: ["feed", feedFilters.include_full],
+    queryFn: () => api.getFeed({ include_full: feedFilters.include_full }),
     refetchOnMount: "always",
   });
 
@@ -34,6 +42,7 @@ export function DiscoverPage() {
     void flushQueue(async (item) => {
       await api.recordSwipe({ ...item.payload, idempotency_key: item.idempotency_key });
       await queryClient.invalidateQueries({ queryKey: ["feed"] });
+      await queryClient.invalidateQueries({ queryKey: ["starred-activities"] });
       await queryClient.invalidateQueries({ queryKey: ["my-chats"] });
       await queryClient.invalidateQueries({ queryKey: ["chats-unread"] });
       await queryClient.invalidateQueries({ queryKey: ["notifications"] });
@@ -59,6 +68,7 @@ export function DiscoverPage() {
         introduction: direction === "right" ? pendingIntroductionRef.current ?? undefined : undefined,
       });
       await queryClient.invalidateQueries({ queryKey: ["feed"] });
+      await queryClient.invalidateQueries({ queryKey: ["starred-activities"] });
       await queryClient.invalidateQueries({ queryKey: ["my-chats"] });
       await queryClient.invalidateQueries({ queryKey: ["chats-unread"] });
       await queryClient.invalidateQueries({ queryKey: ["notifications"] });
@@ -141,7 +151,19 @@ export function DiscoverPage() {
 
         <BrandHeader layout="lockup" size="sm" className="mx-0" />
 
-        <div className="flex items-center gap-4 shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
+          <Pressable
+            onClick={() => navigate("/starred")}
+            className="relative text-on-surface-variant hover:bg-surface-container-high transition-colors w-10 h-10 rounded-full flex items-center justify-center"
+            ariaLabel="Starred activities"
+          >
+            <Icon name="star" filled className="text-secondary" />
+            <UnreadBadge
+              count={starred.length}
+              variant="primary"
+              className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] text-[10px]"
+            />
+          </Pressable>
           <Pressable
             onClick={() => navigate("/filters")}
             className="text-on-surface-variant hover:bg-surface-container-high transition-colors w-10 h-10 rounded-full flex items-center justify-center"
@@ -244,17 +266,25 @@ export function DiscoverPage() {
                 </Pressable>
                 <Pressable
                   onClick={() => handleSwipe("right")}
-                  className="w-16 h-16 rounded-full bg-primary text-on-primary shadow-[0_6px_16px_rgba(0,76,34,0.2)] flex items-center justify-center hover:bg-primary-fixed-dim transition-colors scale-110"
-                  ariaLabel="Join or request"
+                  className={`w-16 h-16 rounded-full flex items-center justify-center shadow-[0_6px_16px_rgba(0,76,34,0.2)] transition-colors scale-110 ${
+                    current.is_full
+                      ? "bg-secondary text-on-secondary"
+                      : "bg-primary text-on-primary hover:bg-primary-fixed-dim"
+                  }`}
+                  ariaLabel={current.is_full ? "Join waitlist" : "Join or request"}
                 >
-                  <Icon name="check" filled className="text-[28px]" />
+                  <Icon
+                    name={current.is_full ? "hourglass_top" : "check"}
+                    filled={!current.is_full}
+                    className="text-[28px]"
+                  />
                 </Pressable>
                 <Pressable
                   onClick={() => handleSwipe("up")}
                   className="w-14 h-14 rounded-full bg-surface-container-lowest border border-outline-variant text-secondary shadow-[0_4px_12px_rgba(0,0,0,0.04)] flex items-center justify-center hover:bg-surface-container-low transition-colors"
-                  ariaLabel="Save for later"
+                  ariaLabel="Star for later"
                 >
-                  <Icon name="bookmark_border" className="text-[24px]" />
+                  <Icon name="star" filled className="text-[24px]" />
                 </Pressable>
               </motion.div>
             </motion.div>

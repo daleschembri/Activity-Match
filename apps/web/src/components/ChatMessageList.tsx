@@ -7,8 +7,10 @@ import { ChatPollCard } from "@/components/chat/ChatPollCard";
 import type { ChatDisplayItem, ChatMessage } from "@/lib/chatMessages";
 import {
   formatBubbleMeta,
+  formatSystemMessageBody,
   senderDisplayName,
   senderInitials,
+  systemMessageIcon,
 } from "@/lib/chatMessages";
 import { messageIn } from "@/lib/motion";
 
@@ -53,6 +55,7 @@ function ChatAvatar({ message, size = "md" }: { message: ChatMessage; size?: "sm
 
 function SystemMessageCard({
   message,
+  participants = [],
   checkinStatus,
   readOnly,
   checkinLoading,
@@ -60,6 +63,7 @@ function SystemMessageCard({
   onDeclineCheckin,
 }: {
   message: ChatMessage;
+  participants?: import("@activity-match/shared").ChatParticipant[];
   checkinStatus?: AttendanceCheckinStatus | null;
   readOnly?: boolean;
   checkinLoading?: boolean;
@@ -67,6 +71,8 @@ function SystemMessageCard({
   onDeclineCheckin?: () => void;
 }) {
   const systemType = (message.payload.system_type as string) ?? "info";
+  const body = formatSystemMessageBody(message, participants);
+  const icon = systemMessageIcon(systemType);
   const isAttendance = systemType === "attendance_request";
   const isDeadlineReminder = systemType === "deadline_reminder";
 
@@ -98,7 +104,7 @@ function SystemMessageCard({
             <Icon name="info" className="text-base text-on-primary-container" />
           </div>
           <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed whitespace-pre-line">
-            {message.body}
+            {body}
           </p>
         </div>
       </motion.div>
@@ -114,10 +120,10 @@ function SystemMessageCard({
     >
       <div className="bg-surface-container text-on-surface rounded-xl p-4 max-w-[90%] border border-surface-variant flex items-start gap-3 shadow-sm">
         <div className="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center shrink-0">
-          <Icon name="info" className="text-base text-on-primary-container" />
+          <Icon name={icon} className="text-base text-on-primary-container" />
         </div>
         <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed whitespace-pre-line">
-          {message.body}
+          {body}
         </p>
       </div>
     </motion.div>
@@ -214,6 +220,7 @@ export function ChatMessageList({
             <SystemMessageCard
               key={item.message.id}
               message={item.message as ChatMessage}
+              participants={participants}
               checkinStatus={checkinStatus}
               readOnly={readOnly}
               checkinLoading={checkinLoading}
