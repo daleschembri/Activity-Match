@@ -4,6 +4,7 @@ export const DEFAULT_CONFIG = {
   late_cancellation_threshold_hours: 12,
   host_late_cancellation_threshold_hours: 24,
   attendance_grace_period_hours: 2,
+  attendance_confirmation_hours: 24,
   host_attendance_correction_window_hours: 48,
   left_swipe_suppression_days: 30,
   new_activity_boost_hours: 24,

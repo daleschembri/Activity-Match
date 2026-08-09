@@ -164,6 +164,7 @@ export function ActivityDetailPage() {
       queryClient.invalidateQueries({ queryKey: ["activity", id] }),
       queryClient.invalidateQueries({ queryKey: ["my-plans"] }),
       queryClient.invalidateQueries({ queryKey: ["my-chats"] }),
+      queryClient.invalidateQueries({ queryKey: ["chats-unread"] }),
       queryClient.invalidateQueries({ queryKey: ["feed"] }),
     ]);
   };

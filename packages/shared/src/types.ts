@@ -110,7 +110,26 @@ export interface Participation {
   activity_id: string;
   user_id: string;
   status: ParticipationStatus;
+  attendance_confirmed_at?: string | null;
   created_at: string;
+}
+
+export interface AttendanceCheckinParticipant {
+  user_id: string;
+  display_name: string;
+  avatar_ref: string | null;
+  attendance_confirmed_at: string | null;
+  is_host: boolean;
+}
+
+export interface AttendanceCheckinStatus {
+  within_window: boolean;
+  prompt_sent: boolean;
+  confirm_by: string | null;
+  viewer_is_host: boolean;
+  viewer_can_respond: boolean;
+  viewer_confirmed_at: string | null;
+  participants: AttendanceCheckinParticipant[];
 }
 
 export interface FeedPage {
@@ -189,6 +208,36 @@ export interface AppNotification {
   payload: Record<string, unknown>;
   activity?: Pick<ActivitySummary, "id" | "title"> | null;
   actor?: Pick<UserProfile, "id" | "display_name" | "avatar_ref"> | null;
+}
+
+export interface ChatSummary extends ActivitySummary {
+  chat_role: "host" | "participant";
+  unread_count: number;
+  last_message?: {
+    body: string;
+    created_at: string;
+    sender_name: string | null;
+    type: Message["type"];
+  } | null;
+}
+
+export interface ChatParticipant {
+  id: string;
+  display_name: string;
+  avatar_ref: string | null;
+  is_host?: boolean;
+}
+
+export interface ChatPollOption {
+  id: string;
+  label: string;
+  votes?: string[];
+}
+
+export interface ChatPollPayload {
+  question: string;
+  allow_multiple?: boolean;
+  options: ChatPollOption[];
 }
 
 export interface DraftField<T> {

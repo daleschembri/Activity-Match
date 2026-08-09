@@ -3,6 +3,14 @@
 @source "../../packages/ui/src";
 
 @layer base {
+  html,
+  body,
+  #root {
+    height: 100dvh;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
   body {
     @apply bg-surface text-on-surface font-sans antialiased;
     -webkit-tap-highlight-color: transparent;

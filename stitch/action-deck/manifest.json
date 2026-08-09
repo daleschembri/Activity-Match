@@ -3,7 +3,7 @@
     "title": "Action Deck",
     "id": "18213223677131290523"
   },
-  "exportedAt": "2026-08-09T10:17:54.441Z",
+  "exportedAt": "2026-08-09T14:25:50.978Z",
   "screens": [
     {
       "title": "Discover Activities",
@@ -423,6 +423,66 @@
       "paths": {
         "html": "stitch\\action-deck\\verification-code-entry\\index.html",
         "screenshot": "stitch\\action-deck\\verification-code-entry\\screenshot.png"
+      }
+    },
+    {
+      "title": "Chats List",
+      "stitchTitle": "Chats List",
+      "id": "3e0c3ba2df9743aeafc3676cb5232122",
+      "slug": "chats-list",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODlkZmY3Yjc4ZWEwOTY4YTFlMDU0MDE2ZTRhEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLvR9K8ZrGDfXM7OcFhVfbAhYbEjIdnzy1Cd_aFyqpRoYujPhj7XdzROTz5IVT2c33fjCA6lx1-zmRzDyOD2u4SB4uyXJovb36jw0HWz_FTQAUM6o_auls0kMBJz9dmxlpPyufR7pAnfT_dEuGJBGVSpA_uj29uzg1SeOto003fJ5BVqKf8lhprCQhN5mIS39Bg6lR_fwZ-oG8XTRKsaab93aTEWdrNgRg757dLlDNPvvsQN2Das5kpB73pL",
+      "paths": {
+        "html": "stitch\\action-deck\\chats-list\\index.html",
+        "screenshot": "stitch\\action-deck\\chats-list\\screenshot.png"
+      }
+    },
+    {
+      "title": "Group Chat - Active Activity",
+      "stitchTitle": "Group Chat - Active Activity",
+      "id": "fe0bdac4ade249f09f96b067f2b8f90b",
+      "slug": "group-chat-active-activity",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "2330",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODllMDE3NzkwNDMwMjNiZTA0NjE3MjJiMGZmEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLsOXBMUkr0poPhs9mp_FxhleSp3loRqpGyWXivlMX-7GQmq_q6hdTQzVU3oUr_YAEoOldAN9bwGnfW9e_-R6gutAL1bgCVjOMPzEe--G6wOdHWL8q1WTZ9Ck4SUmEfV8MgJ7F3Fc9G-Ymf5Z8ppsY9WfSczLuMG0fWofAjcWsJWMKtRfXVAoJXsNjfJZMVrnWu-VKs9JrooYKN3deL2n6ZLqVpGw-o-AtFElhAfciTAWtQQgcHtg_cNVTGI",
+      "paths": {
+        "html": "stitch\\action-deck\\group-chat-active-activity\\index.html",
+        "screenshot": "stitch\\action-deck\\group-chat-active-activity\\screenshot.png"
+      }
+    },
+    {
+      "title": "Group Chat with Poll",
+      "stitchTitle": "Group Chat with Poll",
+      "id": "759780b0c9c54f8b80172a2fe7566408",
+      "slug": "group-chat-with-poll",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1896",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODlkZmZjZDYxMDQwMjNiZWIyODg0MmQxN2VmEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLvB5KjpJ48ZgxVs2pzRK1-8XORJYhMts6hqxFu0JZxoVcwZKhmYRF0ASIj-PI0SRE1AdUoI2iTdL66mLmpX5TNxRJCmVUEyb26jUWgOy7IlnZXR5Iwetxprbr0A5jkTmYP339PQvMlRimbk49IjgmV6JsJxvrYaEcaKV0OVcwZDXqYHB8TJYdFB0bjMNN1mLA9a69omukiWrHZHPykARdTXZeGGp8lN4zHTH3A6-CeJmNQVHqwC2Wii3Kq7",
+      "paths": {
+        "html": "stitch\\action-deck\\group-chat-with-poll\\index.html",
+        "screenshot": "stitch\\action-deck\\group-chat-with-poll\\screenshot.png"
+      }
+    },
+    {
+      "title": "Archived Chat (Read-only)",
+      "stitchTitle": "Archived Chat (Read-only)",
+      "id": "930ba1076238404a9b5c481d7e1bb242",
+      "slug": "archived-chat-read-only",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODllMDIyOTA4ZDYwMjNiZDQ1ZDJmMjE2NGEyEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLuTfygCQLYYT3sH8IAk_33aFQzoxSKHrq_y3bjTRQhslf6MI4nbi8usxwGFLcCdcbYUi8BLGaqa2RKvzeuIZnCZjyZu6XrakASRli_Z4genn-JdfuwV8yrQihcFvXiJ2b79-BzykTOSsqoMQpdkompiMaJHpankGHRanpz-IsOXM2fWQajU0R6OOgRuHufVHQA6ev_Ja8q1WrXH0GNW73S0idv93W9nl4NOj3yxj5PWsJM4vC94tMzTDsfk",
+      "paths": {
+        "html": "stitch\\action-deck\\archived-chat-read-only\\index.html",
+        "screenshot": "stitch\\action-deck\\archived-chat-read-only\\screenshot.png"
       }
     }
   ]

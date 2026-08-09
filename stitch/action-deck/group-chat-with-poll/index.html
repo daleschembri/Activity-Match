@@ -1,0 +1,354 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Sunset Yoga Group Chat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#2f1500",
+                        "primary-fixed-dim": "#8bd79b",
+                        "background": "#fcf9f6",
+                        "on-surface": "#1c1c1a",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "surface-tint": "#1f6c3a",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "surface-container": "#f0edeb",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e5e2e0",
+                        "on-surface-variant": "#404940",
+                        "surface-variant": "#e5e2e0",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#8bd79b",
+                        "inverse-surface": "#31302f",
+                        "inverse-on-surface": "#f3f0ee",
+                        "on-background": "#1c1c1a",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#fe932c",
+                        "on-secondary-container": "#663500",
+                        "on-primary": "#ffffff",
+                        "outline": "#707a6f",
+                        "surface-bright": "#fcf9f6",
+                        "on-primary-fixed-variant": "#005226",
+                        "surface-dim": "#dcd9d7",
+                        "tertiary-container": "#8f3e4c",
+                        "primary-container": "#166534",
+                        "secondary": "#904d00",
+                        "secondary-fixed": "#ffdcc3",
+                        "on-tertiary-fixed": "#3f0112",
+                        "surface-container-low": "#f6f3f1",
+                        "tertiary": "#722736",
+                        "primary-fixed": "#a6f4b5",
+                        "on-tertiary-container": "#ffbfc6",
+                        "outline-variant": "#bfc9bd",
+                        "on-tertiary-fixed-variant": "#792d3b",
+                        "on-secondary-fixed-variant": "#6e3900",
+                        "on-primary-container": "#93e0a2",
+                        "error": "#ba1a1a",
+                        "surface": "#fcf9f6",
+                        "surface-container-high": "#ebe8e5",
+                        "on-primary-fixed": "#00210b",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#004c22",
+                        "tertiary-fixed": "#ffd9dd",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "base": "4px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "label-bold": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-xl": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Subtle shadow for depth */
+        .ambient-shadow {
+            box-shadow: 0 4px 12px rgba(28, 28, 26, 0.04);
+        }
+        
+        /* Message styles */
+        .msg-received {
+            border-bottom-left-radius: 4px;
+        }
+        .msg-sent {
+            border-bottom-right-radius: 4px;
+        }
+        
+        /* Progress bar animation */
+        @keyframes fillProgress {
+            from { width: 0; }
+        }
+        .animate-progress {
+            animation: fillProgress 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Desktop Sidebar - Navigation (Suppressed on mobile) -->
+<nav class="hidden md:flex flex-col w-64 border-r border-outline-variant bg-surface-container-lowest h-screen sticky top-0 shrink-0">
+<div class="p-lg">
+<h1 class="font-headline-lg text-headline-lg text-primary">Discover</h1>
+</div>
+<div class="flex-1 px-md py-sm space-y-sm">
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-bold text-label-bold">Discover</span>
+</a>
+<a class="flex items-center gap-md p-md rounded-lg text-primary bg-primary-container/10 transition-colors" href="#">
+<span class="material-symbols-outlined icon-fill">event_note</span>
+<span class="font-label-bold text-label-bold">My plans</span>
+</a>
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-label-bold text-label-bold">Create</span>
+</a>
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-bold text-label-bold">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area (Chat Interface) -->
+<main class="flex-1 flex flex-col relative max-w-3xl mx-auto w-full h-[100dvh] md:h-screen bg-surface-container-lowest border-x border-outline-variant/30">
+<!-- Top App Bar - Chat Header -->
+<header class="flex justify-between items-center px-margin-mobile py-sm w-full top-0 sticky z-10 bg-surface/95 backdrop-blur-md ambient-shadow">
+<div class="flex items-center gap-md">
+<button class="md:hidden p-sm -ml-sm text-on-surface hover:bg-surface-container-high rounded-full transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A bright, sunlit outdoor yoga session in a grassy park setting, captured with a soft, warm golden hour glow. The scene feels active and communal, matching a 'Sunset Yoga' theme. Vibrant greens and warm oranges dominate the color palette, reinforcing a tactile and natural aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOBu7VXCTanB97Spk7rUwkx0gNGw-fgxgPasy9R4A68l6vTgzMLRpNhRbqqwzU24UgBG54n3eot2xfL9_86PWBU_G3l6AVrZU2E1rq-5absPCcfpiKAlNHIKpa0M2vMqw8sA1gYUMr0IQvnwar1iJuWDkEmNftUog_zeSR01Mrra3zAo6WgBSI0stlYZNPNVJOGI35aVgsuJiZbdMsSKrNxotkrvaxMnlWhTrj1Q-GMjE_Gg8h2Blf4w">
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface leading-tight">Sunset Yoga 🧘‍♀️</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">12 members</p>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Pinned Event Card -->
+<div class="px-margin-mobile py-sm bg-surface-container-lowest border-b border-surface-variant sticky top-[72px] z-10">
+<div class="flex items-center gap-md bg-surface-container-low p-md rounded-lg cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="w-12 h-12 rounded-md bg-primary-container/20 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined icon-fill">calendar_month</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-label-sm text-label-sm text-primary font-bold uppercase tracking-wider mb-xs">Next Session</p>
+<h3 class="font-label-bold text-label-bold text-on-surface truncate">Sunset Flow at Dolores Park</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">Tomorrow, 18:00 - 19:30</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+<!-- Chat Feed -->
+<div class="flex-1 overflow-y-auto p-margin-mobile flex flex-col gap-lg bg-surface">
+<!-- Date Divider -->
+<div class="flex justify-center my-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-low px-md py-xs rounded-full">Today</span>
+</div>
+<!-- Message Group (Received) -->
+<div class="flex gap-md max-w-[85%]">
+<img class="w-8 h-8 rounded-full object-cover shrink-0 mt-auto" data-alt="A close-up portrait of a cheerful person with short dark hair, wearing a casual deep green athletic top, standing outdoors against a blurred natural background in warm daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc5TIvnYH7nmQwc2qD3_nxcr3xWAI2mcpHTR66MR45lCqq6nwAVLaYvjj2UScCrMZ78NROfKeKkx4j2EeUoKqi2RYjlczArJPiVBiiZnU6Y0a5pP8HC6IFIxYBSERHXvIVsMnIKzf4L5qCTIjp5Mjqa77E_Y3F1TknM2xuulTIVGZvalX-VjYANar5GOxDTWsLKlTwqV5M9r3mQlIDP6X5_S2kxkZjyL0BPgHQ1SJchKE4p1hDvhA_gw">
+<div class="flex flex-col gap-sm">
+<div class="flex items-baseline gap-sm px-xs">
+<span class="font-label-bold text-label-bold text-on-surface">Alex</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">14:22</span>
+</div>
+<div class="bg-surface-container-highest text-on-surface p-md rounded-2xl msg-received inline-block">
+<p>Hey everyone! Trying to figure out the best time for tomorrow's session. The sun sets a bit later now.</p>
+</div>
+</div>
+</div>
+<!-- Poll Card (The Core Task) -->
+<div class="flex gap-md max-w-full md:max-w-[85%]">
+<img class="w-8 h-8 rounded-full object-cover shrink-0 mt-auto" data-alt="A close-up portrait of a cheerful person with short dark hair, wearing a casual deep green athletic top, standing outdoors against a blurred natural background in warm daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIOKgBRoKVPMQHuEb09TsS9iHuMfF9PdkaJugZ5OacpINVl3D6KyuuODlVrKBjIkXUL8mv5xvx8_2MHlGykmlnXzsBaNTfuFeUs5DxzKcK8Bp4R920y9uvPBoNqgQY65voH-w1TLLbzJ4OeIO7COuudpfrZjPgzYhe9zCXFyiaZrW0Oq67L-GOTFxWAPBfuW6TQYtayrvqCqVWE09hURn7zyPzqsZFnCFM4WsXblr5uqe1jTHOJYKuxw">
+<div class="flex flex-col gap-sm w-full">
+<div class="flex items-baseline gap-sm px-xs">
+<span class="font-label-bold text-label-bold text-on-surface">Alex</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">14:25</span>
+</div>
+<!-- The Poll Component -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl overflow-hidden ambient-shadow w-full">
+<!-- Poll Header -->
+<div class="p-md border-b border-surface-variant bg-surface-container-low/50 flex items-start gap-md">
+<div class="mt-1 text-primary">
+<span class="material-symbols-outlined icon-fill">poll</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">What time works better?</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Multiple choices not allowed</p>
+</div>
+</div>
+<!-- Poll Options -->
+<div class="p-md flex flex-col gap-md">
+<!-- Option 1: 18:00 (40%) -->
+<div class="relative group cursor-pointer">
+<!-- Background Progress Bar -->
+<div class="absolute inset-0 bg-surface-container-highest rounded-lg overflow-hidden border border-transparent">
+<div class="h-full bg-primary-container/20 animate-progress" style="width: 40%;"></div>
+</div>
+<!-- Content -->
+<div class="relative z-10 p-md flex items-center justify-between">
+<div class="flex items-center gap-md">
+<!-- Unselected Radio -->
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant group-hover:border-primary transition-colors"></div>
+<span class="font-body-md text-on-surface font-medium">18:00</span>
+</div>
+<div class="flex items-center gap-md">
+<!-- Avatars of voters -->
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-surface-container-lowest object-cover" data-alt="A small, circular avatar portrait of a person with blonde hair smiling warmly, set against a soft blurred background with a tactile, deep green overlay tint." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdtb38qwJCIpSKcl-w8fk5MixwYk2xfMcj3VxWd_BO4PV--bkXC9JJWfcRlvmPNboj1JBq0xNzShsRvWZ5H_NTzPlGpEiYZnuxf8DiB8ZCjfk4uYAHbRypnDBzsFr51z2bxNr_H7-U48MYNCWyBAoEI6AnzxgiQ1STYfjtyyENs1o7cPMNo9ABzQv4GvJ6wo1oG8rGdiWtx_3IqSVuKD6MDo8EFYbYiJQGwdk64LisS6OJP-eNRb7gLg">
+<img class="w-6 h-6 rounded-full border-2 border-surface-container-lowest object-cover" data-alt="A small, circular avatar portrait of a person wearing glasses and a casual cap, with a subtle natural lighting setup." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABEiHUwSovye8O8wQFNdiJKsfjJ-SN9xj7SsnvuaxJIeeeXYBPOURB3BMFaTpHFC5mdJdXXYU7qNHYinZRJWMiql6w_ECTuE8NXof2Vl3MTe2SYFY8AZkM3ckqfDZCpdX6WaC_Nkcc7_X9V5BwX1BMIQkEEAyMw4CnamiI62SgrOH0vl68W1-ehCSWV4AmAcUJGuqFPoQChFcTbmuyblyd1qbSQukR64YxAjcQdAvDm6u3wyMim4RXow">
+<div class="w-6 h-6 rounded-full border-2 border-surface-container-lowest bg-surface-variant flex items-center justify-center">
+<span class="font-label-sm text-[10px] text-on-surface-variant">+2</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant w-12 text-right">40%</span>
+</div>
+</div>
+</div>
+<!-- Option 2: 18:30 (60% - Selected) -->
+<div class="relative group cursor-pointer">
+<!-- Background Progress Bar -->
+<div class="absolute inset-0 bg-primary-container/10 rounded-lg overflow-hidden border border-primary">
+<div class="h-full bg-primary-container/30 animate-progress" style="width: 60%;"></div>
+</div>
+<!-- Content -->
+<div class="relative z-10 p-md flex items-center justify-between">
+<div class="flex items-center gap-md">
+<!-- Selected Radio -->
+<div class="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center">
+<div class="w-2.5 h-2.5 rounded-full bg-primary"></div>
+</div>
+<span class="font-body-md text-on-surface font-medium">18:30</span>
+</div>
+<div class="flex items-center gap-md">
+<!-- Avatars of voters -->
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-surface-container-lowest object-cover z-30" data-alt="A small, circular avatar portrait of an individual with dark curly hair laughing, lit by soft, bright daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx09dCYFNV4DIBHmJ2BQjYslR_71qCojutooOyL59rTgX4FBaIOLoMWwKYrnS2U2WPeXpX8e-0Bu07xzeQodYfG4O8hrtHjhHvkOWn9yiEF5gXdKwJ9MrqH2IS9gROJPy9Was3s5Y05KtO7BoTR91tULZgn1Vgop_41QTUk2FKWcwvS7Ts68plaORqjjWDLVwlPoiheJ3RUS2JrvpDozbPdU2YtE6KTzJrMuz2VJVPwMRYp0fI-976dw">
+<img class="w-6 h-6 rounded-full border-2 border-surface-container-lowest object-cover z-20" data-alt="A small, circular avatar portrait of a person with a bright red beanie, shot with high contrast and naturalistic colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj5dmDhzRmehfTA-o7Wk72hXG_P0zizKhXMFFviDapQAxflg32alg7ZBs6XvL6j2bYoD8nhJ1mQl5ecgjDReryiMhbiYECsCsgw0JzJbDTPoAoh1id2iZZI3stB55LPEbsf5VSHUEQurR_06tqQwvDU7lnN5HFpHY9yJmPs-xZK2_txK3A2E8_jqKj6tYvdAHHQBpBVcsxEabdljO5syMMzGxuBPrIstN0q4Yr9vr0cNTOcPKp03aiZA">
+<img class="w-6 h-6 rounded-full border-2 border-surface-container-lowest object-cover z-10" data-alt="A small, circular avatar portrait of someone wearing a minimalist deep green hoodie, reflecting a calm, grounded aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMY62eRbuHXq-648cKJqQMTvAKZ0Y9KUYQtuATfNliwPtQa4wK6BPdR2lK3Ot_xLHvvI3xghaEm6oMsgaXVLj3UJVwaooICAsnODBUHAqOdR706d9fXEFBP_N5CLjDxxWEB1co-bkhsPI_mxS8XSgOIhMBZfzkLj0F86bFcOAsL0T3kxzPDinVEfltjOUTh57IJs4GIdVxLrkmjPw0us196qHpy-Md1r3UQi9Si2tGrHxN7cNlC7FjfQ">
+<div class="w-6 h-6 rounded-full border-2 border-surface-container-lowest bg-surface-variant flex items-center justify-center z-0">
+<span class="font-label-sm text-[10px] text-on-surface-variant">+3</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold w-12 text-right">60%</span>
+</div>
+</div>
+</div>
+<!-- Option 3: 19:00 (0%) -->
+<div class="relative group cursor-pointer">
+<!-- Background Progress Bar -->
+<div class="absolute inset-0 bg-surface-container-lowest hover:bg-surface-container-highest/50 transition-colors rounded-lg overflow-hidden border border-transparent">
+</div>
+<!-- Content -->
+<div class="relative z-10 p-md flex items-center justify-between">
+<div class="flex items-center gap-md">
+<!-- Unselected Radio -->
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant group-hover:border-primary transition-colors"></div>
+<span class="font-body-md text-on-surface font-medium">19:00</span>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-label-sm text-label-sm text-on-surface-variant w-12 text-right">0%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Poll Footer -->
+<div class="p-sm px-md bg-surface-container-low border-t border-surface-variant flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">10 total votes · 2 people haven't voted</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Spacer for bottom input -->
+<div class="h-4"></div>
+</div>
+<!-- Chat Input Bar -->
+<div class="p-sm md:p-md bg-surface-container-lowest border-t border-outline-variant/30 sticky bottom-0 z-10 pb-safe">
+<div class="flex items-end gap-sm bg-surface-container-low rounded-2xl p-sm focus-within:ring-2 focus-within:ring-primary/50 transition-shadow">
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-highest hover:text-primary rounded-full transition-colors shrink-0">
+<span class="material-symbols-outlined">add</span>
+</button>
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 resize-none font-body-md text-on-surface placeholder-on-surface-variant/50 max-h-32 py-sm" placeholder="Message..." rows="1" style="min-height: 44px;"></textarea>
+<button class="p-sm text-primary hover:bg-primary-container/20 rounded-full transition-colors shrink-0">
+<span class="material-symbols-outlined icon-fill">send</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 h-20 bg-surface border-t border-outline-variant/10 shadow-[0_-4px_12px_rgba(0,0,0,0.04)] flex justify-around items-center px-4 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors w-16 h-16 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">explore</span>
+<span class="font-label-sm text-label-sm">Discover</span>
+</a>
+<!-- Active state for "My plans" based on intent (viewing a specific group plan/chat) -->
+<a class="flex flex-col items-center justify-center text-primary font-label-bold text-label-bold after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 w-16 h-16 rounded-xl hover:bg-surface-container-low transition-colors scale-90 duration-200" href="#">
+<span class="material-symbols-outlined icon-fill mb-1">event_note</span>
+<span>My plans</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors w-16 h-16 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">add_circle</span>
+<span class="font-label-sm text-label-sm">Create</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors w-16 h-16 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+</body></html>

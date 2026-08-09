@@ -20,7 +20,7 @@ export const springSoft: Transition = {
   damping: 28,
 };
 
-export const TAB_PATHS = ["/", "/plans", "/chats", "/create/describe", "/profile"];
+export const TAB_PATHS = ["/", "/plans", "/chats", "/notifications", "/create/describe", "/profile"];
 
 export function isTabPath(path: string): boolean {
   return TAB_PATHS.includes(path) || path.startsWith("/create");
@@ -134,23 +134,23 @@ export function getPageVariants(from: string, to: string, isPop: boolean, reduce
 
   if (isTabPath(from) && isTabPath(to) && from !== to) {
     return {
-      initial: { opacity: 0, y: 10, scale: 0.99 },
-      animate: { opacity: 1, y: 0, scale: 1 },
-      exit: { opacity: 0, y: -8, scale: 0.99 },
+      initial: { opacity: 0, y: 8 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -6 },
     };
   }
 
   if (isPop) {
     return {
-      initial: { opacity: 0, x: -32 },
+      initial: { opacity: 0, x: -16 },
       animate: { opacity: 1, x: 0 },
-      exit: { opacity: 0, x: 40 },
+      exit: { opacity: 0, x: 16 },
     };
   }
 
   return {
-    initial: { opacity: 0, x: 32 },
+    initial: { opacity: 0, x: 16 },
     animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -40 },
+    exit: { opacity: 0, x: -16 },
   };
 }

@@ -1,0 +1,248 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Padel Match Chat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#2f1500",
+                        "primary-fixed-dim": "#8bd79b",
+                        "background": "#fcf9f6",
+                        "on-surface": "#1c1c1a",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "surface-tint": "#1f6c3a",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "surface-container": "#f0edeb",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e5e2e0",
+                        "on-surface-variant": "#404940",
+                        "surface-variant": "#e5e2e0",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#8bd79b",
+                        "inverse-surface": "#31302f",
+                        "inverse-on-surface": "#f3f0ee",
+                        "on-background": "#1c1c1a",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#fe932c",
+                        "on-secondary-container": "#663500",
+                        "on-primary": "#ffffff",
+                        "outline": "#707a6f",
+                        "surface-bright": "#fcf9f6",
+                        "on-primary-fixed-variant": "#005226",
+                        "surface-dim": "#dcd9d7",
+                        "tertiary-container": "#8f3e4c",
+                        "primary-container": "#166534",
+                        "secondary": "#904d00",
+                        "secondary-fixed": "#ffdcc3",
+                        "on-tertiary-fixed": "#3f0112",
+                        "surface-container-low": "#f6f3f1",
+                        "tertiary": "#722736",
+                        "primary-fixed": "#a6f4b5",
+                        "on-tertiary-container": "#ffbfc6",
+                        "outline-variant": "#bfc9bd",
+                        "on-tertiary-fixed-variant": "#792d3b",
+                        "on-secondary-fixed-variant": "#6e3900",
+                        "on-primary-container": "#93e0a2",
+                        "error": "#ba1a1a",
+                        "surface": "#fcf9f6",
+                        "surface-container-high": "#ebe8e5",
+                        "on-primary-fixed": "#00210b",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#004c22",
+                        "tertiary-fixed": "#ffd9dd",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "base": "4px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "label-bold": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-xl": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col relative md:hidden">
+<!-- Top App Bar -->
+<header class="bg-surface w-full top-0 sticky flex justify-between items-center px-margin-mobile py-sm w-full flat no shadows z-10 border-b border-surface-variant">
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant flex items-center justify-center p-sm rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-primary">Padel Match</h1>
+<div class="flex -space-x-2 mt-xs">
+<img alt="Participant" class="w-6 h-6 rounded-full border-2 border-surface object-cover" data-alt="A small circular avatar showing a young man in sportswear against a bright blue sky. Natural lighting, active aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9SKKMrXMKIs8Mtk4yeXwHLr_o-_amHCT9TpFzA2Gwt15DYp1uajIyLqORdFZEDyQXzmOfivAWJQz6JXCuizKboHh7m789-OjmrRMUv6nRKtMFbuaL4j6fuhccPTehOcYPaoEvyEc5bWp8VvOuefKyXD37PZwhxJ_u1a9iNQfLDHaeqoPbacDtYgk1od1vy_e90W1vsOXy-e7He8P7CiQ8icRtzfv6-nFzcY1fT0mJQPPz8YhYbQayMw">
+<img alt="Participant" class="w-6 h-6 rounded-full border-2 border-surface object-cover" data-alt="A small circular avatar showing a woman with a headband on a padel court. Soft daylight, energetic mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxldZOT8hvvd7oOMJ0psrKs4OenJE8H_CqtAqO_aoRrigxm0Uc095WWa_XQ7tsFSk4uf9sa47-QuJp2SAL7y1H2O1OvSCUzE-IgokBtQ7Mjwmbdth18i6apsPcgGb1IV9JoscD-GBR2prvzYd9PPLYb0ahxsKO724b0A21NJ6jbC_Hk9SPe_VmmITuo8CP1pCrTRz-_dgIl8MfBISGKeUb4QkVlEqXoBg6g4spd2MjKT0fN-ESFmSYqA">
+<img alt="Participant" class="w-6 h-6 rounded-full border-2 border-surface object-cover" data-alt="A small circular avatar showing a person wearing sunglasses and a cap outdoors. Bright sunlight, sporty aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMZjiNBEHzDTFGpZ4FpRFmFTxoI3nkHPDp_ycDZ6j3aeWw28IPUVB-qT_M1A4YwdBhB2A1N2ws34y2TFs48ObWqCEMqeuztJevrZc_xUZiu4-0dy0wYcVn7ki1QTzjBDigud5_2q8CxPAqn-URl2FK00X-Y6Bwr1j7Nb7g8_navH7u7ZSdUgv0zmxNVdVqpai2rq61u53pLPMH_J9MZAM20DNPfn2z5hSd84ylyDsB8oXX19HcG3b7LQ">
+<div class="w-6 h-6 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center font-label-sm text-label-sm text-on-surface-variant">+2</div>
+</div>
+</div>
+</div>
+<button class="text-on-surface-variant flex items-center justify-center p-sm rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</header>
+<!-- Pinned Activity Card -->
+<div class="px-margin-mobile pt-sm pb-md bg-surface border-b border-surface-variant shadow-[0_4px_12px_rgba(0,0,0,0.02)] relative z-0">
+<div class="bg-surface-container-low rounded-lg p-md border border-surface-variant/50">
+<div class="flex justify-between items-start mb-sm">
+<div class="flex items-center gap-sm text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="push_pin" data-weight="fill" style="font-variation-settings: 'FILL' 1;">push_pin</span>
+<span class="font-label-bold text-label-bold uppercase tracking-wider text-xs">Pinned Activity</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-sm">Mosta Padel Club</h2>
+<div class="grid grid-cols-2 gap-sm">
+<div class="flex items-center gap-xs text-on-surface-variant font-label-bold text-label-bold">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_month">calendar_month</span>
+<span>Tomorrow, 19:00</span>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant font-label-bold text-label-bold">
+<span class="material-symbols-outlined text-[18px]" data-icon="payments">payments</span>
+<span>€8</span>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant font-label-bold text-label-bold col-span-2 mt-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="group">group</span>
+<span>2 spaces left</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Area -->
+<main class="flex-1 overflow-y-auto px-margin-mobile py-md flex flex-col gap-xl pb-24">
+<!-- Date Separator -->
+<div class="flex justify-center">
+<span class="bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm px-md py-xs rounded-full">Today</span>
+</div>
+<!-- User Message (Alex) -->
+<div class="flex items-end justify-end gap-sm">
+<div class="flex flex-col items-end max-w-[80%]">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-xs mr-sm">Alex • 14:32</span>
+<div class="bg-primary text-on-primary rounded-xl rounded-br-none p-md shadow-sm">
+<p class="font-body-md text-body-md mb-sm">Got my new racket ready for tomorrow!</p>
+<img alt="Padel Racket" class="rounded-lg object-cover w-full h-40" data-alt="A close-up shot of a modern, high-end carbon fiber padel racket resting on a vibrant blue court surface. The lighting is bright and sunny, casting sharp shadows, creating an energetic and sporty mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHDpYoAY8Xf3j6hR5lb6011x8qncyQ5YywGuZHaFKJ5auJaBBQVbn3BJsNHOSMGQCum1urQfEnQN6epCa3h_cAdpZgO_21JX2I9wc7_geocsLJOr7nTjetpjqBkQAvI-KB-A6LF8Ex12yxKCIFA2VJAPPc5XMHju5NaDpPp2e2mMhXY4gB_qT1_fxRpma0S3LCVQDLEJRk00SUZnvY2jJn-7LFOCj1UDKlv8wTAnjL7RbyjqVOby1nkw">
+</div>
+</div>
+</div>
+<!-- System Message (Info) -->
+<div class="flex items-start justify-center">
+<div class="bg-surface-container text-on-surface rounded-xl p-md max-w-[90%] border border-surface-variant flex items-start gap-md shadow-sm">
+<div class="w-[28px] h-[28px] rounded-full bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px] text-on-primary-container" data-icon="sports_tennis" data-weight="fill" style="font-variation-settings: 'FILL' 1;">sports_tennis</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        Padel tomorrow at 19:00.<br>
+                        Location: Mosta Padel Club.<br>
+                        Fee: €8.<br>
+                        Two spaces remain.
+                    </p>
+</div>
+</div>
+</div>
+<!-- System Message (Attendance Confirmation) -->
+<div class="flex items-start justify-center">
+<div class="bg-surface text-on-surface rounded-xl p-md max-w-[90%] border border-surface-variant shadow-sm w-full">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-[28px] h-[28px] rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px] text-on-secondary-container" data-icon="event_available">event_available</span>
+</div>
+<p class="font-label-bold text-label-bold text-on-surface">Are you still coming tomorrow?</p>
+</div>
+<div class="flex flex-col gap-sm w-full">
+<button class="w-full bg-primary text-on-primary font-label-bold text-label-bold py-sm px-md rounded-lg hover:bg-on-primary-fixed-variant transition-colors active:scale-[0.98]">
+                        Yes, I'm coming
+                    </button>
+<button class="w-full bg-transparent border-[1.5px] border-outline text-on-surface font-label-bold text-label-bold py-sm px-md rounded-lg hover:bg-surface-container-low transition-colors active:scale-[0.98]">
+                        I can't make it
+                    </button>
+</div>
+</div>
+</div>
+<!-- Participant Message (Sarah) -->
+<div class="flex items-end justify-start gap-sm">
+<img alt="Sarah" class="w-8 h-8 rounded-full border border-surface-variant object-cover mb-1" data-alt="A small circular avatar showing a woman with a headband on a padel court. Soft daylight, energetic mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWuw8DshRT6B_VBBApY0DikxwrCzOdBMMtsb0MlaNOA8q41pZH4Mny7G9134J6uOSxFDNG0fewADHb_xoJE-O-3KaMTjNHY5zvsj3YFuOe6FPIyIQ8X5pO0f3w6C7dronjN8N1GsIEPXUmIGTSFfCC-vHmgJS8sYZlcOjYQRAAiwVCh3eNFfRFtM13U5oC0CFjFjb82H3opXLRPzACiAqj5dakTGs1WE7dF9K7D_Arod5AH2WBzdzabw">
+<div class="flex flex-col items-start max-w-[80%]">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-xs ml-sm">Sarah • 15:05</span>
+<div class="bg-surface-container-high text-on-surface rounded-xl rounded-bl-none p-md shadow-sm">
+<p class="font-body-md text-body-md">Can't wait! 🎾</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Input Bar -->
+<div class="fixed bottom-0 w-full bg-surface border-t border-surface-variant px-margin-mobile py-sm pb-safe flex items-center gap-sm shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-10">
+<button class="text-primary p-sm rounded-full hover:bg-surface-container-high transition-colors shrink-0">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</button>
+<div class="flex-1 bg-surface-container-low border border-outline-variant rounded-full flex items-center px-md py-sm">
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 font-body-md text-body-md text-on-surface placeholder-on-surface-variant/70" placeholder="Message group..." type="text">
+</div>
+<button class="bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center hover:bg-on-primary-fixed-variant transition-colors shrink-0 active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="send">send</span>
+</button>
+</div>
+</body></html>

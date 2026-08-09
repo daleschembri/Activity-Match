@@ -1,45 +1,62 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { FilterChip, Icon, PrimaryButton, ScreenShell } from "@activity-match/ui";
+import { Icon, PrimaryButton } from "@activity-match/ui";
+import { ChatListRow } from "@/components/chat/ChatListRow";
 import { Stagger, StaggerItem } from "@/components/motion/primitives";
+import { splitChatsBySection } from "@/lib/chatList";
 import { api } from "@/lib/api";
-
-type ChatTab = "host" | "participant";
 
 export function ChatsPage() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState<ChatTab>("host");
-  const { data: chats = [], isLoading } = useQuery({
+  const { data: profile } = useQuery({ queryKey: ["profile"], queryFn: () => api.getProfile() });
+  const { data: chats = [], isLoading, error } = useQuery({
     queryKey: ["my-chats"],
     queryFn: () => api.getMyChats(),
+    refetchInterval: 15_000,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
   });
 
-  const hosting = useMemo(() => chats.filter((c) => c.chat_role === "host"), [chats]);
-  const joined = useMemo(() => chats.filter((c) => c.chat_role === "participant"), [chats]);
-  const visible = tab === "host" ? hosting : joined;
+  const { happeningSoon, past } = useMemo(() => splitChatsBySection(chats), [chats]);
 
   return (
-    <ScreenShell title="Chats" reserveBottomNav>
-      <div className="space-y-4">
-        <motion.div
-          className="flex gap-2"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25 }}
+    <div className="h-dvh overflow-hidden bg-background text-on-surface flex flex-col">
+      <header className="bg-surface sticky top-0 z-40 flex justify-between items-center px-margin-mobile py-2 shrink-0">
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => navigate("/profile")}
+            aria-label="Profile"
+            className="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden shrink-0"
+          >
+            {profile?.avatar_ref ? (
+              <img src={profile.avatar_ref} alt="" className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-on-surface-variant">
+                <Icon name="person" />
+              </div>
+            )}
+          </button>
+          <h1 className="text-headline-lg-mobile font-extrabold text-primary">Chats</h1>
+        </div>
+        <button
+          type="button"
+          onClick={() => navigate("/notifications")}
+          aria-label="Notifications"
+          className="w-12 h-12 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full active:scale-95"
         >
-          <FilterChip
-            label={`Hosting (${hosting.length})`}
-            selected={tab === "host"}
-            onClick={() => setTab("host")}
-          />
-          <FilterChip
-            label={`Joined (${joined.length})`}
-            selected={tab === "participant"}
-            onClick={() => setTab("participant")}
-          />
-        </motion.div>
+          <Icon name="notifications" className="text-2xl" />
+        </button>
+      </header>
+
+      <main className="flex-1 overflow-y-auto px-margin-mobile pt-4 pb-24 min-h-0">
+        {error && (
+          <p className="text-error text-body-md mb-4" role="alert">
+            {(error as Error).message}
+          </p>
+        )}
 
         {isLoading && (
           <motion.p
@@ -51,7 +68,7 @@ export function ChatsPage() {
           </motion.p>
         )}
 
-        {!isLoading && chats.length === 0 && (
+        {!isLoading && !error && chats.length === 0 && (
           <motion.div
             className="text-center py-12 space-y-4"
             initial={{ opacity: 0, scale: 0.96 }}
@@ -66,59 +83,32 @@ export function ChatsPage() {
           </motion.div>
         )}
 
-        {!isLoading && chats.length > 0 && visible.length === 0 && (
-          <motion.p
-            className="text-body-md text-on-surface-variant text-center py-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            key={tab}
-          >
-            {tab === "host" ? "You are not hosting any activities yet." : "You have not joined any activities yet."}
-          </motion.p>
+        {!isLoading && happeningSoon.length > 0 && (
+          <section className="mb-8">
+            <h2 className="text-headline-md font-bold text-on-surface mb-4">Happening soon</h2>
+            <Stagger className="space-y-3">
+              {happeningSoon.map((chat) => (
+                <StaggerItem key={chat.id}>
+                  <ChatListRow chat={chat} onClick={() => navigate(`/activities/${chat.id}/chat`)} />
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </section>
         )}
 
-        <AnimatePresence mode="popLayout">
-          <Stagger key={tab} className="space-y-3">
-            {visible.map((chat) => {
-              const when = chat.starts_at
-                ? new Date(chat.starts_at).toLocaleString(undefined, {
-                    weekday: "short",
-                    month: "short",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })
-                : "Flexible timing";
-
-              return (
+        {!isLoading && past.length > 0 && (
+          <section className="mb-8 opacity-90">
+            <h2 className="text-headline-md font-bold text-on-surface-variant mb-4">Past</h2>
+            <Stagger className="space-y-3">
+              {past.map((chat) => (
                 <StaggerItem key={chat.id}>
-                  <motion.button
-                    type="button"
-                    onClick={() => navigate(`/activities/${chat.id}/chat`)}
-                    className="w-full text-left bg-surface-container-lowest rounded-xl border border-outline-variant/20 p-4 flex items-center gap-3"
-                    whileHover={{ scale: 1.01, y: -1 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                    layout
-                  >
-                    <div className="w-11 h-11 rounded-full bg-primary-container/15 text-primary flex items-center justify-center shrink-0">
-                      <Icon name="chat" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h2 className="text-headline-md font-bold truncate">{chat.title}</h2>
-                      <p className="text-body-md text-on-surface-variant truncate">{when}</p>
-                      {chat.area_label && (
-                        <p className="text-label-sm text-on-surface-variant truncate">{chat.area_label}</p>
-                      )}
-                    </div>
-                    <Icon name="chevron_right" className="text-on-surface-variant shrink-0" />
-                  </motion.button>
+                  <ChatListRow chat={chat} onClick={() => navigate(`/activities/${chat.id}/chat`)} />
                 </StaggerItem>
-              );
-            })}
-          </Stagger>
-        </AnimatePresence>
-      </div>
-    </ScreenShell>
+              ))}
+            </Stagger>
+          </section>
+        )}
+      </main>
+    </div>
   );
 }

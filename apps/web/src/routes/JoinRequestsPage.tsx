@@ -23,6 +23,7 @@ export function JoinRequestsPage() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ["join-requests"] });
       void queryClient.invalidateQueries({ queryKey: ["my-chats"] });
+      void queryClient.invalidateQueries({ queryKey: ["chats-unread"] });
       void queryClient.invalidateQueries({ queryKey: ["notifications"] });
       void queryClient.invalidateQueries({ queryKey: ["notifications-unread"] });
     },

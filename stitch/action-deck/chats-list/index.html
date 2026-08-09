@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Gathere - Chats</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "on-secondary": "#ffffff",
+                            "on-secondary-fixed": "#2f1500",
+                            "primary-fixed-dim": "#8bd79b",
+                            "background": "#fcf9f6",
+                            "on-surface": "#1c1c1a",
+                            "secondary-fixed-dim": "#ffb77d",
+                            "surface-tint": "#1f6c3a",
+                            "tertiary-fixed-dim": "#ffb2bb",
+                            "surface-container": "#f0edeb",
+                            "on-error": "#ffffff",
+                            "surface-container-highest": "#e5e2e0",
+                            "on-surface-variant": "#404940",
+                            "surface-variant": "#e5e2e0",
+                            "surface-container-lowest": "#ffffff",
+                            "inverse-primary": "#8bd79b",
+                            "inverse-surface": "#31302f",
+                            "inverse-on-surface": "#f3f0ee",
+                            "on-background": "#1c1c1a",
+                            "error-container": "#ffdad6",
+                            "secondary-container": "#fe932c",
+                            "on-secondary-container": "#663500",
+                            "on-primary": "#ffffff",
+                            "outline": "#707a6f",
+                            "surface-bright": "#fcf9f6",
+                            "on-primary-fixed-variant": "#005226",
+                            "surface-dim": "#dcd9d7",
+                            "tertiary-container": "#8f3e4c",
+                            "primary-container": "#166534",
+                            "secondary": "#904d00",
+                            "secondary-fixed": "#ffdcc3",
+                            "on-tertiary-fixed": "#3f0112",
+                            "surface-container-low": "#f6f3f1",
+                            "tertiary": "#722736",
+                            "primary-fixed": "#a6f4b5",
+                            "on-tertiary-container": "#ffbfc6",
+                            "outline-variant": "#bfc9bd",
+                            "on-tertiary-fixed-variant": "#792d3b",
+                            "on-secondary-fixed-variant": "#6e3900",
+                            "on-primary-container": "#93e0a2",
+                            "error": "#ba1a1a",
+                            "surface": "#fcf9f6",
+                            "surface-container-high": "#ebe8e5",
+                            "on-primary-fixed": "#00210b",
+                            "on-tertiary": "#ffffff",
+                            "primary": "#004c22",
+                            "tertiary-fixed": "#ffd9dd",
+                            "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "lg": "24px",
+                            "margin-mobile": "20px",
+                            "gutter": "16px",
+                            "base": "4px",
+                            "md": "16px",
+                            "sm": "8px",
+                            "xl": "32px",
+                            "xs": "4px"
+                    },
+                    "fontFamily": {
+                            "headline-lg-mobile": ["Hanken Grotesk"],
+                            "label-sm": ["Hanken Grotesk"],
+                            "label-bold": ["Hanken Grotesk"],
+                            "body-lg": ["Hanken Grotesk"],
+                            "body-md": ["Hanken Grotesk"],
+                            "headline-lg": ["Hanken Grotesk"],
+                            "headline-md": ["Hanken Grotesk"],
+                            "headline-xl": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                            "headline-lg-mobile": ["28px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                            "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                            "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700"}],
+                            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                            "headline-lg": ["32px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                            "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                            "headline-xl": ["40px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface w-full top-0 sticky z-40 flex justify-between items-center px-margin-mobile py-sm flat no shadows md:hidden">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A portrait of an energetic young professional in bright natural lighting, clear clear sunny day, wearing casual athletic wear, minimalist background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-quiPO1B_-5uxOGvWBurL6KAW8ELueuMapZFurRGjuR230kc1VMjFIHOeqB88oM-lfCd8tE9LxXniZqD0i8GOyfZnmTGdTJ-8VterTtqITNuWPzu2mB9WCPlGVH9lrQucXGPlDWP3GLQDM20g8uNQJVSgFdgU2-IMmjkmqVpZ88N3Ztd9sIkQv0oJX2aTSM3jfpRRj64rSvFrOcphFE4Z0Pc-VdReDt5ukBMkWjDInrvy6zJA8fOjfg">
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Chats</h1>
+</div>
+<button aria-label="Notifications" class="w-12 h-12 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+</header>
+<!-- Desktop Navigation Shell -->
+<nav class="hidden md:flex bg-surface w-full top-0 sticky z-40 justify-between items-center px-lg py-sm flat no shadows">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A portrait of an energetic young professional in bright natural lighting, clear clear sunny day, wearing casual athletic wear, minimalist background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKP2BxP-zPGrkSArK36oXHetzo4Hix0xFwF3qHHmA1rTScUk3If1MxurTPZMXPTFked5WDhcMJ7YkWBYq6W3i5Z55MxgfiUogGaR9GtIUowlgLSBuzTurN1uCws6TbdZR3_vhgfoAIiTj9HmtHzV7u0EWC7KBPzJE3XqBaE-WE77GCvlxS1aAD1WuoGEPhq3j0a7ZHku6M5j3dgp8Z6Kf0jNQS-N0H21THtKAuE_MEwGVZGRmIqpABoQ">
+</div>
+<h1 class="font-headline-md text-headline-md text-primary">Gathere</h1>
+</div>
+<div class="flex gap-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors p-sm rounded-lg" href="#">
+<span class="material-symbols-outlined mb-xs">explore</span>
+<span class="font-label-sm text-label-sm">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-label-bold text-label-bold p-sm rounded-lg bg-primary-container/10 relative after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:bg-primary after:rounded-full" href="#">
+<span class="material-symbols-outlined mb-xs icon-fill">event_note</span>
+<span class="">My plans</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors p-sm rounded-lg" href="#">
+<span class="material-symbols-outlined mb-xs">add_circle</span>
+<span class="font-label-sm text-label-sm">Create</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors p-sm rounded-lg" href="#">
+<span class="material-symbols-outlined mb-xs">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</div>
+<button aria-label="Notifications" class="w-12 h-12 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+</nav>
+<main class="px-margin-mobile md:px-lg max-w-3xl mx-auto pt-md">
+<!-- Happening Soon Section -->
+<section class="mb-xl">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-md">Happening soon</h2>
+<div class="bg-surface-container-lowest rounded-xl p-md flex gap-md items-center shadow-[0_4px_12px_rgba(0,0,0,0.04)] active:scale-98 transition-transform cursor-pointer">
+<div class="w-14 h-14 rounded-lg bg-tertiary-container/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-2xl">self_improvement</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-bold text-label-bold text-on-surface truncate">Sunset Yoga</h3>
+<span class="font-label-sm text-label-sm text-primary whitespace-nowrap ml-sm">10:45 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">Sarah: See you there!</p>
+</div>
+<div class="flex flex-col items-end gap-xs shrink-0">
+<div class="bg-primary text-on-primary font-label-sm text-label-sm rounded-full w-6 h-6 flex items-center justify-center">2</div>
+<div class="bg-secondary-container/10 text-secondary font-label-sm text-label-sm px-2 py-1 rounded-full">Today 18:30</div>
+</div>
+</div>
+</section>
+<!-- Your Groups Section -->
+
+<!-- Past Section -->
+<section class="mb-xl opacity-75">
+<h2 class="font-headline-md text-headline-md text-on-surface-variant mb-md">Past</h2>
+<div class="bg-surface-container-low rounded-xl p-md flex gap-md items-center active:scale-98 transition-transform cursor-pointer">
+<div class="w-14 h-14 rounded-lg bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline text-2xl">directions_run</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-bold text-label-bold text-on-surface-variant truncate">Morning Trail Run</h3>
+<span class="font-label-sm text-label-sm text-outline whitespace-nowrap ml-sm">Yesterday</span>
+</div>
+<p class="font-body-md text-body-md text-outline truncate italic">The activity has finished.</p>
+</div>
+<div class="flex flex-col items-end gap-xs shrink-0">
+<div class="bg-surface-variant text-outline font-label-sm text-label-sm px-2 py-1 rounded-full border border-outline-variant">Archived</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full flex justify-around items-center px-4 pb-safe bg-surface shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-50 h-20">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors w-16 h-full" href="#">
+<span class="material-symbols-outlined mb-1">explore</span>
+<span class="font-label-sm text-label-sm">Discover</span>
+</a>
+
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors w-16 h-full" href="#">
+<span class="material-symbols-outlined mb-1">add_circle</span>
+<span class="font-label-sm text-label-sm">Create</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors w-16 h-full" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+
+
+</body></html>

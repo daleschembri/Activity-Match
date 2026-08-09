@@ -35,6 +35,7 @@ export function DiscoverPage() {
       await api.recordSwipe({ ...item.payload, idempotency_key: item.idempotency_key });
       await queryClient.invalidateQueries({ queryKey: ["feed"] });
       await queryClient.invalidateQueries({ queryKey: ["my-chats"] });
+      await queryClient.invalidateQueries({ queryKey: ["chats-unread"] });
       await queryClient.invalidateQueries({ queryKey: ["notifications"] });
       await queryClient.invalidateQueries({ queryKey: ["notifications-unread"] });
     });
@@ -59,6 +60,7 @@ export function DiscoverPage() {
       });
       await queryClient.invalidateQueries({ queryKey: ["feed"] });
       await queryClient.invalidateQueries({ queryKey: ["my-chats"] });
+      await queryClient.invalidateQueries({ queryKey: ["chats-unread"] });
       await queryClient.invalidateQueries({ queryKey: ["notifications"] });
       await queryClient.invalidateQueries({ queryKey: ["notifications-unread"] });
     } catch {

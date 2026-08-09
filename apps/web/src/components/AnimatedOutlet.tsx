@@ -23,18 +23,20 @@ export function AnimatedOutlet() {
   }, [location.pathname]);
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.div
-        key={location.pathname}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        variants={variants}
-        transition={pageTransition}
-        className="min-h-dvh will-change-transform"
-      >
-        {outlet}
-      </motion.div>
-    </AnimatePresence>
+    <div className="h-dvh overflow-hidden relative">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={location.pathname}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={variants}
+          transition={pageTransition}
+          className="absolute inset-0 h-full overflow-x-hidden overflow-y-auto overscroll-y-contain"
+        >
+          {outlet}
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }

@@ -4,17 +4,23 @@ import type {
   ActivitySummary,
   ApiResponse,
   AppNotification,
+  AttendanceCheckinStatus,
   AttendanceMark,
   AttendanceParticipant,
+  ChatSummary,
+  ChatParticipant,
+  ChatPollPayload,
   FeedPage,
   FeedbackSentiment,
   Group,
   JoinRequest,
+  Message,
   PastActivityDetail,
   ReliabilityDisplay,
   UserProfile,
 } from "@activity-match/shared";
 import type { ChatMessage } from "@/lib/chatMessages";
+import { applyPollVote } from "@/lib/pollVotes";
 import { DEFAULT_CONFIG } from "@activity-match/shared";
 import { getAccessToken, isSupabaseConfigured, supabase } from "./supabase";
 
@@ -765,29 +771,196 @@ export const api = {
     return Boolean(participation);
   },
 
-  async getMyChats(): Promise<Array<ActivitySummary & { chat_role: "host" | "participant" }>> {
+  async getMyChats(): Promise<ChatSummary[]> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return [];
 
     const plans = await api.getMyPlans();
-    const byId = new Map<string, ActivitySummary & { chat_role: "host" | "participant" }>();
+    const unreadByActivity = await api.getUnreadMessageCounts();
+    const byId = new Map<string, ChatSummary>();
+
+    const chatEligible = (status: ActivitySummary["status"]) =>
+      status === "published" || status === "completed";
 
     for (const activity of plans.hosted) {
-      if (activity.status === "published") {
-        byId.set(activity.id, { ...activity, chat_role: "host" });
+      if (chatEligible(activity.status)) {
+        byId.set(activity.id, {
+          ...activity,
+          chat_role: "host",
+          unread_count: unreadByActivity[activity.id] ?? 0,
+        });
       }
     }
     for (const activity of plans.joined) {
-      if (!byId.has(activity.id)) {
-        byId.set(activity.id, { ...activity, chat_role: "participant" });
+      if (!byId.has(activity.id) && chatEligible(activity.status)) {
+        byId.set(activity.id, {
+          ...activity,
+          chat_role: "participant",
+          unread_count: unreadByActivity[activity.id] ?? 0,
+        });
       }
+    }
+
+    const activityIds = [...byId.keys()];
+    const lastByActivity = await api.getChatLastMessages(activityIds);
+
+    for (const [id, chat] of byId) {
+      byId.set(id, { ...chat, last_message: lastByActivity[id] ?? null });
     }
 
     return [...byId.values()].sort((a, b) => {
       const aTime = a.starts_at ? new Date(a.starts_at).getTime() : 0;
       const bTime = b.starts_at ? new Date(b.starts_at).getTime() : 0;
-      return aTime - bTime;
+      return bTime - aTime;
     });
+  },
+
+  async getChatLastMessages(
+    activityIds: string[],
+  ): Promise<Record<string, ChatSummary["last_message"]>> {
+    if (!activityIds.length) return {};
+
+    const { data: conversations } = await supabase
+      .from("conversations")
+      .select("id, activity_id")
+      .in("activity_id", activityIds);
+
+    if (!conversations?.length) return {};
+
+    const convToActivity = new Map(conversations.map((c) => [c.id as string, c.activity_id as string]));
+    const convIds = conversations.map((c) => c.id as string);
+
+    const { data: messages, error } = await supabase
+      .from("messages")
+      .select(
+        "conversation_id, body, created_at, type, sender:profiles!messages_sender_user_id_fkey(display_name)",
+      )
+      .in("conversation_id", convIds)
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false });
+
+    if (error) throw new Error(error.message);
+
+    const result: Record<string, ChatSummary["last_message"]> = {};
+    for (const row of messages ?? []) {
+      const activityId = convToActivity.get(row.conversation_id as string);
+      if (!activityId || result[activityId]) continue;
+      const sender = Array.isArray(row.sender) ? row.sender[0] : row.sender;
+      result[activityId] = {
+        body: row.body as string,
+        created_at: row.created_at as string,
+        sender_name: (sender?.display_name as string | undefined) ?? null,
+        type: row.type as Message["type"],
+      };
+    }
+    return result;
+  },
+
+  async getChatParticipants(activityId: string): Promise<ChatParticipant[]> {
+    const activity = await api.getActivity(activityId);
+    if (!activity) return [];
+
+    const { data: rows, error } = await supabase
+      .from("participations")
+      .select("user:profiles!participations_user_id_fkey(id, display_name, avatar_ref)")
+      .eq("activity_id", activityId)
+      .in("status", ["confirmed", "attended", "no_show"]);
+
+    if (error) throw new Error(error.message);
+
+    const participants: ChatParticipant[] = (rows ?? [])
+      .map((row) => {
+        const profile = Array.isArray(row.user) ? row.user[0] : row.user;
+        if (!profile) return null;
+        return {
+          id: profile.id as string,
+          display_name: profile.display_name as string,
+          avatar_ref: profile.avatar_ref as string | null,
+          is_host: profile.id === activity.host.id,
+        };
+      })
+      .filter(Boolean) as ChatParticipant[];
+
+    if (!participants.some((p) => p.id === activity.host.id)) {
+      participants.unshift({
+        id: activity.host.id,
+        display_name: activity.host.display_name,
+        avatar_ref: activity.host.avatar_ref,
+        is_host: true,
+      });
+    }
+
+    return participants;
+  },
+
+  async voteChatPoll(messageId: string, optionId: string) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { data: message, error: fetchError } = await supabase
+      .from("messages")
+      .select("id, type, payload")
+      .eq("id", messageId)
+      .maybeSingle();
+
+    if (fetchError) throw new Error(fetchError.message);
+    if (!message) throw new Error("Poll not found");
+    if (message.type !== "poll") throw new Error("Not a poll message");
+
+    const currentPayload = message.payload as unknown as ChatPollPayload;
+    const nextPayload = applyPollVote(currentPayload, optionId, user.id);
+
+    // RPC returns JSONB; PostgREST cannot coerce that scalar to a row — check error only.
+    const { error: rpcError } = await supabase.rpc("vote_chat_poll", {
+      p_message_id: messageId,
+      p_option_id: optionId,
+    });
+    if (!rpcError) return nextPayload;
+
+    const { error: updateError } = await supabase
+      .from("messages")
+      .update({ payload: nextPayload as unknown as Record<string, unknown> })
+      .eq("id", messageId);
+
+    if (updateError) {
+      throw new Error(updateError.message || rpcError.message);
+    }
+
+    return nextPayload;
+  },
+
+  async getUnreadMessageCounts(): Promise<Record<string, number>> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return {};
+
+    const { data, error } = await supabase.rpc("get_unread_message_counts");
+    if (error) {
+      console.warn("get_unread_message_counts failed:", error.message);
+      return {};
+    }
+
+    const counts: Record<string, number> = {};
+    for (const row of data ?? []) {
+      const activityId = row.activity_id as string;
+      counts[activityId] = Number(row.unread_count ?? 0);
+    }
+    return counts;
+  },
+
+  async getUnreadChatCount(): Promise<number> {
+    const counts = await api.getUnreadMessageCounts();
+    return Object.values(counts).reduce((sum, count) => sum + count, 0);
+  },
+
+  async markConversationRead(activityId: string) {
+    const { error } = await supabase.rpc("mark_conversation_read", {
+      p_activity_id: activityId,
+    });
+    if (error) {
+      console.warn("mark_conversation_read failed:", error.message);
+    }
   },
 
   async getMessages(activityId: string): Promise<ChatMessage[]> {
@@ -805,6 +978,92 @@ export const api = {
     return (data ?? []) as ChatMessage[];
   },
 
+  async ensureAttendanceCheckin(activityId: string) {
+    const { error } = await supabase.rpc("ensure_attendance_checkin_prompt", {
+      p_activity_id: activityId,
+    });
+    if (error) {
+      console.warn("ensure_attendance_checkin_prompt failed:", error.message);
+    }
+  },
+
+  async getAttendanceCheckinStatus(activityId: string): Promise<AttendanceCheckinStatus> {
+    const { data: { user } } = await supabase.auth.getUser();
+    const confirmationHours = DEFAULT_CONFIG.attendance_confirmation_hours;
+
+    const { data: activity, error: activityError } = await supabase
+      .from("activities")
+      .select("id, starts_at, status, host_user_id, attendance_prompt_sent_at")
+      .eq("id", activityId)
+      .maybeSingle();
+
+    if (activityError) throw new Error(activityError.message);
+
+    const startsAt = activity?.starts_at ? new Date(activity.starts_at as string) : null;
+    const withinWindow = Boolean(
+      activity?.status === "published" &&
+        startsAt &&
+        startsAt > new Date() &&
+        startsAt.getTime() - Date.now() <= confirmationHours * 60 * 60 * 1000,
+    );
+    const confirmBy =
+      startsAt && withinWindow
+        ? new Date(startsAt.getTime() - 2 * 60 * 60 * 1000).toISOString()
+        : null;
+
+    const { data: participationRows, error: participationError } = await supabase
+      .from("participations")
+      .select("user_id, attendance_confirmed_at, user:profiles!participations_user_id_fkey(id, display_name, avatar_ref)")
+      .eq("activity_id", activityId)
+      .eq("status", "confirmed");
+
+    if (participationError) throw new Error(participationError.message);
+
+    const hostUserId = activity?.host_user_id as string | undefined;
+    const viewerIsHost = Boolean(user && hostUserId && user.id === hostUserId);
+    const participants = (participationRows ?? [])
+      .map((row) => {
+        const profile = Array.isArray(row.user) ? row.user[0] : row.user;
+        if (!profile || !row.user_id) return null;
+        return {
+          user_id: row.user_id as string,
+          display_name: profile.display_name as string,
+          avatar_ref: profile.avatar_ref as string | null,
+          attendance_confirmed_at: (row.attendance_confirmed_at as string | null) ?? null,
+          is_host: row.user_id === hostUserId,
+        };
+      })
+      .filter(Boolean) as AttendanceCheckinStatus["participants"];
+
+    const viewerRow = user ? participants.find((p) => p.user_id === user.id) : undefined;
+    const viewerConfirmedAt = viewerRow?.attendance_confirmed_at ?? null;
+    const viewerCanRespond = Boolean(
+      user &&
+        withinWindow &&
+        viewerRow &&
+        !viewerRow.is_host &&
+        !viewerConfirmedAt,
+    );
+
+    return {
+      within_window: withinWindow,
+      prompt_sent: Boolean(activity?.attendance_prompt_sent_at),
+      confirm_by: confirmBy,
+      viewer_is_host: viewerIsHost,
+      viewer_can_respond: viewerCanRespond,
+      viewer_confirmed_at: viewerConfirmedAt,
+      participants,
+    };
+  },
+
+  async confirmActivityCheckin(activityId: string, attending: boolean) {
+    const { error } = await supabase.rpc("confirm_activity_checkin", {
+      p_activity_id: activityId,
+      p_attending: attending,
+    });
+    if (error) throw new Error(error.message);
+  },
+
   async sendMessage(activityId: string, body: string) {
     const allowed = await api.canAccessActivityChat(activityId);
     if (!allowed) throw new Error("Chat is only available after you are accepted.");
@@ -819,6 +1078,46 @@ export const api = {
       type: "user_text",
     });
     if (error) throw new Error(error.message);
+    void api.markConversationRead(activityId).catch(() => undefined);
+    return { data: { ok: true } };
+  },
+
+  async createChatPoll(
+    activityId: string,
+    payload: { question: string; options: string[]; allowMultiple?: boolean },
+  ) {
+    const allowed = await api.canAccessActivityChat(activityId);
+    if (!allowed) throw new Error("Chat is only available after you are accepted.");
+
+    const trimmedQuestion = payload.question.trim();
+    const trimmedOptions = payload.options.map((opt) => opt.trim()).filter(Boolean);
+    if (!trimmedQuestion) throw new Error("Poll question is required");
+    if (trimmedOptions.length < 2) throw new Error("Add at least two poll options");
+    if (trimmedOptions.length > 6) throw new Error("Polls can have at most six options");
+
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data: conv } = await supabase.from("conversations").select("id").eq("activity_id", activityId).single();
+    if (!conv || !user) throw new Error("Cannot create poll");
+
+    const pollPayload: ChatPollPayload = {
+      question: trimmedQuestion,
+      allow_multiple: Boolean(payload.allowMultiple),
+      options: trimmedOptions.map((label, index) => ({
+        id: `opt-${index + 1}`,
+        label,
+        votes: [],
+      })),
+    };
+
+    const { error } = await supabase.from("messages").insert({
+      conversation_id: conv.id,
+      sender_user_id: user.id,
+      body: trimmedQuestion,
+      type: "poll",
+      payload: pollPayload,
+    });
+    if (error) throw new Error(error.message);
+    void api.markConversationRead(activityId).catch(() => undefined);
     return { data: { ok: true } };
   },
 

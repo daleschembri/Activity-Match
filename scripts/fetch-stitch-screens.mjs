@@ -44,6 +44,10 @@ const REQUESTED_SCREENS = [
   { name: "Attendance Outcome Notice", id: "c4fbfd0012634fd596cabd964b3a2beb" },
   { name: "Profile Reliability Panel States", id: "07e7b84f3ada4225b921b0432c1a3020" },
   { name: "Past Activity Detail", id: "0891aebac83144f3babf1963a4bbfb90" },
+  { name: "Chats List", id: "3e0c3ba2df9743aeafc3676cb5232122" },
+  { name: "Group Chat - Active Activity", id: "fe0bdac4ade249f09f96b067f2b8f90b" },
+  { name: "Group Chat with Poll", id: "759780b0c9c54f8b80172a2fe7566408" },
+  { name: "Archived Chat (Read-only)", id: "930ba1076238404a9b5c481d7e1bb242" },
 ];
 
 function slugify(name) {
