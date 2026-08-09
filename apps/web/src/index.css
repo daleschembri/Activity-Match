@@ -30,4 +30,13 @@
   .safe-area-pb {
     padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
   }
+
+  .safe-area-pt {
+    padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+  }
+
+  /* Clear mobile browser chrome when safe-area env vars are unset */
+  .safe-area-page-top {
+    padding-top: max(3rem, env(safe-area-inset-top, 0px));
+  }
 }

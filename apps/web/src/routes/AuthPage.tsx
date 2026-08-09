@@ -100,7 +100,7 @@ export function AuthPage() {
   }
 
   return (
-    <div className="min-h-dvh bg-surface text-on-surface flex flex-col px-margin-mobile pt-4 pb-margin-mobile max-w-md mx-auto w-full">
+    <div className="min-h-dvh bg-surface text-on-surface flex flex-col px-margin-mobile safe-area-page-top pb-margin-mobile max-w-md mx-auto w-full">
       <header className="py-2">
         <button
           type="button"

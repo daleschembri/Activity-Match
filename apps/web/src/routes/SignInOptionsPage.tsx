@@ -39,7 +39,7 @@ export function SignInOptionsPage() {
   }
 
   return (
-    <div className="min-h-dvh bg-surface text-on-surface flex flex-col px-margin-mobile pt-12 pb-margin-mobile max-w-md mx-auto w-full">
+    <div className="min-h-dvh bg-surface text-on-surface flex flex-col px-margin-mobile safe-area-page-top pb-margin-mobile max-w-md mx-auto w-full">
       <main className="flex-1 flex flex-col justify-between">
         <div className="flex flex-col items-center text-center mt-8">
           <GathereLogo variant="full" size="lg" className="mb-6" />

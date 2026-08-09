@@ -107,7 +107,7 @@ export function VerificationCodePage() {
 
   return (
     <div className="min-h-dvh bg-background text-on-background flex flex-col">
-      <header className="fixed top-0 w-full flex px-margin-mobile py-2 bg-surface z-10">
+      <header className="fixed top-0 w-full flex px-margin-mobile safe-area-pt py-2 bg-surface z-10">
         <button
           type="button"
           onClick={() => navigate("/auth/phone", { state: { from } })}

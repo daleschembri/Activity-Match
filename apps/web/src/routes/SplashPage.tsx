@@ -26,7 +26,7 @@ export function SplashPage() {
 
   return (
     <div
-      className={`min-h-dvh flex flex-col items-center justify-center p-margin-mobile relative overflow-hidden ${
+      className={`min-h-dvh flex flex-col items-center justify-center px-margin-mobile safe-area-page-top relative overflow-hidden ${
         dark ? "bg-[#141413] text-inverse-on-surface" : "bg-surface text-on-surface"
       }`}
     >

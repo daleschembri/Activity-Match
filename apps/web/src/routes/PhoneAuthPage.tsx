@@ -36,7 +36,7 @@ export function PhoneAuthPage() {
   };
 
   return (
-    <div className="min-h-dvh bg-surface text-on-surface flex flex-col">
+    <div className="min-h-dvh bg-surface text-on-surface flex flex-col safe-area-page-top">
       <header className="px-margin-mobile py-2">
         <button
           type="button"

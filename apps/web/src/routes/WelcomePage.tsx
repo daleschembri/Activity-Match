@@ -48,8 +48,8 @@ export function WelcomePage() {
   };
 
   return (
-    <div className="min-h-dvh bg-surface text-on-surface flex flex-col p-margin-mobile max-w-md mx-auto w-full">
-      <header className="grid grid-cols-3 items-center py-2 min-h-[44px]">
+    <div className="min-h-dvh bg-surface text-on-surface flex flex-col px-margin-mobile max-w-md mx-auto w-full safe-area-page-top">
+      <header className="grid grid-cols-3 items-center py-2 min-h-[44px] shrink-0">
         <div className="flex justify-start">
           {slide > 0 ? (
             <button
