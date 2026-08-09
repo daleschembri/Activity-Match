@@ -4,9 +4,13 @@ import type {
   ActivitySummary,
   ApiResponse,
   AppNotification,
+  AttendanceMark,
+  AttendanceParticipant,
   FeedPage,
+  FeedbackSentiment,
   Group,
   JoinRequest,
+  PastActivityDetail,
   ReliabilityDisplay,
   UserProfile,
 } from "@activity-match/shared";
@@ -67,14 +71,16 @@ function mapActivityRow(row: Record<string, unknown>, participationCount = 0): A
 
 async function participationCounts(activityIds: string[]): Promise<Record<string, number>> {
   if (!activityIds.length) return {};
-  const { data } = await supabase
-    .from("participations")
-    .select("activity_id")
-    .in("activity_id", activityIds)
-    .eq("status", "confirmed");
+  const { data, error } = await supabase.rpc("get_participation_counts", {
+    p_activity_ids: activityIds,
+  });
+  if (error) {
+    console.warn("get_participation_counts failed:", error.message);
+    return {};
+  }
   const counts: Record<string, number> = {};
   for (const row of data ?? []) {
-    counts[row.activity_id] = (counts[row.activity_id] ?? 0) + 1;
+    counts[row.activity_id as string] = row.participant_count as number;
   }
   return counts;
 }
@@ -84,7 +90,7 @@ const ACTIVITY_SELECT = `
   cost_amount, cost_currency, skill_level, capacity, published_at, cover_image_ref,
   description, quorum, cost_note, equipment_note, equipment_provided,
   accessibility_note, min_age, max_age, join_deadline, acceptance_mode,
-  visibility, public_slug, host_user_id, host_is_participating,
+  visibility, public_slug, host_user_id, host_is_participating, attendance_resolved_at,
   category:categories(id, name, parent_id, is_active),
   host:profiles!activities_host_user_id_fkey(id, display_name, avatar_ref),
   location:locations(id, name, area_label, address_line, is_public_place, timezone)
@@ -186,10 +192,10 @@ export const api = {
       else {
         const { data: participation } = await supabase
           .from("participations")
-          .select("id")
+          .select("id, status")
           .eq("activity_id", id)
           .eq("user_id", user.id)
-          .eq("status", "confirmed")
+          .in("status", ["confirmed", "attended", "no_show"])
           .maybeSingle();
         if (participation) viewer_role = "participant";
         else {
@@ -506,6 +512,101 @@ export const api = {
     return published;
   },
 
+  validateActivityForUpdate(payload: Record<string, unknown>) {
+    if (!payload.starts_at) throw new Error("Date and time are required.");
+    if (!payload.location_id && !payload.location_pin) throw new Error("Please drop a pin on the map.");
+    const pin = payload.location_pin as { name?: string; area_label?: string } | undefined;
+    if (pin) {
+      if (!String(pin.name ?? "").trim()) throw new Error("Place name is required.");
+      if (!String(pin.area_label ?? "").trim()) throw new Error("Area is required.");
+    }
+    const capacity = Number(payload.capacity ?? 0);
+    if (capacity < 2) throw new Error("Capacity must be at least 2.");
+  },
+
+  async updateActivity(id: string, payload: Record<string, unknown>) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { data: existing, error: fetchError } = await supabase
+      .from("activities")
+      .select("host_user_id, status, location_id")
+      .eq("id", id)
+      .single();
+    if (fetchError || !existing) throw new Error("Activity not found");
+    if (existing.host_user_id !== user.id) throw new Error("Only the host can edit this activity");
+    if (!["published", "draft"].includes(existing.status as string)) {
+      throw new Error("This activity can no longer be edited");
+    }
+
+    api.validateActivityForUpdate(payload);
+    const activity = api.buildActivityPayload(payload);
+    const pin = payload.location_pin as
+      | { lat: number; lng: number; name: string; area_label: string }
+      | undefined;
+    let locationId = existing.location_id as string | null;
+
+    if (pin) {
+      const existingLocationId = existing.location_id as string | null;
+      if (existingLocationId) {
+        const { data: geoLocations } = await supabase.rpc("get_locations_geo");
+        const current = (geoLocations as Array<{ id: string; lat: number; lng: number }> | null)?.find(
+          (entry) => entry.id === existingLocationId,
+        );
+        const pinMoved =
+          !current ||
+          Math.abs(current.lat - pin.lat) > 0.0001 ||
+          Math.abs(current.lng - pin.lng) > 0.0001;
+        locationId = pinMoved ? await api.createLocationFromPin(pin) : existingLocationId;
+      } else {
+        locationId = await api.createLocationFromPin(pin);
+      }
+    }
+
+    if (!locationId) throw new Error("Please drop a pin on the map and name the place.");
+
+    const { data, error } = await supabase
+      .from("activities")
+      .update({
+        title: activity.title,
+        description: activity.description,
+        category_id: activity.category_id,
+        capacity: activity.capacity,
+        cost_amount: activity.cost_amount,
+        cost_currency: activity.cost_currency,
+        cost_note: activity.cost_note,
+        skill_level: activity.skill_level,
+        starts_at: activity.starts_at,
+        duration_minutes: activity.duration_minutes,
+        location_id: locationId,
+        acceptance_mode: activity.acceptance_mode,
+        host_is_participating: activity.host_is_participating,
+        cover_image_ref: activity.cover_image_ref,
+      })
+      .eq("id", id)
+      .eq("host_user_id", user.id)
+      .select()
+      .single();
+
+    if (error) throw new Error(error.message);
+    return data;
+  },
+
+  async removeParticipant(activityId: string, participantUserId: string) {
+    const { data, error } = await supabase.rpc("remove_participant_by_host", {
+      p_activity_id: activityId,
+      p_participant_user_id: participantUserId,
+    });
+    if (error) throw new Error(error.message);
+    if (data?.error) {
+      const code = data.error.code as string;
+      if (code === "NOT_PARTICIPANT") throw new Error("That person is not a confirmed attendee.");
+      if (code === "CANNOT_REMOVE_HOST") throw new Error("You cannot remove yourself from the attendee list here.");
+      throw new Error(code);
+    }
+    return data;
+  },
+
   async recordSwipe(payload: Record<string, unknown>) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Not authenticated");
@@ -659,7 +760,7 @@ export const api = {
       .select("id")
       .eq("activity_id", activityId)
       .eq("user_id", user.id)
-      .eq("status", "confirmed")
+      .in("status", ["confirmed", "attended", "no_show"])
       .maybeSingle();
     return Boolean(participation);
   },
@@ -791,9 +892,13 @@ export const api = {
 
   async getReliability(userId: string): Promise<ReliabilityDisplay> {
     const { data } = await supabase.from("reliability_records").select("*").eq("user_id", userId).maybeSingle();
-    if (!data || data.attended_count + data.hosted_count < 3) return { label: "New to the platform" };
+    const minActivities = DEFAULT_CONFIG.reliability_visibility_min_activities;
+    if (!data || data.attended_count + data.hosted_count < minActivities) {
+      return { label: "New to the platform", is_new: true };
+    }
     return {
       label: "Reliability",
+      is_new: false,
       attended_count: data.attended_count,
       late_cancellation_count: data.late_cancellation_count,
       no_show_count: data.no_show_count,
@@ -853,15 +958,15 @@ export const api = {
       .from("activities")
       .select(ACTIVITY_SELECT)
       .eq("host_user_id", user.id)
-      .in("status", ["published", "draft"])
-      .order("starts_at", { ascending: true });
+      .in("status", ["published", "draft", "completed"])
+      .order("starts_at", { ascending: false });
     if (hostedError) throw new Error(hostedError.message);
 
     const { data: joinedParticipations, error: joinedError } = await supabase
       .from("participations")
       .select("activity_id")
       .eq("user_id", user.id)
-      .eq("status", "confirmed");
+      .in("status", ["confirmed", "attended", "no_show"]);
     if (joinedError) throw new Error(joinedError.message);
 
     const joinedIds = joinedParticipations?.map((p) => p.activity_id) ?? [];
@@ -893,16 +998,175 @@ export const api = {
     };
   },
 
-  async submitFeedback(activityId: string, rating: number, comment?: string) {
+  async submitFeedback(activityId: string, sentiment: FeedbackSentiment) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Not authenticated");
+
+    const activity = await api.getActivity(activityId);
+    if (!activity) throw new Error("Activity not found");
+    if (activity.viewer_role !== "participant") {
+      throw new Error("Only participants can leave feedback");
+    }
+
     const { error } = await supabase.from("activity_feedback").upsert({
       activity_id: activityId,
       user_id: user.id,
-      rating,
-      comment,
+      sentiment,
+      rating: sentiment === "up" ? 5 : 1,
     });
     if (error) throw new Error(error.message);
+  },
+
+  async getAttendanceParticipants(activityId: string): Promise<AttendanceParticipant[]> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { data: activity } = await supabase
+      .from("activities")
+      .select("host_user_id")
+      .eq("id", activityId)
+      .single();
+    if (!activity || activity.host_user_id !== user.id) {
+      throw new Error("Only the host can view attendance");
+    }
+
+    const { data, error } = await supabase
+      .from("participations")
+      .select("user_id, status, user:profiles!participations_user_id_fkey(id, display_name, avatar_ref)")
+      .eq("activity_id", activityId)
+      .in("status", ["confirmed", "attended", "no_show"])
+      .neq("user_id", activity.host_user_id);
+
+    if (error) throw new Error(error.message);
+
+    return (data ?? [])
+      .map((row) => {
+        const profile = Array.isArray(row.user) ? row.user[0] : row.user;
+        if (!profile || !row.user_id) return null;
+        return {
+          user_id: row.user_id as string,
+          display_name: profile.display_name as string,
+          avatar_ref: profile.avatar_ref as string | null,
+          status: row.status as AttendanceParticipant["status"],
+        };
+      })
+      .filter(Boolean) as AttendanceParticipant[];
+  },
+
+  async markAttendance(activityId: string, marks: AttendanceMark[]) {
+    const { data, error } = await supabase.rpc("mark_attendance", {
+      p_activity_id: activityId,
+      p_marks: marks,
+    });
+    if (error) throw new Error(error.message);
+    return data as { attended_count: number; total_count: number };
+  },
+
+  async respondToAttendanceOutcome(activityId: string, accepted: boolean) {
+    const { error } = await supabase.rpc("respond_to_attendance_outcome", {
+      p_activity_id: activityId,
+      p_accepted: accepted,
+    });
+    if (error) throw new Error(error.message);
+  },
+
+  async isAttendanceResolved(activityId: string): Promise<boolean> {
+    const { data, error } = await supabase
+      .from("activities")
+      .select("attendance_resolved_at")
+      .eq("id", activityId)
+      .maybeSingle();
+    if (error) throw new Error(error.message);
+    return Boolean(data?.attendance_resolved_at);
+  },
+
+  async getPastActivity(id: string): Promise<PastActivityDetail | null> {
+    const activity = await api.getActivity(id);
+    if (!activity) return null;
+
+    const { data: activityRow } = await supabase
+      .from("activities")
+      .select("attendance_resolved_at, status")
+      .eq("id", id)
+      .single();
+
+    if (!activityRow?.attendance_resolved_at) return null;
+
+    const hostUserId = activity.host.id;
+    const { data: participationRows } = await supabase
+      .from("participations")
+      .select("status, user:profiles!participations_user_id_fkey(id, display_name, avatar_ref)")
+      .eq("activity_id", id)
+      .eq("status", "attended");
+
+    const attendees = (participationRows ?? [])
+      .map((row) => {
+        const profile = Array.isArray(row.user) ? row.user[0] : row.user;
+        if (!profile) return null;
+        return {
+          id: profile.id as string,
+          display_name: profile.display_name as string,
+          avatar_ref: profile.avatar_ref as string | null,
+          is_host: profile.id === hostUserId,
+        };
+      })
+      .filter(Boolean) as PastActivityDetail["attendees"];
+
+    const hostInList = attendees.some((a) => a.id === hostUserId);
+    if (!hostInList) {
+      const { data: hostParticipation } = await supabase
+        .from("participations")
+        .select("id")
+        .eq("activity_id", id)
+        .eq("user_id", hostUserId)
+        .eq("status", "attended")
+        .maybeSingle();
+      if (hostParticipation) {
+        attendees.unshift({
+          id: activity.host.id,
+          display_name: activity.host.display_name,
+          avatar_ref: activity.host.avatar_ref,
+          is_host: true,
+        });
+      }
+    }
+
+    const { data: conv } = await supabase
+      .from("conversations")
+      .select("id")
+      .eq("activity_id", id)
+      .maybeSingle();
+
+    return {
+      ...activity,
+      attendance_resolved_at: (activityRow?.attendance_resolved_at as string | null) ?? null,
+      attendees,
+      chat_read_only: Boolean(conv),
+    };
+  },
+
+  async getPendingAttendanceOutcome(activityId: string): Promise<boolean> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return false;
+
+    const { data } = await supabase
+      .from("participations")
+      .select("id")
+      .eq("activity_id", activityId)
+      .eq("user_id", user.id)
+      .eq("status", "no_show")
+      .maybeSingle();
+
+    if (!data) return false;
+
+    const { data: dispute } = await supabase
+      .from("attendance_disputes")
+      .select("id")
+      .eq("activity_id", activityId)
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    return !dispute;
   },
 
   async getCategories() {
@@ -968,5 +1232,10 @@ export const api = {
       .is("read_at", null);
 
     if (error) throw new Error(error.message);
+  },
+
+  async processActivityLifecycle() {
+    const { error } = await supabase.rpc("process_activity_lifecycle");
+    if (error) console.warn("process_activity_lifecycle failed:", error.message);
   },
 };

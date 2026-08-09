@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Icon, PrimaryButton } from "@activity-match/ui";
+import { BrandHeader } from "@/components/GathereLogo";
 import { DiscoverFeedCard } from "@/components/DiscoverFeedCard";
 import { JoinRequestSheet } from "@/components/JoinRequestSheet";
 import { Pressable } from "@/components/motion/primitives";
@@ -136,7 +137,7 @@ export function DiscoverPage() {
           )}
         </Pressable>
 
-        <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary">Discover</h1>
+        <BrandHeader layout="lockup" size="sm" className="mx-0" />
 
         <div className="flex items-center gap-4 shrink-0">
           <Pressable

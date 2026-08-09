@@ -1,0 +1,214 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Sign In</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#bfc9bd",
+                      "surface-container-high": "#ebe8e5",
+                      "tertiary-fixed-dim": "#ffb2bb",
+                      "surface-dim": "#dcd9d7",
+                      "surface-container": "#f0edeb",
+                      "surface-container-highest": "#e5e2e0",
+                      "surface-variant": "#e5e2e0",
+                      "tertiary-fixed": "#ffd9dd",
+                      "tertiary-container": "#8f3e4c",
+                      "primary-fixed": "#a6f4b5",
+                      "secondary-container": "#fe932c",
+                      "inverse-surface": "#31302f",
+                      "secondary-fixed-dim": "#ffb77d",
+                      "primary-container": "#166534",
+                      "on-surface-variant": "#404940",
+                      "error-container": "#ffdad6",
+                      "surface": "#fcf9f6",
+                      "primary": "#004c22",
+                      "on-secondary-fixed": "#2f1500",
+                      "on-primary-container": "#93e0a2",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-container": "#ffbfc6",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-tint": "#1f6c3a",
+                      "on-secondary-fixed-variant": "#6e3900",
+                      "tertiary": "#722736",
+                      "on-tertiary-fixed-variant": "#792d3b",
+                      "surface-container-low": "#f6f3f1",
+                      "on-surface": "#1c1c1a",
+                      "secondary-fixed": "#ffdcc3",
+                      "secondary": "#904d00",
+                      "surface-bright": "#fcf9f6",
+                      "on-error": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-background": "#1c1c1a",
+                      "inverse-primary": "#8bd79b",
+                      "on-secondary-container": "#663500",
+                      "inverse-on-surface": "#f3f0ee",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed": "#3f0112",
+                      "background": "#fcf9f6",
+                      "primary-fixed-dim": "#8bd79b",
+                      "on-primary-fixed-variant": "#005226",
+                      "on-error-container": "#93000a",
+                      "on-primary-fixed": "#00210b",
+                      "outline": "#707a6f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "margin-mobile": "20px",
+                      "md": "16px",
+                      "sm": "8px",
+                      "gutter": "16px",
+                      "base": "4px",
+                      "lg": "24px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg-mobile": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-xl": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-sm": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-bold": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-xl": [
+                              "40px",
+                              {
+                                      "lineHeight": "44px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.04em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-bold": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface h-screen w-full flex flex-col antialiased">
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col justify-between px-margin-mobile pt-xl pb-margin-mobile max-w-md mx-auto w-full md:max-w-lg md:pt-24 md:pb-12">
+<!-- Header Section -->
+<div class="flex flex-col items-center text-center mt-12 md:mt-0">
+<div class="w-[40%] mx-auto mb-lg">{{DATA:DOCUMENT:DOCUMENT_11}}</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[280px]">Sign in to start finding your group.</p>
+</div>
+<!-- Authentication Buttons Section -->
+<div class="flex flex-col gap-md w-full mt-auto mb-lg">
+<!-- Apple Button -->
+<button class="w-full bg-on-surface text-surface flex items-center justify-center gap-sm py-4 rounded-full font-label-bold text-label-bold transition-transform duration-100 active:scale-95 shadow-[0_4px_20px_rgba(28,28,26,0.08)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">file_download</span>
+                Continue with Apple
+            </button>
+<!-- Google Button -->
+<button class="w-full bg-surface border-[1.5px] border-outline-variant text-on-surface flex items-center justify-center gap-sm py-4 rounded-full font-label-bold text-label-bold transition-transform duration-100 active:scale-95 hover:bg-surface-container-lowest shadow-[0_4px_12px_rgba(112,122,111,0.04)]">
+<!-- Using an icon for Google as placeholder since raw SVG isn't ideal here, but per requirements avoiding heavy data URIs. A simplified approach. -->
+<span class="font-bold font-headline-md text-headline-md tracking-tighter" style="font-family: serif;">G</span>
+                Continue with Google
+            </button>
+<!-- Phone Number Button -->
+<button class="w-full bg-primary text-on-primary flex items-center justify-center gap-sm py-4 rounded-full font-label-bold text-label-bold transition-transform duration-100 active:scale-95 shadow-[0_4px_20px_rgba(0,76,34,0.12)]">
+<span class="material-symbols-outlined">call</span>
+                Continue with phone number
+            </button>
+<!-- Terms & Privacy -->
+<p class="text-center font-label-sm text-label-sm text-outline mt-sm px-4">
+                By continuing, you agree to our <a class="underline hover:text-on-surface-variant transition-colors" href="#">Terms of Service</a> and acknowledge our <a class="underline hover:text-on-surface-variant transition-colors" href="#">Privacy Policy</a>.
+            </p>
+</div>
+<!-- Secondary Path -->
+<div class="w-full flex flex-col items-center pt-md border-t border-surface-variant">
+<a class="font-label-bold text-label-bold text-primary hover:text-surface-tint transition-colors text-center" href="#">
+                Got an invite link? Open it to see the activity
+            </a>
+</div>
+</main>
+
+
+</body></html>

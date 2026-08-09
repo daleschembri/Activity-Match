@@ -13,9 +13,9 @@ export default defineConfig({
       devOptions: { enabled: false },
       includeAssets: ["favicon.svg"],
       manifest: {
-        name: "Activity Match",
-        short_name: "Activities",
-        description: "Discover and join local activities",
+        name: "Gathere",
+        short_name: "Gathere",
+        description: "Discover and join local activities with Gathere",
         theme_color: "#004c22",
         background_color: "#fcf9f6",
         display: "standalone",

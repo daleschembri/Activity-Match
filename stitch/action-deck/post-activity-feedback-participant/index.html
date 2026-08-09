@@ -1,0 +1,219 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Feedback</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#3f0112",
+                        "surface-container-low": "#f6f3f1",
+                        "tertiary-container": "#8f3e4c",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "on-surface-variant": "#404940",
+                        "background": "#fcf9f6",
+                        "on-tertiary-fixed-variant": "#792d3b",
+                        "tertiary": "#722736",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#2f1500",
+                        "tertiary-fixed": "#ffd9dd",
+                        "on-primary-fixed-variant": "#005226",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e5e2e0",
+                        "primary-fixed-dim": "#8bd79b",
+                        "primary-container": "#166534",
+                        "inverse-on-surface": "#f3f0ee",
+                        "secondary": "#904d00",
+                        "primary-fixed": "#a6f4b5",
+                        "secondary-fixed": "#ffdcc3",
+                        "surface-container-highest": "#e5e2e0",
+                        "inverse-surface": "#31302f",
+                        "secondary-container": "#fe932c",
+                        "on-background": "#1c1c1a",
+                        "outline": "#707a6f",
+                        "on-secondary-container": "#663500",
+                        "on-secondary-fixed-variant": "#6e3900",
+                        "outline-variant": "#bfc9bd",
+                        "primary": "#004c22",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dcd9d7",
+                        "surface-bright": "#fcf9f6",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#f0edeb",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#00210b",
+                        "surface-container-high": "#ebe8e5",
+                        "on-surface": "#1c1c1a",
+                        "inverse-primary": "#8bd79b",
+                        "on-tertiary-container": "#ffbfc6",
+                        "on-primary-container": "#93e0a2",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "surface-tint": "#1f6c3a",
+                        "surface": "#fcf9f6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "label-bold": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-xl": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .option-card.selected {
+            border-color: #004c22;
+            background-color: #f0edeb;
+        }
+        .option-card.selected .material-symbols-outlined {
+            color: #004c22;
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
+<!-- Top Navigation Placeholder for completeness, but minimal for a transactional screen -->
+<header class="w-full top-0 sticky bg-background flex justify-between items-center px-margin-mobile py-sm z-10">
+<button aria-label="Close" class="w-11 h-11 flex items-center justify-center text-on-surface hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<span class="font-label-bold text-label-bold text-on-surface-variant">Feedback</span>
+<div class="w-11"></div> <!-- Spacer -->
+</header>
+<main class="flex-grow px-margin-mobile pt-lg pb-32 flex flex-col max-w-md mx-auto w-full">
+<div class="mb-xl">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background md:font-headline-lg md:text-headline-lg">
+                Did this go ahead as planned?
+            </h1>
+</div>
+<div class="flex flex-col gap-md mb-xl" id="options-container">
+<!-- Option 1 -->
+<label class="option-card cursor-pointer border border-outline-variant rounded-xl p-md flex items-center gap-md bg-surface hover:bg-surface-container-low transition-colors duration-200">
+<input class="sr-only" name="feedback_status" type="radio" value="yes">
+<div class="flex-grow">
+<span class="font-headline-md text-headline-md text-on-surface block mb-xs">Yes, all good</span>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-outline-variant flex items-center justify-center bg-surface-container-lowest shrink-0 indicator">
+<span class="material-symbols-outlined text-transparent text-[20px]" data-icon="check">check</span>
+</div>
+</label>
+<!-- Option 2 -->
+<label class="option-card cursor-pointer border border-outline-variant rounded-xl p-md flex items-center gap-md bg-surface hover:bg-surface-container-low transition-colors duration-200">
+<input class="sr-only" name="feedback_status" type="radio" value="partial">
+<div class="flex-grow">
+<span class="font-headline-md text-headline-md text-on-surface block mb-xs">It happened but something was off</span>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-outline-variant flex items-center justify-center bg-surface-container-lowest shrink-0 indicator">
+<span class="material-symbols-outlined text-transparent text-[20px]" data-icon="warning">warning</span>
+</div>
+</label>
+<!-- Option 3 -->
+<label class="option-card cursor-pointer border border-outline-variant rounded-xl p-md flex items-center gap-md bg-surface hover:bg-surface-container-low transition-colors duration-200">
+<input class="sr-only" name="feedback_status" type="radio" value="no">
+<div class="flex-grow">
+<span class="font-headline-md text-headline-md text-on-surface block mb-xs">It didn't happen</span>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-outline-variant flex items-center justify-center bg-surface-container-lowest shrink-0 indicator">
+<span class="material-symbols-outlined text-transparent text-[20px]" data-icon="cancel">cancel</span>
+</div>
+</label>
+</div>
+<div class="mb-xl flex-grow">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-sm" for="feedback_text">
+                Anything you'd want the host to know?
+                <span class="block font-label-sm text-label-sm font-normal text-outline mt-1">Only we see this. (Optional)</span>
+</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md text-body-md text-on-surface placeholder:text-outline-variant focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none resize-none transition-shadow" id="feedback_text" placeholder="Add your comments here..." rows="4"></textarea>
+</div>
+</main>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-0 left-0 w-full bg-background border-t border-surface-variant p-margin-mobile flex gap-md md:justify-center z-20 pb-[max(20px,env(safe-area-inset-bottom))]">
+<div class="flex gap-md w-full max-w-md">
+<button class="flex-1 py-md px-lg rounded-full border-[1.5px] border-outline text-on-surface font-label-bold text-label-bold hover:bg-surface-container-low transition-colors duration-200 min-h-[44px]">
+                Skip
+            </button>
+<button class="flex-1 py-md px-lg rounded-full bg-primary text-on-primary font-label-bold text-label-bold hover:bg-primary-container hover:scale-95 transition-all duration-200 min-h-[44px] shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
+                Send
+            </button>
+</div>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const options = document.querySelectorAll('input[name="feedback_status"]');
+            
+            options.forEach(option => {
+                option.addEventListener('change', (e) => {
+                    // Reset all
+                    document.querySelectorAll('.option-card').forEach(card => {
+                        card.classList.remove('selected', 'border-primary', 'bg-surface-container', 'shadow-[0_4px_12px_rgba(0,0,0,0.04)]');
+                        card.classList.add('border-outline-variant', 'bg-surface');
+                        const indicator = card.querySelector('.indicator');
+                        indicator.classList.remove('border-primary', 'bg-primary');
+                        indicator.classList.add('border-outline-variant', 'bg-surface-container-lowest');
+                        const icon = indicator.querySelector('.material-symbols-outlined');
+                        icon.classList.add('text-transparent');
+                        icon.classList.remove('text-on-primary');
+                    });
+
+                    // Set active
+                    if(e.target.checked) {
+                        const activeCard = e.target.closest('.option-card');
+                        activeCard.classList.remove('border-outline-variant', 'bg-surface');
+                        activeCard.classList.add('selected', 'border-primary', 'bg-surface-container', 'shadow-[0_4px_12px_rgba(0,0,0,0.04)]');
+                        
+                        const indicator = activeCard.querySelector('.indicator');
+                        indicator.classList.remove('border-outline-variant', 'bg-surface-container-lowest');
+                        indicator.classList.add('border-primary', 'bg-primary');
+                        
+                        const icon = indicator.querySelector('.material-symbols-outlined');
+                        icon.classList.remove('text-transparent');
+                        icon.classList.add('text-on-primary');
+                    }
+                });
+            });
+        });
+    </script>
+</body></html>

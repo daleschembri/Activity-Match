@@ -5,6 +5,7 @@ export * from "./components/FilterChip";
 export * from "./components/Icon";
 export * from "./components/PrimaryButton";
 export * from "./components/ScreenShell";
+export * from "./components/SegmentedControl";
 export * from "./components/SystemMessage";
 export * from "./components/TextField";
 export * from "./components/ToggleSwitch";

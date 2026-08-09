@@ -8,6 +8,8 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import type { Session } from "@supabase/supabase-js";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
+import { hasCompletedWelcome } from "@/lib/welcomeStorage";
+import { GathereLogo } from "@/components/GathereLogo";
 
 interface AuthContextValue {
   session: Session | null;
@@ -25,10 +27,11 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-const PUBLIC_PATHS = ["/auth", "/a"];
-
 function isPublicPath(pathname: string) {
-  return PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+  if (pathname === "/splash" || pathname === "/welcome") return true;
+  if (pathname === "/auth" || pathname.startsWith("/auth/")) return true;
+  if (pathname === "/a" || pathname.startsWith("/a/")) return true;
+  return false;
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -59,7 +62,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isSupabaseConfigured || loading) return;
     if (!session && !isPublicPath(location.pathname)) {
-      navigate("/auth", { replace: true, state: { from: location.pathname } });
+      const entry = hasCompletedWelcome() ? "/auth" : "/splash";
+      navigate(entry, { replace: true, state: { from: location.pathname } });
     }
   }, [session, loading, location.pathname, navigate]);
 
@@ -70,8 +74,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   if (isSupabaseConfigured && loading) {
     return (
-      <div className="min-h-dvh flex items-center justify-center bg-surface text-on-surface">
-        Loading...
+      <div className="min-h-dvh flex flex-col items-center justify-center gap-4 bg-surface text-on-surface">
+        <GathereLogo variant="symbolSimplified" size="lg" className="animate-pulse" />
+        <p className="text-body-md text-on-surface-variant">Loading...</p>
       </div>
     );
   }

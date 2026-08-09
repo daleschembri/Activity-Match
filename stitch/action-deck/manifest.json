@@ -3,7 +3,7 @@
     "title": "Action Deck",
     "id": "18213223677131290523"
   },
-  "exportedAt": "2026-08-08T15:17:39.947Z",
+  "exportedAt": "2026-08-09T10:17:54.441Z",
   "screens": [
     {
       "title": "Discover Activities",
@@ -243,6 +243,186 @@
       "paths": {
         "html": "stitch\\action-deck\\activity-chat\\index.html",
         "screenshot": "stitch\\action-deck\\activity-chat\\screenshot.png"
+      }
+    },
+    {
+      "title": "Mark Attendance (Host)",
+      "stitchTitle": "Mark Attendance (Host)",
+      "id": "135f84fa3be74d6f908bdb9b8972ff1a",
+      "slug": "mark-attendance-host",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZTk0OTgyMjMwNDVhZGJlMDEyMTM4NDY5EgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLsqr2iFLe_G3A7p_8H1trQDvh-Yicm7jTsWj-p0vnOeGaCmKqKt6hTGgpk0x6c9Czdh62beYsI6pr2RChIuT-t6eB8qCoppOnSegS4Jyhh4Bh3qt5y7pvbXT3WssY_JfRRFiJNpF-7UX2v5GQtbAcSo-xf2NStMNGxqcOU5ZfZsEeAWmkeLCRLlaNR4wGdQf8L_L-fO3u50ad0ijOA9zedL8djEuZcffwyO9ybz8vNF3atCmu4A7rdMwwE",
+      "paths": {
+        "html": "stitch\\action-deck\\mark-attendance-host\\index.html",
+        "screenshot": "stitch\\action-deck\\mark-attendance-host\\screenshot.png"
+      }
+    },
+    {
+      "title": "Post-activity Feedback (Participant)",
+      "stitchTitle": "Post-activity Feedback (Participant)",
+      "id": "30f6ed5c340848189ec2084f49bed296",
+      "slug": "post-activity-feedback-participant",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZThjMzE4MTQwMjNiZTAwOGNiMjE4ZDZjEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLsmvhgM0sWWBAUZwC3w8AE75aKxtr3hdbu_3jV3E1m6aZ8CuQZRv00nQd77_9_lNAVjSrYGSZ5EF7WXyoKsf7SamXYtNhGHLyriBREoqXpfyiz2J_RNUtcxq0e7QhjqqoazXg1fJ7mmbf331mQi4JxjMbw4TIzizdThqGZfaSS29KTR3owAYJpnk0l0poNz2jI-MBfeDnjFOo3llAaAhWbgSKrdrJe9ZwyYwB_bzNIR-YgI16j94oq_7p4",
+      "paths": {
+        "html": "stitch\\action-deck\\post-activity-feedback-participant\\index.html",
+        "screenshot": "stitch\\action-deck\\post-activity-feedback-participant\\screenshot.png"
+      }
+    },
+    {
+      "title": "Attendance Saved Confirmation",
+      "stitchTitle": "Attendance Saved Confirmation",
+      "id": "41d9b5fa2c8e46039efe3e8439980661",
+      "slug": "attendance-saved-confirmation",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZThkZmNlZGUwMzU2ZDRiNmE3MTc0M2MxEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLu4m044lKqs8HSRdFQDUssVUHWM664EYxLnOeF8pHG5A7EXLaZV6e3LTKOrEoOmygsj887gpEww10kI0DM_k3YjMFdTs5A1zBun_j7jcDAgisTTQdiDskyILmke5au27FILZ46OO6J55JAavmVsvUv486wyNCpPTdQJs8nirF0v3VTcBGqZXtkE_QtHXiZYtCmZPx6mz2d-FjkvcFw1quLRstThyojE-IpBjT8XKO0UpCbgwoqn5MczbQY",
+      "paths": {
+        "html": "stitch\\action-deck\\attendance-saved-confirmation\\index.html",
+        "screenshot": "stitch\\action-deck\\attendance-saved-confirmation\\screenshot.png"
+      }
+    },
+    {
+      "title": "Attendance Outcome Notice",
+      "stitchTitle": "Attendance Outcome Notice",
+      "id": "c4fbfd0012634fd596cabd964b3a2beb",
+      "slug": "attendance-outcome-notice",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZTdhMWJhMjkwMjNiZTAwOGNiMjE4ZDZjEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLuB3gsWBb9qYpLXqo0Mv68UQqtk_V8vr51C9TTy4n4Oje9Ls6k8xhyDH2l2b0xLGdqQe_xMoMEchNk0GmIJgycFujsCkbF4b1b8W1RX_e_mq-jln7unBlOQeDxgz4cwtzRQIGvTC47p36E3O-k11Gy_Syglhq8TiZthBfOuYLUkH_mZ10w71R5mnRw3PZJSkRB5QyG3gqaTXloBmuaVzCjClBbhE1_WOZlVZa4GeEsuECIYKf8GNak0L6th",
+      "paths": {
+        "html": "stitch\\action-deck\\attendance-outcome-notice\\index.html",
+        "screenshot": "stitch\\action-deck\\attendance-outcome-notice\\screenshot.png"
+      }
+    },
+    {
+      "title": "Profile Reliability Panel States",
+      "stitchTitle": "Profile Reliability Panel States",
+      "id": "07e7b84f3ada4225b921b0432c1a3020",
+      "slug": "profile-reliability-panel-states",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1832",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZThmNjVmZDYwMjNiZTA0NjE3MjJiMGZmEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLtDa4xeYHnJfvJHNFCLUFpRBASLFcaAhizrcVZdqlOoirUsZNkHGoPSa7lhuhZEgq7uj4MxD7EO8guFngdkayjrnYwHbwZb_yE9dyj25HyoNF4mB9uYMOfILbZZ_aIeIfNXqmmH0I7aHynCOjogK5YNd7Na9T0rxE9Z2Rnlk3dxv53Jkm1E3HPSS_VVs8Leu-9HypnpbOIcOJ8cm1GNeFaFwSh4Gq3eYQpS6V3hZ2FI7kxHlEZt4FkFIek",
+      "paths": {
+        "html": "stitch\\action-deck\\profile-reliability-panel-states\\index.html",
+        "screenshot": "stitch\\action-deck\\profile-reliability-panel-states\\screenshot.png"
+      }
+    },
+    {
+      "title": "Past Activity Detail",
+      "stitchTitle": "Past Activity Detail",
+      "id": "0891aebac83144f3babf1963a4bbfb90",
+      "slug": "past-activity-detail",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "2882",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZTgyODVjOTQwOTY4YTFlMDU0MDE2ZTRhEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLt50lGAh-XVQh-1xQHfdtKRaYtcp6ARzT08TIq6-Mkz0DJO3YE1vIfxQeoPELpy8ppAKHUbTpFOHCHTt_S7O7lypalSKh6pkY9idPmWVKlCAT9-c04ZY3CEFMO560g18PCB-lFziaPVoGIBOpEGwhATeTqab3na7xD2F68joycYF_7Ndup35v6I28V-vQi4sq09-i5W9LMuyL_9v5jd4UkKuc3Bnm_t_BLhEt3Ou_-8XlQ1S-538g67ECAS",
+      "paths": {
+        "html": "stitch\\action-deck\\past-activity-detail\\index.html",
+        "screenshot": "stitch\\action-deck\\past-activity-detail\\screenshot.png"
+      }
+    },
+    {
+      "title": "Welcome - Slide 1",
+      "stitchTitle": "Welcome - Slide 1",
+      "id": "458b80da02914343ba6f10f2c7519df7",
+      "slug": "welcome-slide-1",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZTllOTdmZTkwMjNiZTU5OWQ3MmI5OGJmEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLtR_YHg8wv7oPqEszr0XqmcWCU7nl-jvf1tHM7SVKQIKDl4cdDxtAq_I8E1dYgP1rrz2teDPWa6Yrhny21wwsn7k6vlrEOnco9_C_8t-IJKMxZj8gGA7KFvxdRLuCyYNjo302UUUDZt-vP3ggb_9jZb-8PLfHC_M1IpODBbxzPCPK9-8rZMW5fCO-4i7B9XR2fojCRn8JlhBIIsB5EcW7td8JDWD_YHU1fREMR8XUulQM0cZXP0T0y80FS3",
+      "paths": {
+        "html": "stitch\\action-deck\\welcome-slide-1\\index.html",
+        "screenshot": "stitch\\action-deck\\welcome-slide-1\\screenshot.png"
+      }
+    },
+    {
+      "title": "Splash Screen (Dark)",
+      "stitchTitle": "Splash Screen (Dark)",
+      "id": "f7675de7721f4b999b205a7d502bef0a",
+      "slug": "splash-screen-dark",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZTcyZGUzZjUwOTY4YTFlMDU0MDE2ZTRhEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLuB3Qbo0vYauNDw99MXaWYfxBLbGOAvMM8L3q_84JeX5FvH5ixsA4e32DqAHFpwueF9uksvLU-TiBMeeXzvxO4aqWFuL0OzbL_dQct5Loswn_WB6E7lmu3JR15_QH4NoVUOcCgudvLp13u3HTF4qHjEgi5W01nbtiaJpywY_j13qGSsCKZmF3YSEQzT7yDmVXCKVQxNuynREGP7tJQQLbrbraye27o1P4QQxHExavh3ywMGxA1uUvDdxu74",
+      "paths": {
+        "html": "stitch\\action-deck\\splash-screen-dark\\index.html",
+        "screenshot": "stitch\\action-deck\\splash-screen-dark\\screenshot.png"
+      }
+    },
+    {
+      "title": "Welcome - Slide 2",
+      "stitchTitle": "Welcome - Slide 2",
+      "id": "f687b007b1664ca7b97596d3089ddf12",
+      "slug": "welcome-slide-2",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZTg5MTY3YzcwOTY4YTA5OGYxMDhmZmUzEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLtgoiWO1mJzlSTwxdYru4lkLzFqEGbeb-G68xIb5OGwjxmmqO8d_MjmZt4-pj57QLXWjd7Utemdg5DtaQpY2gZtIDwsy9ou6TINMSt_YP8k5PVq4v8jp65Od8Mqh7F2CE1RSC9ULdhW9Btg_QcbE4M5OvpDnYJzGVy5BrqmRQvvRm5o8Mn6-7m4xylDIJqMmSD1fL_Jo-nmzz7tp2AYHBfnwKwgjWKUjCQigNW62VZRycKHs0eRqLxP3SR_",
+      "paths": {
+        "html": "stitch\\action-deck\\welcome-slide-2\\index.html",
+        "screenshot": "stitch\\action-deck\\welcome-slide-2\\screenshot.png"
+      }
+    },
+    {
+      "title": "Welcome - Slide 3",
+      "stitchTitle": "Welcome - Slide 3",
+      "id": "9f16e7c601a34b05bb50daa309c97331",
+      "slug": "welcome-slide-3",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZTk5MDk3YTYwMjNiZTAwOGNiMjE4ZDZjEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLt61NaSlJmB7Tjuwh48u-DKQQA9K4WWH9gjiEhKh_Tr9FMFtjU-VijJIIJiA7bBsY6OQr6F-u2o7CxMzlih_1VgmUXPWAyaZXmXikgThWjWTbv6Jm80kJoUpp48MUKNPZgUScFMJAdQq085q9efFBBleJPIYcoRpcoNugEJzDZNsAZLrQzzKfPD7B9BF48V1Tk2uPcQMzKx_3VoUc2t9twwpAkzp6ynhdOyvLuNE77y0q0n1GNRTeYOwvY6",
+      "paths": {
+        "html": "stitch\\action-deck\\welcome-slide-3\\index.html",
+        "screenshot": "stitch\\action-deck\\welcome-slide-3\\screenshot.png"
+      }
+    },
+    {
+      "title": "Sign In Options",
+      "stitchTitle": "Sign In Options",
+      "id": "ff1151b47cb14ee6a247b14d253287e0",
+      "slug": "sign-in-options",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZWQ0ZTE0ZjgwMzU2ZDRiNmE3MTc0M2MxEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLtsPtEIGZopRkjlDPmhBL3wIRR8QpwertFDUTdugWmh-2J2ca16Cydqz5FNmZaD3JCLjEnDaryq21cvOMsmj6lKN4fSKxi5O7HJVHB7V3ep-6ICEsnYe28IyqpkbAZqHtUCtuRVP4WI_PbhFGGEcu0LW2ShoweatftfLHr0YYM6EECBLnYcgg9yI3cBdxHbggR3mH9zLkLw583PaKOKTF_X63g8FPvkPLB9OU-G_7kcNjiteL40r2MyKR8n",
+      "paths": {
+        "html": "stitch\\action-deck\\sign-in-options\\index.html",
+        "screenshot": "stitch\\action-deck\\sign-in-options\\screenshot.png"
+      }
+    },
+    {
+      "title": "Verification Code Entry",
+      "stitchTitle": "Verification Code Entry",
+      "id": "e50bbc2adef64491873442877a29640c",
+      "slug": "verification-code-entry",
+      "deviceType": "MOBILE",
+      "width": "780",
+      "height": "1768",
+      "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1ODk5ZTk3NTliMzQwMjNiZTU5OWQ3MmI5OGJmEgsSBxDf0O-t5goYAZIBJAoKcHJvamVjdF9pZBIWQhQxODIxMzIyMzY3NzEzMTI5MDUyMw&filename=&opi=89354086",
+      "imageUrl": "https://lh3.googleusercontent.com/aida/AP1WRLtbGcXtOfYOnSAcqiuVQJoJ7Xhpc0mdZW5MLKk_psHd8pJpB675gpX6gnSocr0wU5kecBxYprWY_OLOCkpbJURW-VjjtclqdzYWLli6UeUxmIeExwuMnzQzrwktsky7TLosPbLK-F3U9SDFfQTINeQvt0Nxoxje5nkWbOq23ACOc7FYE645VuScjoiI8uSXmeCz6DGg-qfeMYHTIYp4m6DmbZ5oC-smmB573PZimnH1pda6eVhOtwwaHSc_",
+      "paths": {
+        "html": "stitch\\action-deck\\verification-code-entry\\index.html",
+        "screenshot": "stitch\\action-deck\\verification-code-entry\\screenshot.png"
       }
     }
   ]

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { FilterChip, PrimaryButton, ScreenShell } from "@activity-match/ui";
+import { BrandHeader } from "@/components/GathereLogo";
 import { api } from "@/lib/api";
 
 export function InterestsOnboardingPage() {
@@ -50,8 +51,9 @@ export function InterestsOnboardingPage() {
   };
 
   return (
-    <ScreenShell title="Your Interests">
+    <ScreenShell headerLeading={<BrandHeader layout="lockup" size="sm" />}>
       <div className="space-y-6">
+        <h2 className="text-headline-md font-bold">Your interests</h2>
         <p className="text-body-lg">What kinds of activities are you into? Pick at least one to personalize your feed.</p>
         <div className="flex flex-wrap gap-2">
           {categories.map((c: { id: string; name: string }) => (

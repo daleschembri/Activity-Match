@@ -84,15 +84,18 @@ export function ActivityChatPage() {
     );
   }
 
+  const isReadOnly = activity?.status === "completed";
+
   return (
     <ScreenShell
-      title={activity?.title ?? "Activity Chat"}
+      title={isReadOnly ? `${activity?.title ?? "Activity"} (Read-only)` : (activity?.title ?? "Activity Chat")}
       headerRight={
         <button type="button" onClick={() => navigate("/chats")} aria-label="Back to chats">
           <Icon name="arrow_back" />
         </button>
       }
       footer={
+        isReadOnly ? undefined : (
         <div className="p-margin-mobile border-t border-outline-variant/30 flex gap-2">
           <input
             className="flex-1 rounded-xl border border-outline-variant px-4 py-3 min-h-[48px] bg-surface-container-lowest"
@@ -109,8 +112,14 @@ export function ActivityChatPage() {
             <Icon name="send" />
           </PrimaryButton>
         </div>
+        )
       }
     >
+      {isReadOnly && (
+        <p className="text-body-md text-on-surface-variant text-center mb-4">
+          This conversation is archived and read-only.
+        </p>
+      )}
       <div className="min-h-full flex flex-col justify-end">
         {messagesError && (
           <p className="text-error text-body-md mb-4" role="alert">

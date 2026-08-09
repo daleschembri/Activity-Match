@@ -59,6 +59,24 @@ export const NotificationType = {
   JOIN_REQUEST_ACCEPTED: "join_request_accepted",
   JOIN_REQUEST_DECLINED: "join_request_declined",
   JOIN_REQUEST_WAITLISTED: "join_request_waitlisted",
+  ATTENDANCE_RECORD_UPDATED: "attendance_record_updated",
+  ATTENDANCE_DISPUTE_SUBMITTED: "attendance_dispute_submitted",
+  ACTIVITY_UPDATED: "activity_updated",
+  PARTICIPANT_REMOVED: "participant_removed",
+  PARTICIPANT_JOINED: "participant_joined",
+  ATTENDANCE_MARK_REMINDER: "attendance_mark_reminder",
+  FEEDBACK_PROMPT: "feedback_prompt",
+} as const;
+
+export const FeedbackSentiment = {
+  UP: "up",
+  DOWN: "down",
+} as const;
+
+export const FeedbackOutcome = {
+  YES: "yes",
+  PARTIAL: "partial",
+  NO: "no",
 } as const;
 
 export const SkillLevel = {
@@ -86,5 +104,7 @@ export type ParticipationStatus =
 export type SwipeDirection = (typeof SwipeDirection)[keyof typeof SwipeDirection];
 export type MessageType = (typeof MessageType)[keyof typeof MessageType];
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType];
+export type FeedbackOutcome = (typeof FeedbackOutcome)[keyof typeof FeedbackOutcome];
+export type FeedbackSentiment = (typeof FeedbackSentiment)[keyof typeof FeedbackSentiment];
 export type SkillLevel = (typeof SkillLevel)[keyof typeof SkillLevel];
 export type ProfileGender = (typeof ProfileGender)[keyof typeof ProfileGender];

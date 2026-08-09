@@ -14,7 +14,11 @@
     "build:vercel": "npm run build --workspace=@activity-match/web && node scripts/prepare-vercel-output.mjs",
     "preview": "npm run preview --workspace=@activity-match/web",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "lint": "npm run lint --workspaces --if-present"
+    "lint": "npm run lint --workspaces --if-present",
+    "fetch:stitch": "node scripts/fetch-stitch-screens.mjs"
+  },
+  "devDependencies": {
+    "@google/stitch-sdk": "^0.1.0"
   },
   "engines": {
     "node": ">=20"

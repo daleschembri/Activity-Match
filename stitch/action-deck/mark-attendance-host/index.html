@@ -1,0 +1,195 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Mark Attendance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#3f0112",
+                    "surface-container-low": "#f6f3f1",
+                    "tertiary-container": "#8f3e4c",
+                    "tertiary-fixed-dim": "#ffb2bb",
+                    "on-surface-variant": "#404940",
+                    "background": "#fcf9f6",
+                    "on-tertiary-fixed-variant": "#792d3b",
+                    "tertiary": "#722736",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#2f1500",
+                    "tertiary-fixed": "#ffd9dd",
+                    "on-primary-fixed-variant": "#005226",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#e5e2e0",
+                    "primary-fixed-dim": "#8bd79b",
+                    "primary-container": "#166534",
+                    "inverse-on-surface": "#f3f0ee",
+                    "secondary": "#904d00",
+                    "primary-fixed": "#a6f4b5",
+                    "secondary-fixed": "#ffdcc3",
+                    "surface-container-highest": "#e5e2e0",
+                    "inverse-surface": "#31302f",
+                    "secondary-container": "#fe932c",
+                    "on-background": "#1c1c1a",
+                    "outline": "#707a6f",
+                    "on-secondary-container": "#663500",
+                    "on-secondary-fixed-variant": "#6e3900",
+                    "outline-variant": "#bfc9bd",
+                    "primary": "#004c22",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#dcd9d7",
+                    "surface-bright": "#fcf9f6",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#f0edeb",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#00210b",
+                    "surface-container-high": "#ebe8e5",
+                    "on-surface": "#1c1c1a",
+                    "inverse-primary": "#8bd79b",
+                    "on-tertiary-container": "#ffbfc6",
+                    "on-primary-container": "#93e0a2",
+                    "secondary-fixed-dim": "#ffb77d",
+                    "surface-tint": "#1f6c3a",
+                    "surface": "#fcf9f6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "gutter": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Hanken Grotesk"],
+                    "headline-xl": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "label-bold": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-xl": ["40px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                    "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .segmented-control-bg {
+            background-color: theme('colors.surface-container-high');
+        }
+        .segmented-control-active {
+            background-color: theme('colors.primary');
+            color: theme('colors.on-primary');
+        }
+        .segmented-control-inactive {
+            color: theme('colors.on-surface-variant');
+        }
+        .row-highlight {
+            background-color: theme('colors.primary-fixed-dim');
+            /* Very subtle green highlight */
+            opacity: 0.15;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface flex justify-between items-center px-margin-mobile py-sm z-10 flat no shadows">
+<button aria-label="Go back" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors Active: scale-95 duration-100 text-primary">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary truncate max-w-[200px] text-center">Mark Attendance</h1>
+<div class="w-11 h-11"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col pb-[140px]">
+<!-- Header Section -->
+<section class="px-margin-mobile py-lg flex flex-col gap-sm">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">Sunset walk and coffee</h2>
+<div class="flex items-center gap-xs text-on-surface-variant font-label-bold text-label-bold">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_month">calendar_month</span>
+<span>Sat, Oct 14</span>
+</div>
+<p class="font-body-md text-body-md text-secondary mt-base">You have 2 days left to update this</p>
+</section>
+<!-- Participants List -->
+<section class="flex flex-col">
+<!-- Participant Row 1 (Default: Came along) -->
+<div class="px-margin-mobile py-md flex flex-col gap-sm border-b border-surface-variant relative">
+<div class="flex items-center gap-md">
+<img alt="Sarah J." class="w-12 h-12 rounded-full object-cover border border-surface-variant" data-alt="A close-up portrait of a cheerful young woman with curly hair outdoors, natural lighting, warm and welcoming expression, tactile minimalism photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAscCEKLC1qsCUDf_n6gc4-n3FFZfGrLxlw7hNkTOpzuXeBpvuKy6d2hYrSeOCTpO_zuxP3_Nip0xB63KvXf4C3Nqt7b7R50WbUflxrKp3nP9JsoCMaxE87YJL37fNyIiAquNy_q5Jfu9Hz5Npj9f3dBPVTme3m1MTJ4D8HnhsvhBoqhWoxxmkfJtxV8UM5MY2Bts-SR8MqadozbE-rt2wpVVSAFX6q03skM64Dp8IESKc9mzLhnWNQIQ">
+<span class="font-body-lg text-body-lg font-medium">Sarah J.</span>
+</div>
+<div class="flex p-[2px] rounded-full segmented-control-bg mt-xs">
+<button class="flex-1 py-xs rounded-full font-label-bold text-label-bold segmented-control-active transition-colors">Came along</button>
+<button class="flex-1 py-xs rounded-full font-label-bold text-label-bold segmented-control-inactive transition-colors hover:bg-surface-variant">Didn't come</button>
+</div>
+</div>
+<!-- Participant Row 2 (Changed: Didn't come) -->
+<div class="px-margin-mobile py-md flex flex-col gap-sm border-b border-surface-variant relative">
+<!-- Highlight Layer -->
+<div class="absolute inset-0 row-highlight pointer-events-none"></div>
+<div class="flex items-center gap-md relative z-10">
+<img alt="Mike T." class="w-12 h-12 rounded-full object-cover border border-surface-variant" data-alt="A portrait of a man in his 30s wearing a casual beanie, standing in front of a subtly blurred urban background, soft lighting, tactile minimalism aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANyOUB6y3PXiZAAR1Q_WU2OeHEO2UQiWDetlinqchwvJMec3uF1fgOFJWNjpC6UjbVsYxBr36fxgmIAaPRXyJnwK90nZs3nsm6xmgVIhGNX8utDlKymhjRNHjYocNDXARnylVVHmtri7ZEU8uNvaYVb0AHXLb7QBtLDw7ftALjPMkR4tCLy3FEusc5-2AKINNLRCMIOaubQTJ1SZ3Qjli-NJM5YiwGIeqSZlyZcTct-H2jdcjMT2yntQ">
+<span class="font-body-lg text-body-lg font-medium">Mike T.</span>
+</div>
+<div class="flex p-[2px] rounded-full segmented-control-bg mt-xs relative z-10">
+<button class="flex-1 py-xs rounded-full font-label-bold text-label-bold segmented-control-inactive transition-colors hover:bg-surface-variant">Came along</button>
+<button class="flex-1 py-xs rounded-full font-label-bold text-label-bold bg-surface-variant text-on-background transition-colors">Didn't come</button>
+</div>
+</div>
+<!-- Participant Row 3 (Default: Came along) -->
+<div class="px-margin-mobile py-md flex flex-col gap-sm border-b border-surface-variant relative">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-headline-md text-headline-md border border-surface-variant">
+                        EJ
+                    </div>
+<span class="font-body-lg text-body-lg font-medium">Emily J.</span>
+</div>
+<div class="flex p-[2px] rounded-full segmented-control-bg mt-xs">
+<button class="flex-1 py-xs rounded-full font-label-bold text-label-bold segmented-control-active transition-colors">Came along</button>
+<button class="flex-1 py-xs rounded-full font-label-bold text-label-bold segmented-control-inactive transition-colors hover:bg-surface-variant">Didn't come</button>
+</div>
+</div>
+<!-- Missing someone link -->
+<div class="px-margin-mobile py-lg flex justify-center">
+<a class="font-label-bold text-label-bold text-primary underline underline-offset-4 hover:text-primary-container transition-colors" href="#">Someone missing from this list?</a>
+</div>
+</section>
+</main>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-0 w-full bg-surface px-margin-mobile py-md pb-[max(16px,env(safe-area-inset-bottom))] shadow-[0_-8px_20px_rgba(0,0,0,0.04)] flex flex-col gap-sm z-50">
+<button class="w-full bg-primary text-on-primary py-sm rounded-full font-label-bold text-label-bold hover:bg-primary-container transition-colors active:scale-[0.98] h-12 flex items-center justify-center shadow-sm">
+            Save attendance
+        </button>
+<button class="w-full bg-transparent border-2 border-outline text-on-surface py-sm rounded-full font-label-bold text-label-bold hover:bg-surface-container-low transition-colors active:scale-[0.98] h-12 flex items-center justify-center">
+            All good, everyone came
+        </button>
+</div>
+</body></html>

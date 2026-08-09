@@ -155,6 +155,25 @@ export interface ReliabilityDisplay {
   late_cancellation_count?: number;
   no_show_count?: number;
   hosted_count?: number;
+  is_new?: boolean;
+}
+
+export interface AttendanceParticipant {
+  user_id: string;
+  display_name: string;
+  avatar_ref: string | null;
+  status: ParticipationStatus;
+}
+
+export interface AttendanceMark {
+  user_id: string;
+  attended: boolean;
+}
+
+export interface PastActivityDetail extends ActivityDetail {
+  attendance_resolved_at: string | null;
+  attendees: Array<Pick<UserProfile, "id" | "display_name" | "avatar_ref"> & { is_host?: boolean }>;
+  chat_read_only: boolean;
 }
 
 export interface AppNotification {

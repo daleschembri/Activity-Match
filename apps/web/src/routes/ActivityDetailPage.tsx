@@ -4,10 +4,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ActivityDetail } from "@activity-match/shared";
 import { Icon, PrimaryButton } from "@activity-match/ui";
 import { ActivityMeetingMap } from "@/components/ActivityMeetingMap";
+import { ActivityOptionsSheet } from "@/components/ActivityOptionsSheet";
 import { JoinRequestSheet } from "@/components/JoinRequestSheet";
 import { CapacitySegments, capacityStatusLabel } from "@/components/CapacitySegments";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion/primitives";
 import { api } from "@/lib/api";
+import { APP_NAME } from "@/lib/brand";
 import { trackEvent } from "@/lib/analytics";
 
 function formatDetailWhen(startsAt: string | null): string {
@@ -92,7 +94,7 @@ function AboutHostSection({ activity }: { activity: ActivityDetail }) {
         </div>
         <p className="font-body-md text-body-md text-on-surface-variant whitespace-pre-line">
           {activity.host.bio?.trim() ||
-            `${activity.host.display_name} hosts activities on Activity Match. Say hello in the chat once you join.`}
+            `${activity.host.display_name} hosts activities on ${APP_NAME}. Say hello in the chat once you join.`}
         </p>
       </div>
     </section>
@@ -107,6 +109,7 @@ export function ActivityDetailPage() {
   const [leaving, setLeaving] = useState(false);
   const [joining, setJoining] = useState(false);
   const [joinSheetOpen, setJoinSheetOpen] = useState(false);
+  const [optionsOpen, setOptionsOpen] = useState(false);
   const { data: activity, isLoading } = useQuery({
     queryKey: ["activity", id],
     queryFn: () => api.getActivity(id),
@@ -234,6 +237,9 @@ export function ActivityDetailPage() {
     }
   };
 
+  const isHost = activity.viewer_role === "host";
+  const canManage = isHost && ["published", "draft"].includes(activity.status);
+
   const primaryAction = () => {
     if (activity.viewer_role === "host") return navigate("/host/requests");
     if (isParticipant) return leave();
@@ -264,7 +270,7 @@ export function ActivityDetailPage() {
           type="button"
           aria-label="More options"
           className="p-2 rounded-full hover:bg-surface-container-high transition-colors btn-press"
-          onClick={shareActivity}
+          onClick={() => setOptionsOpen(true)}
         >
           <Icon name="more_vert" />
         </button>
@@ -451,6 +457,15 @@ export function ActivityDetailPage() {
           <Icon name="share" />
         </button>
       </FadeIn>
+
+      <ActivityOptionsSheet
+        open={optionsOpen}
+        isHost={isHost}
+        onClose={() => setOptionsOpen(false)}
+        onShare={shareActivity}
+        onEdit={canManage ? () => navigate(`/activities/${id}/edit`) : undefined}
+        onManageAttendees={canManage ? () => navigate(`/activities/${id}/attendees`) : undefined}
+      />
 
       <JoinRequestSheet
         open={joinSheetOpen}

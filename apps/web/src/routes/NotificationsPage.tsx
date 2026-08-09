@@ -4,7 +4,7 @@ import type { AppNotification } from "@activity-match/shared";
 import { Icon, PrimaryButton, ScreenShell } from "@activity-match/ui";
 import { Stagger, StaggerItem } from "@/components/motion/primitives";
 import { api } from "@/lib/api";
-import { formatNotificationWhen, getNotificationHref, getNotificationIcon } from "@/lib/notifications";
+import { formatNotificationWhen, getNotificationIcon, resolveNotificationHref } from "@/lib/notifications";
 
 function NotificationRow({
   notification,
@@ -87,7 +87,7 @@ export function NotificationsPage() {
         queryClient.invalidateQueries({ queryKey: ["notifications-unread"] }),
       ]);
     }
-    navigate(getNotificationHref(notification));
+    navigate(await resolveNotificationHref(notification));
   };
 
   const unreadCount = notifications.filter((n) => !n.read_at).length;

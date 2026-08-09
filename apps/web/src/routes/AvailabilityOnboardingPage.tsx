@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FilterChip, PrimaryButton, ScreenShell } from "@activity-match/ui";
+import { BrandHeader } from "@/components/GathereLogo";
 import { api } from "@/lib/api";
 
 const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as const;
@@ -40,8 +41,9 @@ export function AvailabilityOnboardingPage() {
   };
 
   return (
-    <ScreenShell title="Your Availability">
+    <ScreenShell headerLeading={<BrandHeader layout="lockup" size="sm" />}>
       <div className="space-y-6">
+        <h2 className="text-headline-md font-bold">Your availability</h2>
         <p className="text-body-lg">When are you usually free for activities? We use this to rank events that fit your schedule.</p>
         <div className="flex flex-wrap gap-2">
           {days.map((d) => (

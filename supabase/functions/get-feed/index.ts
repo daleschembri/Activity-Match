@@ -42,27 +42,40 @@ Deno.serve(async (req) => {
     });
   }
 
-  const items = (activities ?? []).map((a) => ({
-    id: a.id,
-    title: a.title,
-    listing_type: a.listing_type,
-    status: a.status,
-    category: a.category,
-    starts_at: a.starts_at,
-    duration_minutes: a.duration_minutes,
-    area_label: null,
-    distance_from_viewer_minutes: null,
-    cost_amount: Number(a.cost_amount),
-    cost_currency: a.cost_currency,
-    skill_level: a.skill_level,
-    capacity: a.capacity,
-    participation_count: 0,
-    spaces_remaining: a.capacity,
-    is_full: false,
-    is_joinable: true,
-    host: a.host,
-    tags: [],
-  }));
+  const activityIds = (activities ?? []).map((a) => a.id as string);
+  const { data: countRows } = activityIds.length
+    ? await supabase.rpc("get_participation_counts", { p_activity_ids: activityIds })
+    : { data: [] as Array<{ activity_id: string; participant_count: number }> };
+  const countsById = new Map(
+    (countRows ?? []).map((row) => [row.activity_id as string, row.participant_count as number]),
+  );
+
+  const items = (activities ?? []).map((a) => {
+    const capacity = a.capacity as number | null;
+    const participationCount = countsById.get(a.id as string) ?? 0;
+    const spacesRemaining = capacity != null ? Math.max(0, capacity - participationCount) : null;
+    return {
+      id: a.id,
+      title: a.title,
+      listing_type: a.listing_type,
+      status: a.status,
+      category: a.category,
+      starts_at: a.starts_at,
+      duration_minutes: a.duration_minutes,
+      area_label: null,
+      distance_from_viewer_minutes: null,
+      cost_amount: Number(a.cost_amount),
+      cost_currency: a.cost_currency,
+      skill_level: a.skill_level,
+      capacity,
+      participation_count: participationCount,
+      spaces_remaining: spacesRemaining,
+      is_full: capacity != null && participationCount >= capacity,
+      is_joinable: capacity == null || participationCount < capacity,
+      host: a.host,
+      tags: [],
+    };
+  });
 
   return new Response(JSON.stringify({
     data: {

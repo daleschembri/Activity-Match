@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { ActivityLifecycleSync } from "./components/ActivityLifecycleSync";
 import { AppShell } from "./components/AppShell";
 import { AuthProvider } from "./lib/AuthProvider";
 import { isSupabaseConfigured } from "./lib/supabase";
@@ -17,23 +18,45 @@ import { ActivityChatPage } from "./routes/ActivityChatPage";
 import { ChatsPage } from "./routes/ChatsPage";
 import { NotificationsPage } from "./routes/NotificationsPage";
 import { FeedbackPage } from "./routes/FeedbackPage";
+import { EditActivityPage } from "./routes/EditActivityPage";
+import { ManageAttendeesPage } from "./routes/ManageAttendeesPage";
+import { MarkAttendancePage } from "./routes/MarkAttendancePage";
+import { AttendanceSavedPage } from "./routes/AttendanceSavedPage";
+import { AttendanceOutcomePage } from "./routes/AttendanceOutcomePage";
+import { PastActivityDetailPage } from "./routes/PastActivityDetailPage";
 import { ProfilePage } from "./routes/ProfilePage";
 import { EditProfilePage } from "./routes/EditProfilePage";
 import { PublicActivityPage } from "./routes/PublicActivityPage";
 import { GroupPage } from "./routes/GroupPage";
+import { SplashPage } from "./routes/SplashPage";
+import { WelcomePage } from "./routes/WelcomePage";
+import { SignInOptionsPage } from "./routes/SignInOptionsPage";
+import { PhoneAuthPage } from "./routes/PhoneAuthPage";
+import { VerificationCodePage } from "./routes/VerificationCodePage";
 import { AuthPage } from "./routes/AuthPage";
 
 export function App() {
   const routes = (
     <Routes>
       <Route element={<AppShell />}>
-        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/splash" element={<SplashPage />} />
+        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/auth" element={<SignInOptionsPage />} />
+        <Route path="/auth/phone" element={<PhoneAuthPage />} />
+        <Route path="/auth/verify" element={<VerificationCodePage />} />
+        <Route path="/auth/email" element={<AuthPage />} />
         <Route path="/" element={<DiscoverPage />} />
         <Route path="/filters" element={<FilterPage />} />
         <Route path="/feed/exhausted" element={<EndOfFeedPage />} />
         <Route path="/activities/:id" element={<ActivityDetailPage />} />
         <Route path="/activities/:id/chat" element={<ActivityChatPage />} />
         <Route path="/activities/:id/feedback" element={<FeedbackPage />} />
+        <Route path="/activities/:id/edit" element={<EditActivityPage />} />
+        <Route path="/activities/:id/attendees" element={<ManageAttendeesPage />} />
+        <Route path="/activities/:id/attendance" element={<MarkAttendancePage />} />
+        <Route path="/activities/:id/attendance/saved" element={<AttendanceSavedPage />} />
+        <Route path="/activities/:id/attendance/outcome" element={<AttendanceOutcomePage />} />
+        <Route path="/activities/:id/past" element={<PastActivityDetailPage />} />
         <Route path="/host/requests" element={<JoinRequestsPage />} />
         <Route path="/waitlist/:requestId" element={<WaitlistClaimPage />} />
         <Route path="/create/describe" element={<CreateDescribePage />} />
@@ -54,7 +77,14 @@ export function App() {
 
   return (
     <BrowserRouter>
-      {isSupabaseConfigured ? <AuthProvider>{routes}</AuthProvider> : routes}
+      {isSupabaseConfigured ? (
+        <AuthProvider>
+          <ActivityLifecycleSync />
+          {routes}
+        </AuthProvider>
+      ) : (
+        routes
+      )}
     </BrowserRouter>
   );
 }

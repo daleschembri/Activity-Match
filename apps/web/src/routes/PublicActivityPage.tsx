@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { CapacityBadge, PrimaryButton, ScreenShell, TextField } from "@activity-match/ui";
+import { BrandHeader } from "@/components/GathereLogo";
 import { api } from "@/lib/api";
 
 export function PublicActivityPage() {
@@ -20,11 +21,23 @@ export function PublicActivityPage() {
     alert("Interest recorded! Check your email for verification.");
   };
 
-  if (isLoading) return <ScreenShell title="Activity"><p>Loading...</p></ScreenShell>;
-  if (!activity) return <ScreenShell title="Activity"><p>Activity not found</p></ScreenShell>;
+  if (isLoading) {
+    return (
+      <ScreenShell headerLeading={<BrandHeader layout="lockup" size="sm" />}>
+        <p>Loading...</p>
+      </ScreenShell>
+    );
+  }
+  if (!activity) {
+    return (
+      <ScreenShell headerLeading={<BrandHeader layout="lockup" size="sm" />}>
+        <p>Activity not found</p>
+      </ScreenShell>
+    );
+  }
 
   return (
-    <ScreenShell title="Shared Activity">
+    <ScreenShell headerLeading={<BrandHeader layout="lockup" size="sm" />}>
       <div className="space-y-5">
         <h1 className="text-headline-lg-mobile font-extrabold">{activity.title}</h1>
         {activity.capacity != null && (

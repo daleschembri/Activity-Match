@@ -1,0 +1,237 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Completed Activity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-fixed": "#3f0112",
+                      "surface-container-low": "#f6f3f1",
+                      "tertiary-container": "#8f3e4c",
+                      "tertiary-fixed-dim": "#ffb2bb",
+                      "on-surface-variant": "#404940",
+                      "background": "#fcf9f6",
+                      "on-tertiary-fixed-variant": "#792d3b",
+                      "tertiary": "#722736",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed": "#2f1500",
+                      "tertiary-fixed": "#ffd9dd",
+                      "on-primary-fixed-variant": "#005226",
+                      "on-error-container": "#93000a",
+                      "surface-variant": "#e5e2e0",
+                      "primary-fixed-dim": "#8bd79b",
+                      "primary-container": "#166534",
+                      "inverse-on-surface": "#f3f0ee",
+                      "secondary": "#904d00",
+                      "primary-fixed": "#a6f4b5",
+                      "secondary-fixed": "#ffdcc3",
+                      "surface-container-highest": "#e5e2e0",
+                      "inverse-surface": "#31302f",
+                      "secondary-container": "#fe932c",
+                      "on-background": "#1c1c1a",
+                      "outline": "#707a6f",
+                      "on-secondary-container": "#663500",
+                      "on-secondary-fixed-variant": "#6e3900",
+                      "outline-variant": "#bfc9bd",
+                      "primary": "#004c22",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "surface-dim": "#dcd9d7",
+                      "surface-bright": "#fcf9f6",
+                      "error-container": "#ffdad6",
+                      "surface-container": "#f0edeb",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#00210b",
+                      "surface-container-high": "#ebe8e5",
+                      "on-surface": "#1c1c1a",
+                      "inverse-primary": "#8bd79b",
+                      "on-tertiary-container": "#ffbfc6",
+                      "on-primary-container": "#93e0a2",
+                      "secondary-fixed-dim": "#ffb77d",
+                      "surface-tint": "#1f6c3a",
+                      "surface": "#fcf9f6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "20px",
+                      "base": "4px",
+                      "xl": "32px",
+                      "xs": "4px",
+                      "md": "16px",
+                      "sm": "8px",
+                      "gutter": "16px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Hanken Grotesk"],
+                      "headline-xl": ["Hanken Grotesk"],
+                      "body-md": ["Hanken Grotesk"],
+                      "label-sm": ["Hanken Grotesk"],
+                      "headline-md": ["Hanken Grotesk"],
+                      "body-lg": ["Hanken Grotesk"],
+                      "headline-lg-mobile": ["Hanken Grotesk"],
+                      "label-bold": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "headline-xl": ["40px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                      "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700"}]
+              }
+            }
+          }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface w-full top-0 sticky flex justify-between items-center px-margin-mobile py-sm z-50">
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary md:font-headline-lg md:text-headline-lg">My plans</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant flex-shrink-0">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A close-up portrait of a young woman with a warm smile, wearing athletic outdoor gear. Soft, natural sunlight illuminates her face against a blurred green background, fitting a light-mode, grounded, active aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6mOfpEbg6mhuy5Fdk5Y4Nsgfr8KowyQWYmRlIeI1oGOsyeDqBBiBkZo9I_xLqLX2lqaN6WlaXPtvP2ES_sy6AK6872jL8mKRUU6u6yEWPbJjHzeKXRYLKHQyT4czj_oyPxyLaVWPNaFrolPKsX40AohoCTgOlr6_ZosA_SN-nr6Xq1dnl1b-85plMSGqmH_vc6XwhFCW1YdQfUXkJsoTMJjThQpRFEWSvbrmxTOPIhEgCzGosFyrD4w">
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 w-full max-w-3xl mx-auto px-margin-mobile py-xl flex flex-col gap-xl pb-[100px] md:pb-xl">
+<!-- Header Card -->
+<section class="bg-surface-container-lowest rounded-xl p-lg shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-surface-variant">
+<div class="flex justify-between items-start mb-md">
+<div class="flex flex-wrap gap-sm">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-surface-tint/10 text-primary font-label-bold text-label-bold">
+<span class="material-symbols-outlined text-[16px] mr-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Completed
+                    </span>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">
+                        Outdoor
+                    </span>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Oct 12, 2023</span>
+</div>
+<h2 class="font-headline-xl text-headline-xl text-on-background mb-sm">Morning Trail Run</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-md flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">location_on</span>
+                Pine Ridge Reservation Trail
+            </p>
+<div class="h-[200px] rounded-lg overflow-hidden relative mb-md">
+<img class="w-full h-full object-cover" data-alt="A scenic wide shot of a dirt trail winding through a dense, lush green pine forest bathed in crisp morning sunlight. The environment feels fresh, sturdy, and natural, matching a light-mode tactile minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVmi6tLpugVHVZYPTOdwwQXflzaVBDsQE1C41ZcaXO_-cNkoNod_1nB7GlroCoPpyBvQWTfA7X6zHVb0ML1d-P6u7jShPhYdCfvE0k-vuIgsJU33_ZNoI2lMKO6sOpuNPLlOiGryRiInSsCCK9KNS3IQN3jNo3AdVl6kqzy76EBMM-MgU_Ts0dV6MpZsARtlrAFQrkpR-W-MvdPvMBi44CI6FutEmSxPWDge8ZYKlRSUnfRS-TjSWo_A">
+</div>
+<!-- Stats Bento -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md mt-md">
+<div class="bg-surface-container-low p-md rounded-lg flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary mb-1" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-headline-md text-headline-md text-on-background">1h 15m</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Duration</span>
+</div>
+<div class="bg-surface-container-low p-md rounded-lg flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary mb-1" style="font-variation-settings: 'FILL' 1;">route</span>
+<span class="font-headline-md text-headline-md text-on-background">5.2 mi</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Distance</span>
+</div>
+<div class="bg-surface-container-low p-md rounded-lg flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary mb-1" style="font-variation-settings: 'FILL' 1;">elevation</span>
+<span class="font-headline-md text-headline-md text-on-background">450 ft</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Elevation</span>
+</div>
+<div class="bg-surface-container-low p-md rounded-lg flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary mb-1" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-headline-md text-headline-md text-on-background">4</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Attendees</span>
+</div>
+</div>
+</section>
+<!-- Attendees Section -->
+<section class="flex flex-col gap-md">
+<h3 class="font-headline-md text-headline-md text-on-background px-xs">Attendees</h3>
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-surface-variant overflow-hidden">
+<ul class="divide-y divide-surface-variant">
+<li class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A casual portrait of an active man in his 30s wearing a running jacket, smiling. Natural daylight, tactile minimalist aesthetic with muted natural tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKNz3xHVhvhn1HRC4B8tbZRker9GbqtnMPB_rRoy9AYn75Q3iVRqBqlNGF6qMMjTv3snlJmUjOM2XCKtebcIBRDHOxJ2B9l2_tOrx4wtxoF7svW6uX8EiaL-WmyHELd3mdmBJKe1B1M_8fd7JPfyC2g44ZFtDHxv5GLrSusYqMuY8sklo73J21Y7CpiM9_iuhLU_DIlvHotq3Ujxq3JFWcvu01QSF85Fr1RNem_7WFDH63x4z0Mf7IHw">
+</div>
+<span class="font-label-bold text-label-bold text-on-background">Alex Rivera (Organizer)</span>
+</div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</li>
+<li class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A headshot of an athletic woman wearing a sun visor and sunglasses, looking relaxed. Bright natural light, clear background, fitting a light-mode active lifestyle theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYe16oBNGO2baNKVfvJqElrAmeglfEnuXQ1cIDb4AwJMwPfLLJzZyOC6GkG4g66A93HWVukB7iyXXT7vt11uq559orzAZotkYsFHQg1CK-448gpQoafmmdL9wC3CMycpUSgQhg928YzC2dF3WfXcuQCMTSW_tAfCtYOlDDtbu_ghgowECDUiQbEGcVe-dgEWqhL58u6PwDgeqZ2BuMDHROZKkj93qTj90_hdTkhQph5NU-bouImI891Q">
+</div>
+<span class="font-label-bold text-label-bold text-on-background">Sarah Chen</span>
+</div>
+</li>
+<li class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Portrait of a friendly older man in hiking gear. Earthy colors, soft natural lighting, grounded and reliable mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHzxIGLNV179PbmGiwXEx59w1dHVVtzaunxJTCgL6VFdILFjhUwJyPh8NMoHQVOLwcc7I8e26YDsXIjTIk7btbtacLcmWxHNcZDboQRVnOj37hvudscZU7V035HyuOzk2q_784sVfu8NLuJ-Axw9gLju9V9Ib5YzdLAxxpmboXNZeaoJi4u1SnyF3l7XkgbBQHx2vdEtVVqalUdbelDmDWqRid3q_uAtqxy5XDRGp0mLACR2yIDtv2eA">
+</div>
+<span class="font-label-bold text-label-bold text-on-background">David Miller</span>
+</div>
+</li>
+<li class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Close up of a young non-binary person with short hair, wearing a casual athletic tee. Warm, inviting lighting, tactile minimalist style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-w350T0XgSx0hTC6-Xu6ysXZzuO6dudUcRKgaSc1PJxzO0AO3AIPce2ZvOaMiZzszXV-TorOiuX-BJTW3mKrlNM7kixex_Uc47Ip7Z9W4RoWpFindbi_KTKv7kI8zMPu_xLbJF93LLwbmzAh575hu7fm16laPgORs_NBW4x2KKmfOb00wCxdzXlNXZKmrn9bjpoimQx1M7iW-e7eUjRPX5a0Qhf18tfgMP5S-coEph7IZ5zcUwrsBrg">
+</div>
+<span class="font-label-bold text-label-bold text-on-background">Jamie Taylor</span>
+</div>
+</li>
+</ul>
+</div>
+</section>
+<!-- Actions -->
+<section class="flex flex-col gap-md mt-md">
+<button class="w-full bg-surface-container-highest text-on-background font-label-bold text-label-bold py-4 px-lg rounded-xl flex items-center justify-center gap-2 hover:bg-surface-variant active:scale-[0.98] transition-all shadow-[0_4px_12px_rgba(0,0,0,0.04)] border border-outline-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">forum</span>
+                View Chat (Read-only)
+            </button>
+<button class="w-full bg-primary text-on-primary font-label-bold text-label-bold py-4 px-lg rounded-xl flex items-center justify-center gap-2 hover:bg-primary-container active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">replay</span>
+                Repeat with this group
+            </button>
+</section>
+</main>
+<!-- BottomNavBar (Hidden on md and up, only visible on mobile destination) -->
+<nav class="md:hidden fixed bottom-0 w-full flex justify-around items-center px-4 pb-safe bg-surface shadow-[0_-4px_12px_rgba(0,0,0,0.04)] h-20 z-50">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors w-16 h-16 rounded-xl">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">explore</span>
+<span class="font-label-sm text-label-sm">Discover</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary font-label-bold text-label-bold hover:bg-surface-container-low transition-colors w-16 h-16 rounded-xl relative after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 after:absolute after:bottom-2">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">event_note</span>
+<span class="font-label-sm text-label-sm">My plans</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors w-16 h-16 rounded-xl">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">add_circle</span>
+<span class="font-label-sm text-label-sm">Create</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors w-16 h-16 rounded-xl">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</button>
+</nav>
+</body></html>

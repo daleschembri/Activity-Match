@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Icon, PrimaryButton, ScreenShell } from "@activity-match/ui";
+import { BrandHeader } from "@/components/GathereLogo";
+import { ReliabilityPanel } from "@/components/ReliabilityPanel";
 import { api } from "@/lib/api";
 import { formatProfileAgeGender } from "@/lib/profile";
 import { useAuth } from "@/lib/AuthProvider";
@@ -29,7 +31,15 @@ export function ProfilePage() {
   const ageGender = formatProfileAgeGender(profile?.date_of_birth, profile?.gender);
 
   return (
-    <ScreenShell title="Profile" reserveBottomNav>
+    <ScreenShell
+      headerLeading={
+        <div className="flex items-center gap-3">
+          <BrandHeader layout="symbol" size="sm" />
+          <h1 className="text-headline-md font-bold tracking-tight">Profile</h1>
+        </div>
+      }
+      reserveBottomNav
+    >
       <div className="space-y-8 pb-8">
         <section className="flex flex-col items-center text-center gap-4">
           {profile?.avatar_ref ? (
@@ -80,24 +90,7 @@ export function ProfilePage() {
 
         <section className="space-y-3">
           <h3 className="text-label-bold text-on-surface-variant uppercase tracking-wider">Reliability</h3>
-          {reliability?.label === "New to the platform" ? (
-            <p className="text-body-md text-on-surface-variant">New to the platform</p>
-          ) : (
-            <div className="grid grid-cols-3 gap-2">
-              <div className="bg-surface-container-lowest p-4 rounded-xl text-center">
-                <p className="text-headline-lg-mobile font-extrabold text-primary">{reliability?.attended_count ?? 0}</p>
-                <p className="text-label-sm text-on-surface-variant">Attended</p>
-              </div>
-              <div className="bg-surface-container-lowest p-4 rounded-xl text-center">
-                <p className="text-headline-lg-mobile font-extrabold">{reliability?.late_cancellation_count ?? 0}</p>
-                <p className="text-label-sm text-on-surface-variant">Cancel</p>
-              </div>
-              <div className="bg-surface-container-lowest p-4 rounded-xl text-center">
-                <p className="text-headline-lg-mobile font-extrabold">{reliability?.no_show_count ?? 0}</p>
-                <p className="text-label-sm text-on-surface-variant">No-shows</p>
-              </div>
-            </div>
-          )}
+          <ReliabilityPanel reliability={reliability} />
         </section>
 
         <section className="space-y-3">
