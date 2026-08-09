@@ -1,17 +1,10 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { AppNotification } from "@activity-match/shared";
 import { Icon, PrimaryButton, ScreenShell } from "@activity-match/ui";
+import { NotificationSetupBanner } from "@/components/NotificationSetupBanner";
 import { Stagger, StaggerItem } from "@/components/motion/primitives";
 import { api } from "@/lib/api";
-import { useAuth } from "@/lib/AuthProvider";
-import {
-  browserNotificationsSupported,
-  getBrowserNotificationPermission,
-  requestBrowserNotificationPermission,
-} from "@/lib/browserNotifications";
-import { subscribeToWebPush, vapidPublicKeyConfigured } from "@/lib/pushNotifications";
 import { formatNotificationWhen, getNotificationIcon, resolveNotificationHref } from "@/lib/notifications";
 
 function NotificationRow({
@@ -71,8 +64,6 @@ function NotificationRow({
 export function NotificationsPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { session } = useAuth();
-  const [permission, setPermission] = useState(() => getBrowserNotificationPermission());
   const { data: notifications = [], isLoading } = useQuery({
     queryKey: ["notifications"],
     queryFn: () => api.getNotifications(),
@@ -102,14 +93,6 @@ export function NotificationsPage() {
 
   const unreadCount = notifications.filter((n) => !n.read_at).length;
 
-  const enableBrowserNotifications = async () => {
-    const next = await requestBrowserNotificationPermission();
-    setPermission(next);
-    if (next === "granted" && session?.user.id && vapidPublicKeyConfigured()) {
-      await subscribeToWebPush(session.user.id);
-    }
-  };
-
   return (
     <ScreenShell
       title="Notifications"
@@ -128,23 +111,7 @@ export function NotificationsPage() {
       }
     >
       <div className="space-y-4">
-        {browserNotificationsSupported() && permission !== "granted" && (
-          <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="font-label-bold text-label-bold text-on-surface">Browser notifications</p>
-              <p className="text-body-md text-on-surface-variant mt-1">
-                {permission === "denied"
-                  ? "Notifications are blocked in your browser settings."
-                  : vapidPublicKeyConfigured()
-                    ? "Get alerts and chat messages even when Gathere is closed."
-                    : "Get alerts and chat messages even when Gathere is in the background."}
-              </p>
-            </div>
-            {permission === "default" && (
-              <PrimaryButton onClick={() => void enableBrowserNotifications()}>Enable</PrimaryButton>
-            )}
-          </div>
-        )}
+        <NotificationSetupBanner />
 
         {isLoading && <p className="text-on-surface-variant">Loading notifications...</p>}
 

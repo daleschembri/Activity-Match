@@ -8,7 +8,6 @@ import {
   BROWSER_NOTIFICATION_NAVIGATE_EVENT,
   formatChatMessagePreview,
   getBrowserNotificationPermission,
-  requestBrowserNotificationPermission,
   showBrowserNotification,
 } from "@/lib/browserNotifications";
 import { hasActivePushSubscription, subscribeToWebPush, vapidPublicKeyConfigured } from "@/lib/pushNotifications";
@@ -51,10 +50,6 @@ export function BrowserNotificationBridge() {
     const userId = session.user.id;
 
     void (async () => {
-      if (getBrowserNotificationPermission() === "default") {
-        await requestBrowserNotificationPermission();
-      }
-
       if (getBrowserNotificationPermission() === "granted" && vapidPublicKeyConfigured()) {
         await subscribeToWebPush(userId);
       }

@@ -5,6 +5,7 @@ import { Icon, PrimaryButton } from "@activity-match/ui";
 import { BrandHeader } from "@/components/GathereLogo";
 import { DiscoverFeedCard } from "@/components/DiscoverFeedCard";
 import { JoinRequestSheet } from "@/components/JoinRequestSheet";
+import { NotificationSetupBanner } from "@/components/NotificationSetupBanner";
 import { UnreadBadge } from "@/components/UnreadBadge";
 import { Pressable } from "@/components/motion/primitives";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -182,6 +183,8 @@ export function DiscoverPage() {
       </motion.header>
 
       <main className="flex-1 relative w-full overflow-hidden flex flex-col min-h-0 pb-20 px-margin-mobile">
+        <NotificationSetupBanner dismissible className="w-full max-w-md mx-auto mt-2 mb-1 shrink-0" />
+
         {error && (
           <motion.div
             className="w-full max-w-md mx-auto bg-error-container text-on-error-container rounded-xl p-4 text-body-md my-4"
