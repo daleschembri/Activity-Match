@@ -14,24 +14,25 @@ function formatDiscoverWhen(startsAt: string | null): string {
   if (!startsAt) return "Flexible timing";
   const date = new Date(startsAt);
   return date.toLocaleString(undefined, {
-    weekday: "long",
+    weekday: "short",
     hour: "2-digit",
     minute: "2-digit",
   });
 }
 
-function formatLocation(activity: ActivitySummary): string {
+function formatLocationBadge(activity: ActivitySummary): string {
   const area = activity.area_label ?? "Location TBD";
   if (activity.distance_from_viewer_minutes != null) {
-    return `${area}, ${activity.distance_from_viewer_minutes} min away`;
+    return `${area} · ${activity.distance_from_viewer_minutes} min`;
   }
   return area;
 }
 
-function listingTypeLabel(listingType: ActivitySummary["listing_type"]): string {
-  if (listingType === "confirmed") return "Confirmed";
-  if (listingType === "proposed") return "Proposed";
-  return "Idea";
+function formatCostBadge(activity: ActivitySummary): string {
+  if (activity.cost_amount > 0) {
+    return `${activity.cost_currency} ${activity.cost_amount.toFixed(0)}`;
+  }
+  return "Free";
 }
 
 function skillTag(skillLevel: ActivitySummary["skill_level"]): string | null {
@@ -58,9 +59,9 @@ function HostReliability({ userId }: { userId: string }) {
   const isEstablished = reliability?.label !== "New to the platform";
 
   return (
-    <p className="font-label-sm text-label-sm text-primary flex items-center gap-1">
-      {isEstablished && <Icon name="verified" className="text-[14px]" />}
-      {isEstablished ? "High Reliability" : "New host"}
+    <p className="font-label-sm text-label-sm text-primary flex items-center gap-1 truncate">
+      {isEstablished && <Icon name="verified" className="text-[14px] shrink-0" />}
+      <span className="truncate">{isEstablished ? "High Reliability" : "New host"}</span>
     </p>
   );
 }
@@ -68,7 +69,9 @@ function HostReliability({ userId }: { userId: string }) {
 /** Discover card matching stitch/action-deck/discover-activities */
 export function DiscoverFeedCard({ activity, onOpen, className = "" }: DiscoverFeedCardProps) {
   const when = formatDiscoverWhen(activity.starts_at);
-  const location = formatLocation(activity);
+  const locationBadge = formatLocationBadge(activity);
+  const costBadge = formatCostBadge(activity);
+  const isFree = activity.cost_amount <= 0;
   const coverUrl = activity.cover_image_ref?.trim() || null;
   const skill = skillTag(activity.skill_level);
   const filled = activity.participation_count;
@@ -77,9 +80,9 @@ export function DiscoverFeedCard({ activity, onOpen, className = "" }: DiscoverF
   return (
     <article
       className={`relative z-10 w-full bg-surface-container-lowest rounded-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col min-h-0 h-full border border-surface-container ${className}`}
-      aria-label={`${activity.title}, ${when}`}
+      aria-label={`${activity.title}, ${when}, ${locationBadge}`}
     >
-      <div className="relative h-[42%] min-h-[140px] w-full bg-surface-container-high shrink-0">
+      <div className="relative h-[38%] min-h-[128px] max-h-[200px] w-full bg-surface-container-high shrink-0">
         {coverUrl ? (
           <img
             src={coverUrl}
@@ -93,71 +96,62 @@ export function DiscoverFeedCard({ activity, onOpen, className = "" }: DiscoverF
             <Icon name="image" className="text-5xl opacity-50" />
           </div>
         )}
-        <div className="absolute top-4 left-4 flex gap-2">
-          <span className="px-3 py-1 bg-primary-container text-on-primary-container font-label-bold text-label-sm rounded-full bg-opacity-90 backdrop-blur-sm shadow-sm flex items-center gap-1">
-            {activity.listing_type === "confirmed" && (
-              <Icon name="check_circle" filled className="text-[16px] leading-none" />
-            )}
-            {listingTypeLabel(activity.listing_type)}
+        <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
+          <span className="max-w-full px-3 py-1 bg-surface-container-highest/95 text-on-surface font-label-bold text-label-sm rounded-full backdrop-blur-sm shadow-sm flex items-center gap-1 min-w-0">
+            <Icon name="location_on" className="text-[16px] leading-none shrink-0" />
+            <span className="truncate">{locationBadge}</span>
           </span>
-          <span className="px-3 py-1 bg-surface-container-highest text-on-surface font-label-bold text-label-sm rounded-full bg-opacity-90 backdrop-blur-sm shadow-sm">
-            One-off
+          <span
+            className={`px-3 py-1 font-label-bold text-label-sm rounded-full backdrop-blur-sm shadow-sm shrink-0 ${
+              isFree
+                ? "bg-primary-fixed/95 text-on-primary-fixed"
+                : "bg-secondary-fixed/95 text-on-secondary-container"
+            }`}
+          >
+            {costBadge}
           </span>
         </div>
       </div>
 
-      <div className="p-5 sm:p-6 flex flex-col flex-1 bg-surface-container-lowest min-h-0 overflow-y-auto">
-        <div className="mb-4">
-          <h2 className="font-headline-md text-headline-md text-on-surface mb-2">{activity.title}</h2>
-          <div className="flex flex-col gap-1 text-on-surface-variant font-body-md text-body-md">
-            <div className="flex items-center gap-2">
-              <Icon name="calendar_month" className="text-[18px]" />
-              <span>{when}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Icon name="location_on" className="text-[18px]" />
-              <span>{location}</span>
-            </div>
+      <div className="p-4 flex flex-col flex-1 bg-surface-container-lowest min-h-0 overflow-hidden">
+        <div className="mb-3 min-w-0">
+          <h2 className="font-headline-md text-headline-md text-on-surface mb-1.5 line-clamp-2">
+            {activity.title}
+          </h2>
+          <div className="flex items-center gap-2 text-on-surface-variant font-body-md text-body-md min-w-0">
+            <Icon name="calendar_month" className="text-[18px] shrink-0" />
+            <span className="truncate">{when}</span>
+            {skill && (
+              <>
+                <span className="text-outline-variant shrink-0">·</span>
+                <span className="truncate text-label-sm">{skill}</span>
+              </>
+            )}
           </div>
         </div>
 
         {capacity != null && capacity > 0 && (
-          <div className="mb-5">
-            <div className="flex justify-between items-end mb-2">
-              <span className="font-label-bold text-label-bold text-on-surface">Capacity</span>
-              <span className="font-label-sm text-label-sm text-on-surface-variant">
-                {activity.is_full ? "Full — join waitlist" : `${filled} of ${capacity} spaces filled`}
+          <div className="mb-3">
+            <div className="flex justify-between items-center gap-2 mb-1.5">
+              <span className="font-label-bold text-label-bold text-on-surface shrink-0">Capacity</span>
+              <span className="font-label-sm text-label-sm text-on-surface-variant text-right truncate">
+                {activity.is_full ? "Full — join waitlist" : `${filled} of ${capacity} filled`}
               </span>
             </div>
-            <CapacitySegments filled={filled} total={capacity} />
+            <CapacitySegments filled={filled} total={capacity} className="h-2" />
           </div>
         )}
 
-        <div className="flex flex-wrap gap-2 mb-auto">
-          {skill && (
-            <span className="px-3 py-1 bg-secondary/10 text-secondary font-label-sm text-label-sm rounded-full">
-              {skill}
-            </span>
-          )}
-          <span className="px-3 py-1 bg-primary/10 text-primary font-label-sm text-label-sm rounded-full">
-            {activity.cost_amount > 0
-              ? `${activity.cost_currency} ${activity.cost_amount.toFixed(0)}`
-              : "Free"}
-          </span>
-        </div>
-
-        <hr className="border-outline-variant/30 my-4" />
-
-        <div className="flex items-center justify-between mt-auto">
-          <div className="flex items-center gap-3 min-w-0">
+        <div className="flex items-center justify-between gap-3 mt-auto pt-3 border-t border-outline-variant/30 min-w-0">
+          <div className="flex items-center gap-2.5 min-w-0">
             {activity.host.avatar_ref ? (
               <img
                 src={activity.host.avatar_ref}
                 alt=""
-                className="w-10 h-10 rounded-full object-cover border border-outline-variant/20 shrink-0"
+                className="w-9 h-9 rounded-full object-cover border border-outline-variant/20 shrink-0"
               />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant/20 flex items-center justify-center text-label-sm font-bold text-on-surface-variant shrink-0">
+              <div className="w-9 h-9 rounded-full bg-surface-container-highest border border-outline-variant/20 flex items-center justify-center text-label-sm font-bold text-on-surface-variant shrink-0">
                 {hostInitials(activity.host.display_name)}
               </div>
             )}

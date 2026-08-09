@@ -1,9 +1,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { registerSW } from "virtual:pwa-register";
 import { App } from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import "./index.css";
+
+if (import.meta.env.PROD && "serviceWorker" in navigator) {
+  registerSW({ immediate: true });
+}
 
 if (import.meta.env.DEV && "serviceWorker" in navigator) {
   void navigator.serviceWorker.getRegistrations().then((registrations) => {

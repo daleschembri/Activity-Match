@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ActivityLifecycleSync } from "./components/ActivityLifecycleSync";
+import { BrowserNotificationBridge } from "./components/BrowserNotificationBridge";
 import { AppShell } from "./components/AppShell";
 import { AuthProvider } from "./lib/AuthProvider";
 import { isSupabaseConfigured } from "./lib/supabase";
@@ -82,6 +83,7 @@ export function App() {
       {isSupabaseConfigured ? (
         <AuthProvider>
           <ActivityLifecycleSync />
+          <BrowserNotificationBridge />
           {routes}
         </AuthProvider>
       ) : (

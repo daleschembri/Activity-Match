@@ -185,6 +185,54 @@ SELECT
 
 ---
 
+## 8. Web Push (VAPID) — notifications when the app is closed
+
+Background alerts and chat messages use **Web Push**. This needs VAPID keys and one Edge Function secret.
+
+### Generate VAPID keys
+
+```powershell
+npx web-push generate-vapid-keys
+```
+
+Add the **public** key to `apps/web/.env`:
+
+```env
+VITE_VAPID_PUBLIC_KEY=your-public-key-here
+```
+
+### Apply migration and deploy the function
+
+```powershell
+supabase db push
+supabase functions deploy send-push --no-verify-jwt
+```
+
+`--no-verify-jwt` is required because database triggers call this function with an internal secret, not a user JWT.
+
+### Set Edge Function secrets
+
+Get the internal push secret from the database (SQL Editor):
+
+```sql
+SELECT trim(both '"' from value::text) AS push_internal_secret
+FROM app_config WHERE key = 'push_internal_secret';
+```
+
+Then set secrets (replace placeholders):
+
+```powershell
+supabase secrets set `
+  PUSH_INTERNAL_SECRET=your-push-internal-secret-from-sql `
+  VAPID_PUBLIC_KEY=your-vapid-public-key `
+  VAPID_PRIVATE_KEY=your-vapid-private-key `
+  VAPID_SUBJECT=mailto:you@example.com
+```
+
+Restart the dev server after updating `.env`. Users enable notifications on the **Alerts** page; iOS requires installing the PWA to Home Screen for push.
+
+---
+
 ## Troubleshooting
 
 | Problem | Fix |
@@ -195,6 +243,7 @@ SELECT
 | Sign up does nothing | Disable email confirmation in Auth settings |
 | RLS permission denied | Ensure migrations ran; profile is auto-created on signup |
 | Still seeing demo data | `.env` is missing or dev server wasn't restarted |
+| No push when app closed | Set `VITE_VAPID_PUBLIC_KEY`, deploy `send-push`, set secrets (see §8) |
 
 ---
 
